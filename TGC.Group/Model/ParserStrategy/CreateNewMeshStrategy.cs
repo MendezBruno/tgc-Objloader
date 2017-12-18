@@ -2,7 +2,7 @@
 
 namespace TGC.Group.Model.ParserStrategy
 {
-    class CreateNewMeshStrategy : ObjParseStrategy
+    public class CreateNewMeshStrategy : ObjParseStrategy
     {
         public CreateNewMeshStrategy()
         {
