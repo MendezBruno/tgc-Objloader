@@ -101,6 +101,7 @@
     <Compile Include="Model\ObjMesh.cs" />
     <Compile Include="Model\ParserStrategy\CreateNewMeshStrategy.cs" />
     <Compile Include="Model\ObjParsingDelagator.cs" />
+    <Compile Include="Model\ParserStrategy\CreateVertexStrategy.cs" />
     <Compile Include="Model\ParserStrategy\ObjParseStrategy.cs" />
     <Compile Include="Model\TGCObjLoader.cs" />
     <Compile Include="Program.cs" />

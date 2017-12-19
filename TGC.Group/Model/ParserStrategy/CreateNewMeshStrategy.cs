@@ -4,6 +4,7 @@ namespace TGC.Group.Model.ParserStrategy
 {
     public class CreateNewMeshStrategy : ObjParseStrategy
     {
+        const int nameObject = 1;
         public CreateNewMeshStrategy()
         {
             Keyword = OBJECT;
@@ -11,7 +12,8 @@ namespace TGC.Group.Model.ParserStrategy
 
         public override void ProccesLine(string line, List<ObjMesh> listObjMesh)
         {
-            listObjMesh.Add(new ObjMesh());
+            var split = line.Split(' ');
+            listObjMesh.Add(new ObjMesh(split[nameObject]));
         }
     }
 }

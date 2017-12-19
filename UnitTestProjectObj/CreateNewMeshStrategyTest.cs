@@ -28,7 +28,8 @@ namespace UnitTestProjectObj
             
             string line = "o Cube";
             _createNewMeshStrategy.ProccesLine(line, ListObjMesh);
-            Assert.Equals(typeof(ObjMesh), ListObjMesh.First());
+            Assert.True(ListObjMesh.First().Name.Equals("Cube"));
+
         }
     }
 

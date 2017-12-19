@@ -18,12 +18,14 @@ namespace UnitTestProjectObj
     {
         TgcObjLoader _tgcObjLoader = new TgcObjLoader();
         string _fullobjpath;
+        string _fullobjpathHome;
 
         [SetUp]
         public void Init()
         {
            // _fullobjpath = _tgcObjLoader.GetPathObjforCurrentDirectory();
            _fullobjpath = @"I:\proyectos net\tgc-group\UnitTestProjectObj\DatosPrueba\cubo.obj";
+            _fullobjpathHome = @"D:\workspace\proyectosnet\tgc-Objloader\UnitTestProjectObj\DatosPrueba\cubo.obj";
         }
 
      /*   [TestCase]
@@ -39,7 +41,7 @@ namespace UnitTestProjectObj
         [TestCase]
         public void GetArrayLines()
         {
-            string[] lines = System.IO.File.ReadAllLines(_fullobjpath);
+            string[] lines = System.IO.File.ReadAllLines(_fullobjpathHome);
             NUnit.Framework.Assert.True(lines.Length > 0);
         }
 
@@ -49,7 +51,7 @@ namespace UnitTestProjectObj
         {
             var line = "";
             _tgcObjLoader.ProccesLine(line);
-            Assert.IsFalse(_tgcObjLoader.ListObjMesh.Count > 0); 
+            Assert.IsEmpty(_tgcObjLoader.ListObjMesh); 
         }
 
         [TestCase]
@@ -57,7 +59,7 @@ namespace UnitTestProjectObj
         {
             string line = "        ";
             _tgcObjLoader.ProccesLine(line);
-            Assert.IsFalse(_tgcObjLoader.ListObjMesh.Count > 0);
+            Assert.IsEmpty(_tgcObjLoader.ListObjMesh);
         }
 
         [TestCase]
@@ -85,7 +87,7 @@ namespace UnitTestProjectObj
         {
             string line = "o Cube";
             _tgcObjLoader.ProccesLine(line);
-            Assert.Equals(typeof(ObjMesh), _tgcObjLoader.ListObjMesh.First());
+            Assert.True(_tgcObjLoader.ListObjMesh.First().Name.Equals("Cube") );
         }
 
         /*
