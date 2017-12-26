@@ -31,6 +31,9 @@ namespace UnitTestProjectObj
             string line = "f 2/2/1 4/1/1 1/1/1";
             _createFaceStrategy.ProccesLine(line, ListObjMesh);
             Assert.True(ListObjMesh.Last().FaceTrianglesList.Count > 0);
+            Assert.True(ListObjMesh.Last().FaceTrianglesList.Last().V1 == 2);
+            Assert.True(ListObjMesh.Last().FaceTrianglesList.Last().Vt1 == 2);
+            Assert.True(ListObjMesh.Last().FaceTrianglesList.Last().Vn1 == 1);
 
         }
 
@@ -39,15 +42,15 @@ namespace UnitTestProjectObj
         {
             string line = "f 2//1 4//1 1//1";
             _createFaceStrategy.ProccesLine(line, ListObjMesh);
-            Assert.IsNull(ListObjMesh.Last().FaceTrianglesList.Last().Vt2);
+            Assert.True(ListObjMesh.Last().FaceTrianglesList.Last().Vt2 == 0);
         }
 
         [Test]
         public void CreateFaceWithoutVertexNormalOk()
         {
-            string line = "f 2/2/ 4/2/ 1/2/";
+            string line = "f 2/2 4/2 1/2";
             _createFaceStrategy.ProccesLine(line, ListObjMesh);
-            Assert.IsNull(ListObjMesh.Last().FaceTrianglesList.Last().Vn2);
+            Assert.True(ListObjMesh.Last().FaceTrianglesList.Last().Vn2 == 0);
         }
 
     }
