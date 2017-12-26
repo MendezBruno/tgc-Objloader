@@ -99,8 +99,11 @@
     <Compile Include="Model\FaceTriangle.cs" />
     <Compile Include="Model\GameModel.cs" />
     <Compile Include="Model\ObjMesh.cs" />
+    <Compile Include="Model\ParserStrategy\CreateFaceStrategy.cs" />
     <Compile Include="Model\ParserStrategy\CreateNewMeshStrategy.cs" />
     <Compile Include="Model\ObjParsingDelagator.cs" />
+    <Compile Include="Model\ParserStrategy\CreateNormalStrategy.cs" />
+    <Compile Include="Model\ParserStrategy\CreateTextCoordStrategy.cs" />
     <Compile Include="Model\ParserStrategy\CreateVertexStrategy.cs" />
     <Compile Include="Model\ParserStrategy\ObjParseStrategy.cs" />
     <Compile Include="Model\TGCObjLoader.cs" />

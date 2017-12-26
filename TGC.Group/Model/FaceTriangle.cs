@@ -1,9 +1,11 @@
-﻿namespace TGC.Group.Model
+﻿using System;
+
+namespace TGC.Group.Model
 {
     public class FaceTriangle
     {
         private string[] _vertexSplit;
-        private string[] _cantSplit;
+        private int _cantSplit;
 
         internal uint V1 { get; set; }
         internal uint Vt1 { get; set; }
@@ -17,10 +19,14 @@
 
         public FaceTriangle() { }
 
-        public FaceTriangle(string[] vertexSplit, string[] cantSplit)
+        public FaceTriangle(string[] vertexSplit, int cantSplit)
         {
-            this._vertexSplit = vertexSplit;
-            this._cantSplit = cantSplit;
+            SetValues(vertexSplit, cantSplit);
+        }
+
+        private void SetValues(string[] vertexSplit, int cantSplit)
+        {
+            throw new NotImplementedException();
         }
 
 

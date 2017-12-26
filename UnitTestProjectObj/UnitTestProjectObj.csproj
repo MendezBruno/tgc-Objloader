@@ -78,6 +78,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CreateNewMeshStrategyTest.cs" />
+    <Compile Include="CreateNormalStrategyTest.cs" />
+    <Compile Include="CreateTextCoordStrategyTest.cs" />
+    <Compile Include="CreateVertexStrategyTest.cs" />
     <Compile Include="ObjLoaderTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

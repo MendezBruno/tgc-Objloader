@@ -8,10 +8,10 @@ namespace TGC.Group.Model
     public class ObjMesh
     {
         public string Name { get; set; }
-        public List<Vector3> VertexListV  { get; set; }
-        public List<Vector3> VertexListVt { get; set; }
-        public List<Vector3> VertexListVn { get; set; }
-        public List<FaceTriangle> FaceTrianglesList { get; set; }
+        public List<Vector3> VertexListV  { get; set; } = new List<Vector3>();
+        public List<Vector3> VertexListVt { get; set; } = new List<Vector3>();
+        public List<Vector3> VertexListVn { get; set; } = new List<Vector3>();
+        public List<FaceTriangle> FaceTrianglesList { get; set; } = new List<FaceTriangle>();
 
         public ObjMesh(){}
 
