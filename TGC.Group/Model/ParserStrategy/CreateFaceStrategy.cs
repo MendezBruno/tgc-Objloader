@@ -8,7 +8,7 @@ namespace TGC.Group.Model.ParserStrategy
 {
     public class CreateFaceStrategy : ObjParseStrategy
     {
-        protected CreateFaceStrategy()
+        public CreateFaceStrategy()
         {
             Keyword = FACE;
         }
@@ -25,7 +25,7 @@ namespace TGC.Group.Model.ParserStrategy
             {
                 throw new ArgumentException("Error: ", e);
             }
-            FaceTriangle face = new FaceTriangle(f, cantSplit);
+            FaceTriangle face = new FaceTriangle(f);
             listObjMesh.Last().FaceTrianglesList.Add(face);
         }
 

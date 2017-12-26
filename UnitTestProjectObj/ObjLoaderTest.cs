@@ -41,7 +41,7 @@ namespace UnitTestProjectObj
         [TestCase]
         public void GetArrayLines()
         {
-            string[] lines = System.IO.File.ReadAllLines(_fullobjpathHome);
+            string[] lines = System.IO.File.ReadAllLines(_fullobjpath);
             NUnit.Framework.Assert.True(lines.Length > 0);
         }
 

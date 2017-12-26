@@ -48,8 +48,8 @@ namespace TGC.Group.Model
         {
             var vertexSplit = line.Remove(0, 2).Split(' ');
             string[] cantSplit = vertexSplit[0].Split('/');
-            FaceTriangle face = new FaceTriangle(vertexSplit, cantSplit);
-            CurrentObjMesh.FaceTrianglesList.Add(face);
+           // FaceTriangle face = new FaceTriangle(vertexSplit, cantSplit);
+           // CurrentObjMesh.FaceTrianglesList.Add(face);
             
         }
 
