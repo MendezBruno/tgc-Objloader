@@ -1,13 +1,23 @@
-﻿using System;
-using System.Globalization;
-using NUnit.Framework.Constraints;
+﻿using System.Globalization;
 
 namespace TGC.Group.Model
 {
     public class FaceTriangle
     {
-        private string[] _vertexSplit;
         private int _cantSplit;
+        private string[] _vertexSplit;
+
+        public FaceTriangle()
+        {
+        }
+
+        public FaceTriangle(string v, string v1, string v2)
+        {
+            V1 = uint.Parse(v, Style, Info);
+            V2 = uint.Parse(v1, Style, Info);
+            V3 = uint.Parse(v2, Style, Info);
+        }
+
         internal NumberStyles Style { get; } = NumberStyles.Any;
         internal CultureInfo Info { get; } = CultureInfo.InvariantCulture;
 
@@ -21,15 +31,6 @@ namespace TGC.Group.Model
         public uint V3 { get; set; }
         public uint Vt3 { get; set; }
         public uint Vn3 { get; set; }
-
-        public FaceTriangle() { }
-              
-        public FaceTriangle(string v, string v1, string v2)
-        {
-            V1 = uint.Parse(v, Style, Info);
-            V2 = uint.Parse(v1, Style, Info);
-            V3 = uint.Parse(v2, Style, Info);
-        }
 
         internal void SetTexturesValues(string v1, string v2, string v3)
         {

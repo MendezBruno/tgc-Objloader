@@ -9,7 +9,7 @@ using System.Runtime.InteropServices;
 [assembly:
     AssemblyDescription(
         "Trabajo práctico de la asignatura electiva Técnicas de Gráficos por Computadora (TGC) en la carrera de Ingeniería en Sistemas de Información. Universidad Tecnológica Nacional, Facultad Regional Buenos Aires (UTN-FRBA)."
-        )]
+    )]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("TGC - UTN.BA")]
 [assembly: AssemblyProduct("TGC.Group")]

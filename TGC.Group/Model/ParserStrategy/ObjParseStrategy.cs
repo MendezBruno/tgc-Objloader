@@ -15,6 +15,9 @@ namespace TGC.Group.Model.ParserStrategy
         internal const string LALA = "mtllib";
         internal const string LALALA = "usemtl";
         internal const string SHADOW = "s";
+        internal const string COMMENT = "#";
+        internal const string WHITELINE = "      ";
+        internal const string EMPTYLINE = "";
 
         internal string Keyword = null;
         private NumberStyles Style { get; } = NumberStyles.Any;
@@ -22,16 +25,16 @@ namespace TGC.Group.Model.ParserStrategy
 
         public abstract void ProccesLine(string line, List<ObjMesh> listObjMesh);
 
-        public bool ResponseTo(string action)
+        public virtual bool ResponseTo(string action)
         {
             return action == Keyword;
         }
 
         public Vector3 CreateVector3(string line)
         {
-            string[] indices = line.Split(' ');
-            if (indices.Length != 4) throw new ArgumentException("El Archivo obj no fue exportado de forma triangular");
-            Vector3 vertex = new Vector3()
+            var indices = line.Split(' ');
+            if (indices.Length != 4) throw new ArgumentException("El Archivo .obj no fue exportado de forma triangular");
+            var vertex = new Vector3
             {
                 X = float.Parse(indices[1], Style, Info),
                 Y = float.Parse(indices[2], Style, Info),

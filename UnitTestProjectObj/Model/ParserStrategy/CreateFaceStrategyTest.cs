@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using NUnit.Framework;
 using TGC.Group.Model;
 using TGC.Group.Model.ParserStrategy;
@@ -10,48 +7,45 @@ using TGC.Group.Model.ParserStrategy;
 namespace UnitTestProjectObj
 {
     [TestFixture]
-    class CreateFaceStrategyTest
+    internal class CreateFaceStrategyTest
     {
-        private CreateFaceStrategy _createFaceStrategy = new CreateFaceStrategy();
-        private CreateNewMeshStrategy _createNewMeshStrategy = new CreateNewMeshStrategy();
-        public List<ObjMesh> ListObjMesh { get; set; }
-
         [SetUp]
         public void Init()
         {
             ListObjMesh = new List<ObjMesh>();
-            string line = "o Cube";
+            var line = "o Cube";
             _createNewMeshStrategy.ProccesLine(line, ListObjMesh);
         }
+
+        private readonly CreateFaceStrategy _createFaceStrategy = new CreateFaceStrategy();
+        private readonly CreateNewMeshStrategy _createNewMeshStrategy = new CreateNewMeshStrategy();
+        public List<ObjMesh> ListObjMesh { get; set; }
 
         [Test]
         public void CreateFaceOk()
         {
-
-            string line = "f 2/2/1 4/1/1 1/1/1";
+            var line = "f 2/2/1 4/1/1 1/1/1";
             _createFaceStrategy.ProccesLine(line, ListObjMesh);
             Assert.True(ListObjMesh.Last().FaceTrianglesList.Count > 0);
             Assert.True(ListObjMesh.Last().FaceTrianglesList.Last().V1 == 2);
             Assert.True(ListObjMesh.Last().FaceTrianglesList.Last().Vt1 == 2);
             Assert.True(ListObjMesh.Last().FaceTrianglesList.Last().Vn1 == 1);
-
-        }
-
-        [Test]
-        public void CreateFaceWithoutVertexTextureOk()
-        {
-            string line = "f 2//1 4//1 1//1";
-            _createFaceStrategy.ProccesLine(line, ListObjMesh);
-            Assert.True(ListObjMesh.Last().FaceTrianglesList.Last().Vt2 == 0);
         }
 
         [Test]
         public void CreateFaceWithoutVertexNormalOk()
         {
-            string line = "f 2/2 4/2 1/2";
+            var line = "f 2/2 4/2 1/2";
             _createFaceStrategy.ProccesLine(line, ListObjMesh);
             Assert.True(ListObjMesh.Last().FaceTrianglesList.Last().Vn2 == 0);
         }
 
+        [Test]
+        public void CreateFaceWithoutVertexTextureOk()
+        {
+            var line = "f 2//1 4//1 1//1";
+            _createFaceStrategy.ProccesLine(line, ListObjMesh);
+            Assert.True(ListObjMesh.Last().FaceTrianglesList.Last().Vt2 == 0);
+        }
     }
 }

@@ -1,6 +1,6 @@
+using System.Drawing;
 using Microsoft.DirectX;
 using Microsoft.DirectX.DirectInput;
-using System.Drawing;
 using TGC.Core.Direct3D;
 using TGC.Core.Example;
 using TGC.Core.Geometry;
@@ -96,9 +96,7 @@ namespace TGC.Group.Model
 
             //Capturar Input teclado
             if (Input.keyPressed(Key.F))
-            {
                 BoundingBox = !BoundingBox;
-            }
 
             //Capturar Input Mouse
             if (Input.buttonUp(TgcD3dInput.MouseButtons.BUTTON_LEFT))
@@ -110,9 +108,7 @@ namespace TGC.Group.Model
 
                 //Si superamos cierto Y volvemos a la posición original.
                 if (Camara.Position.Y > 300f)
-                {
                     Camara.SetCamera(new Vector3(Camara.Position.X, 0f, Camara.Position.Z), Camara.LookAt);
-                }
             }
         }
 

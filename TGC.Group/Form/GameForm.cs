@@ -63,9 +63,7 @@ namespace TGC.Group.Form
         private void GameForm_FormClosing(object sender, FormClosingEventArgs e)
         {
             if (ApplicationRunning)
-            {
                 ShutDown();
-            }
         }
 
         /// <summary>
@@ -110,8 +108,6 @@ namespace TGC.Group.Form
             {
                 //Renderizo si es que hay un ejemplo activo.
                 if (Modelo != null)
-                {
-                    //Solo renderizamos si la aplicacion tiene foco, para no consumir recursos innecesarios.
                     if (ApplicationActive())
                     {
                         Modelo.Update();
@@ -122,7 +118,6 @@ namespace TGC.Group.Form
                         //Si no tenemos el foco, dormir cada tanto para no consumir gran cantidad de CPU.
                         Thread.Sleep(100);
                     }
-                }
                 // Process application messages.
                 Application.DoEvents();
             }
@@ -135,17 +130,11 @@ namespace TGC.Group.Form
         public bool ApplicationActive()
         {
             if (ContainsFocus)
-            {
                 return true;
-            }
 
             foreach (var form in OwnedForms)
-            {
                 if (form.ContainsFocus)
-                {
                     return true;
-                }
-            }
 
             return false;
         }

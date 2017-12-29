@@ -4,7 +4,8 @@ namespace TGC.Group.Model.ParserStrategy
 {
     public class CreateNewMeshStrategy : ObjParseStrategy
     {
-        const int nameObject = 1;
+        private const int nameObject = 1;
+
         public CreateNewMeshStrategy()
         {
             Keyword = OBJECT;

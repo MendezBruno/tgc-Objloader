@@ -1,34 +1,26 @@
-﻿using System;
-using System.Text;
-using System.Collections.Generic;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using System.IO;
+using System.Linq;
 using NUnit.Framework;
 using TGC.Group.Model;
-using System.IO;
-using System.Linq;
-using Assert = NUnit.Framework.Assert;
 
 namespace UnitTestProjectObj
 {
-
-
-
     [TestFixture]
-    class ObjLoaderTest
+    internal class ObjLoaderTest
     {
-        TgcObjLoader _tgcObjLoader = new TgcObjLoader();
-        string _fullobjpath;
-        string _fullobjpathHome;
-
         [SetUp]
         public void Init()
         {
-           // _fullobjpath = _tgcObjLoader.GetPathObjforCurrentDirectory();
-           _fullobjpath = @"I:\proyectos net\tgc-group\UnitTestProjectObj\DatosPrueba\cubo.obj";
+            // _fullobjpath = _tgcObjLoader.GetPathObjforCurrentDirectory();
+            _fullobjpath = @"I:\proyectos net\tgc-group\UnitTestProjectObj\DatosPrueba\cubo.obj";
             _fullobjpathHome = @"D:\workspace\proyectosnet\tgc-Objloader\UnitTestProjectObj\DatosPrueba\cubo.obj";
         }
 
-     /*   [TestCase]
+        private TgcObjLoader _tgcObjLoader = new TgcObjLoader();
+        private string _fullobjpath;
+        private string _fullobjpathHome;
+
+        /*   [TestCase]
         public void LoadObjFromFileOk()
         {
             string path = tgcObjLoader.getPathObj();
@@ -41,53 +33,54 @@ namespace UnitTestProjectObj
         [TestCase]
         public void GetArrayLines()
         {
-            string[] lines = System.IO.File.ReadAllLines(_fullobjpathHome);
-            NUnit.Framework.Assert.True(lines.Length > 0);
+            var lines = File.ReadAllLines(_fullobjpath);
+            Assert.True(lines.Length > 0);
         }
 
-        
+
         [TestCase]
         public void ProcessLineReturnWithLineBlanck()
         {
+            var _tgcObjLoader = new TgcObjLoader();
             var line = "";
             _tgcObjLoader.ProccesLine(line);
-            Assert.IsEmpty(_tgcObjLoader.ListObjMesh); 
+            Assert.IsTrue(_tgcObjLoader.ListObjMesh.Count == 0);
         }
 
         [TestCase]
         public void ProcessLineReturnWithSpaceBlanck()
         {
-            string line = "        ";
+            var _tgcObjLoader = new TgcObjLoader();
+            var line = "        ";
             _tgcObjLoader.ProccesLine(line);
-            Assert.IsEmpty(_tgcObjLoader.ListObjMesh);
+            Assert.IsTrue(_tgcObjLoader.ListObjMesh.Count == 0);
         }
 
         [TestCase]
-        public void ProcessLineReturnWithFirsCaracterHastag()
+        public void ProcessLineReturnWithFirstCaracterHastag()
         {
-            string line = "# Blender v2.79 (sub 0) OBJ File: ''";
+            var _tgcObjLoader = new TgcObjLoader();
+            var line = "# Blender v2.79 (sub 0) OBJ File: ''";
             _tgcObjLoader.ProccesLine(line);
-            Assert.IsFalse(_tgcObjLoader.ListObjMesh.Count == 0);
+            Assert.IsTrue(_tgcObjLoader.ListObjMesh.Count == 0);
         }
 
-        [Test]
+        [TestCase]
         public void ProcessLineThrowWithBadAction()
         {
-            string line = "badAction Blender v2.79 (sub 0) OBJ File: ''";
-            Assert.That(() =>
-                {
-                    _tgcObjLoader.ProccesLine(line);
-                }, Throws.InvalidOperationException
-
+            var _tgcObjLoader = new TgcObjLoader();
+            var line = "badAction Blender v2.79 (sub 0) OBJ File: ''";
+            Assert.That(() => { _tgcObjLoader.ProccesLine(line); }, Throws.InvalidOperationException
             );
         }
 
-        [Test]
+        [TestCase]
         public void ProccesLineNewObjet()
         {
-            string line = "o Cube";
+            var _tgcObjLoader = new TgcObjLoader();
+            var line = "o Cube";
             _tgcObjLoader.ProccesLine(line);
-            Assert.True(_tgcObjLoader.ListObjMesh.First().Name.Equals("Cube") );
+            Assert.True(_tgcObjLoader.ListObjMesh.First().Name.Equals("Cube"));
         }
 
         /*
@@ -118,6 +111,5 @@ namespace UnitTestProjectObj
             
         }
         */
-
     }
 }

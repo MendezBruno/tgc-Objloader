@@ -1,9 +1,5 @@
-﻿using Microsoft.DirectX;
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace TGC.Group.Model.ParserStrategy
 {
@@ -16,7 +12,7 @@ namespace TGC.Group.Model.ParserStrategy
 
         public override void ProccesLine(string line, List<ObjMesh> listObjMesh)
         {
-            Vector3 vertex = CreateVector3(line);
+            var vertex = CreateVector3(line);
             listObjMesh.Last().VertexListV.Add(vertex);
         }
     }
