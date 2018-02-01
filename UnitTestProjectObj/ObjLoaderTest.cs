@@ -33,6 +33,7 @@ namespace UnitTestProjectObj
         [TestCase]
         public void GetArrayLines()
         {
+            string text = File.ReadAllText("DatosPrueba\\cubo.obj");
             var lines = File.ReadAllLines(_fullobjpath);
             Assert.True(lines.Length > 0);
         }
