@@ -1,5 +1,8 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Linq;
+using System.Net.Mime;
+using System.Reflection;
 using NUnit.Framework;
 using TGC.Group.Model;
 
@@ -12,8 +15,21 @@ namespace UnitTestProjectObj
         public void Init()
         {
             // _fullobjpath = _tgcObjLoader.GetPathObjforCurrentDirectory();
-            _fullobjpath = @"I:\proyectos net\tgc-group\UnitTestProjectObj\DatosPrueba\cubo.obj";
-            _fullobjpathHome = @"D:\workspace\proyectosnet\tgc-Objloader\UnitTestProjectObj\DatosPrueba\cubo.obj";
+            // _fullobjpath = @"I:\proyectos net\tgc-group\UnitTestProjectObj\DatosPrueba\cubo.obj";
+            //_fullobjpathHome = @"D:\workspace\proyectosnet\tgc-Objloader\UnitTestProjectObj\DatosPrueba\cubo.obj";
+
+
+            var dir = new DirectoryInfo(Path.GetFullPath(TestContext.CurrentContext.TestDirectory));
+            while (!dir.Parent.Name.Equals("UnitTestProjectObj"))
+            {
+                dir = new DirectoryInfo(dir.Parent.FullName);
+            }
+            _fullobjpath = dir.Parent.FullName;
+            string[] objFile = (Properties.Resources.cubotxt).Split(new string[] { "\\n" }, StringSplitOptions.None);
+            var lines = File.ReadAllLines(_fullobjpath);
+            var lala = "nono";
+
+
         }
 
         private TgcObjLoader _tgcObjLoader = new TgcObjLoader();
@@ -33,7 +49,10 @@ namespace UnitTestProjectObj
         [TestCase]
         public void GetArrayLines()
         {
-            string text = File.ReadAllText("DatosPrueba\\cubo.obj");
+            //var assembly = System.Reflection.Assembly.GetExecutingAssembly();
+            //assembly.Location; aca tengo la dll del test.
+            string mono = Environment.CurrentDirectory;
+            string mono2 = AppDomain.CurrentDomain.BaseDirectory;
             var lines = File.ReadAllLines(_fullobjpath);
             Assert.True(lines.Length > 0);
         }
