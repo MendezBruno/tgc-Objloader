@@ -100,6 +100,9 @@
     <Compile Include="Model\FaceTriangle.cs" />
     <Compile Include="Model\GameModel.cs" />
     <Compile Include="Model\ObjMesh.cs" />
+    <Compile Include="Model\ParserStrategy\AddMtllibStrategy.cs" />
+    <Compile Include="Model\ParserStrategy\AddShadowStrategy.cs" />
+    <Compile Include="Model\ParserStrategy\AddUsemtlStrategy.cs" />
     <Compile Include="Model\ParserStrategy\CreateFaceStrategy.cs" />
     <Compile Include="Model\ParserStrategy\CreateNewMeshStrategy.cs" />
     <Compile Include="Model\ParserStrategy\CreateNormalStrategy.cs" />

@@ -13,6 +13,10 @@ namespace TGC.Group.Model
         {
             Strategies = new List<ObjParseStrategy>();
             Strategies.Add(new CreateNewMeshStrategy());
+            Strategies.Add(new CreateNormalStrategy());
+            Strategies.Add(new CreateFaceStrategy());
+            Strategies.Add(new CreateTextCoordStrategy());
+            Strategies.Add(new CreateVertexStrategy());
             Strategies.Add(new NoOperationStrategy());
             ListObjMesh = new List<ObjMesh>();
            
@@ -52,7 +56,7 @@ namespace TGC.Group.Model
         public void ProccesLine(string line)
         {
             var action = line.Split(' ').FirstOrDefault();
-            //TODO COMPLETAR if (action != null) ;
+            if (action == null) throw new InvalidOperationException($"Cannot find action for this line {line}");
 
             foreach (var strategy in Strategies)
                 if (strategy.ResponseTo(action))

@@ -12,8 +12,8 @@ namespace TGC.Group.Model.ParserStrategy
         internal const string TEXTURE = "vt";
         internal const string NORMAL = "vn";
         internal const string FACE = "f";
-        internal const string LALA = "mtllib";
-        internal const string LALALA = "usemtl";
+        internal const string MTLLIB = "mtllib";
+        internal const string USEMTL = "usemtl";
         internal const string SHADOW = "s";
         internal const string COMMENT = "#";
         internal const string WHITELINE = "      ";

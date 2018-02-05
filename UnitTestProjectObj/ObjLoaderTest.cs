@@ -34,15 +34,19 @@ namespace UnitTestProjectObj
 
         }
 
-        /*   [TestCase]
+        [TestCase]
         public void LoadObjFromFileOk()
         {
-            string path = tgcObjLoader.getPathObj();
+            var _tgcObjLoader = new TgcObjLoader();
+            _tgcObjLoader.LoadObjFromFile(_fullobjpath);
+            Assert.True(_tgcObjLoader.ListObjMesh.Count > 1);
+            ObjMesh resObjMesh = _tgcObjLoader.ListObjMesh.First();
+            Assert.True(resObjMesh.VertexListV.Count == 8);
 
-            NUnit.Framework.Assert.True(); El resultado de este test deberia ser una lista de ObjMesh
+            
 
         }
-     */
+     
 
         [TestCase]
         public void GetArrayLines()
