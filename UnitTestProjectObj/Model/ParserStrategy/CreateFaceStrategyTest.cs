@@ -9,6 +9,10 @@ namespace UnitTestProjectObj
     [TestFixture]
     internal class CreateFaceStrategyTest
     {
+        private readonly CreateFaceStrategy _createFaceStrategy = new CreateFaceStrategy();
+        private readonly CreateNewMeshStrategy _createNewMeshStrategy = new CreateNewMeshStrategy();
+        public List<ObjMesh> ListObjMesh { get; set; }
+        
         [SetUp]
         public void Init()
         {
@@ -16,11 +20,7 @@ namespace UnitTestProjectObj
             var line = "o Cube";
             _createNewMeshStrategy.ProccesLine(line, ListObjMesh);
         }
-
-        private readonly CreateFaceStrategy _createFaceStrategy = new CreateFaceStrategy();
-        private readonly CreateNewMeshStrategy _createNewMeshStrategy = new CreateNewMeshStrategy();
-        public List<ObjMesh> ListObjMesh { get; set; }
-
+        
         [Test]
         public void CreateFaceOk()
         {

@@ -88,8 +88,7 @@ namespace UnitTestProjectObj
         {
             var _tgcObjLoader = new TgcObjLoader();
             var line = "badAction Blender v2.79 (sub 0) OBJ File: ''";
-            Assert.That(() => { _tgcObjLoader.ProccesLine(line); }, Throws.InvalidOperationException
-            );
+            Assert.That(() => { _tgcObjLoader.ProccesLine(line); }, Throws.InvalidOperationException);
         }
 
         [TestCase]
