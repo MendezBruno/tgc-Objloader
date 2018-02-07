@@ -53,6 +53,7 @@
   <ItemGroup>
     <Compile Include="Model\ParserStrategy\AddMtllibStrategyTest.cs" />
     <Compile Include="Model\ParserStrategy\AddShadowStrategyTest.cs" />
+    <Compile Include="Model\ParserStrategy\AddUsemtlStrategyTest.cs" />
     <Compile Include="Model\ParserStrategy\CreateFaceStrategyTest.cs" />
     <Compile Include="Model\ParserStrategy\CreateNewMeshStrategyTest.cs" />
     <Compile Include="Model\ParserStrategy\CreateNormalStrategyTest.cs" />

@@ -10,6 +10,7 @@ namespace UnitTestProjectObj
     internal class CreateFaceStrategyTest
     {
         private readonly CreateFaceStrategy _createFaceStrategy = new CreateFaceStrategy();
+        private readonly AddUsemtlStrategy _addUsemtlStrategy = new AddUsemtlStrategy();
         private readonly CreateNewMeshStrategy _createNewMeshStrategy = new CreateNewMeshStrategy();
         public List<ObjMesh> ListObjMesh { get; set; }
         
@@ -46,6 +47,16 @@ namespace UnitTestProjectObj
             var line = "f 2//1 4//1 1//1";
             _createFaceStrategy.ProccesLine(line, ListObjMesh);
             Assert.True(ListObjMesh.Last().FaceTrianglesList.Last().Vt2 == 0);
+        }
+
+        [Test]
+        public void AttributeUsemtlAdded()
+        {
+            var line = "f 2/2 4/2 1/2";
+            _createFaceStrategy.ProccesLine(line, ListObjMesh);
+            line = "usemtl Material.001";
+            _addUsemtlStrategy.ProccesLine(line, ListObjMesh);
+            Assert.True(ListObjMesh.Last().FaceTrianglesList.Last().Usemtl != null);
         }
     }
 }

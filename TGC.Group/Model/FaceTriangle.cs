@@ -5,6 +5,7 @@ namespace TGC.Group.Model
     public class FaceTriangle
     {
         private int _cantSplit;
+        public string Usemtl { get; set; }
         private string[] _vertexSplit;
 
         public FaceTriangle()
