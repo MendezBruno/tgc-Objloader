@@ -20,6 +20,8 @@ namespace UnitTestProjectObj
             ListObjMesh = new List<ObjMesh>();
             var line = "o Cube";
             _createNewMeshStrategy.ProccesLine(line, ListObjMesh);
+            line = "usemtl Material.001";
+            _addUsemtlStrategy.ProccesLine(line, ListObjMesh);
         }
         
         [Test]
@@ -56,7 +58,7 @@ namespace UnitTestProjectObj
             _createFaceStrategy.ProccesLine(line, ListObjMesh);
             line = "usemtl Material.001";
             _addUsemtlStrategy.ProccesLine(line, ListObjMesh);
-            Assert.True(ListObjMesh.Last().FaceTrianglesList.Last().Usemtl != null);
+            Assert.True(ListObjMesh.Last().FaceTrianglesList.Last().Usemtl.Equals("Material.001"));
         }
     }
 }

@@ -12,6 +12,9 @@ namespace TGC.Group.Model
         public TgcObjLoader()
         {
             Strategies = new List<ObjParseStrategy>();
+            Strategies.Add(new AddMtllibStrategy());
+            Strategies.Add(new AddShadowStrategy());
+            Strategies.Add(new AddUsemtlStrategy());
             Strategies.Add(new CreateNewMeshStrategy());
             Strategies.Add(new CreateNormalStrategy());
             Strategies.Add(new CreateFaceStrategy());

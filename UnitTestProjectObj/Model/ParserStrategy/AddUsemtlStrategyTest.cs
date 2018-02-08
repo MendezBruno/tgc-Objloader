@@ -52,7 +52,7 @@ namespace UnitTestProjectObj.Model.ParserStrategy
         [Test]
         public void AsignateAttributeUsemtlFalisByNumberOfParameters()
         {
-            var line = "s badParameter";
+            var line = "s bad Parameter";
             Assert.That(() => { _addUsemtlStrategy.ProccesLine(line, ListObjMesh); }, Throws.ArgumentException);
 
         }
