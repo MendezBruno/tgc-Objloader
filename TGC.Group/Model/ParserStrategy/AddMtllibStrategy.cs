@@ -18,7 +18,7 @@ namespace TGC.Group.Model.ParserStrategy
 
         public override void ProccesLine(string line, List<ObjMesh> listObjMesh)
         {
-            listObjMesh.Last().Mtllib = CheckAttributeLine(line);
+           // listObjMesh.Last().Mtllib = CheckAttributeLine(line);
         }
 
         private string CheckAttributeLine(string line)

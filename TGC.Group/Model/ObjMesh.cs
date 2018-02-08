@@ -15,7 +15,7 @@ namespace TGC.Group.Model
         }
 
         public string Name { get; set; }
-        public string Mtllib { get; set; }
+       // public string Mtllib { get; set; }
         public bool Shadow { get; set; } = false;
         public new List<string> Usemtl = new List<string>();
         public List<Vector3> VertexListV { get; set; } = new List<Vector3>();

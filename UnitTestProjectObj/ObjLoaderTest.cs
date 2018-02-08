@@ -39,7 +39,7 @@ namespace UnitTestProjectObj
         {
             var _tgcObjLoader = new TgcObjLoader();
             _tgcObjLoader.LoadObjFromFile(_fullobjpath);
-            Assert.True(_tgcObjLoader.ListObjMesh.Count > 1);
+            Assert.True(_tgcObjLoader.ListObjMesh.Count > 0);
             ObjMesh resObjMesh = _tgcObjLoader.ListObjMesh.First();
             Assert.True(resObjMesh.VertexListV.Count == 8);
 
@@ -49,7 +49,7 @@ namespace UnitTestProjectObj
      
 
         [TestCase]
-        public void GetArrayLines()
+        public void GetArrayLinesOk()
         {
             var lines = File.ReadAllLines(_fullobjpath);
             Assert.True(lines.Length > 0);
@@ -100,33 +100,18 @@ namespace UnitTestProjectObj
             Assert.True(_tgcObjLoader.ListObjMesh.First().Name.Equals("Cube"));
         }
 
-        /*
-        [Test]
-        public void ProccesLineWithVertex()
+        [TestCase]
+        public void GetListOfMaterialsOk()
         {
-            string line = "v 1.000000 - 1.000000 - 1.000000";
-            TgcObjLoader.ProccesLine(line);
-            Assert.True(TgcObjLoader.Delegator.CurrentObjMesh.VertexListV.Count > 0);
+            var lines = File.ReadAllLines(_fullobjpath);
+            _tgcObjLoader.GetListOfMaterials(lines);
+            Assert.True(_tgcObjLoader.ListMtllib.Count > 0);
         }
 
-        [Test]
-        public void CreateVectorFaliedForCurrentMeshNull()
+        [TestCase]
+        public void GetListwithOutMaterialsOk()
         {
-            string line = "v 1.000000 - 1.000000 - 1.000000";
-            Assert.That(() =>
-                {
-                    TgcObjLoader.ProccesLine(line);
-                }, Throws.InvalidOperationException
-
-            );
 
         }
-
-        [Test]
-        public void CreateVectorFaliedForFormatInvalid()
-        {
-            
-        }
-        */
     }
 }

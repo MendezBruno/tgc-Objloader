@@ -22,12 +22,16 @@ namespace TGC.Group.Model
             Strategies.Add(new CreateVertexStrategy());
             Strategies.Add(new NoOperationStrategy());
             ListObjMesh = new List<ObjMesh>();
+            ListMtllib = new List<string>();
            
         }
 
+        internal const string MTLLIB = "mtllib";
+        private const int INDEXATTR = 2;
         public List<ObjParseStrategy> Strategies { get; set; }
 
         public List<ObjMesh> ListObjMesh { get; set; }
+        public List<string> ListMtllib { get; set; }
 
         public string GetPathObj()
         {
@@ -51,7 +55,7 @@ namespace TGC.Group.Model
         public void LoadObjFromFile(string path)
         {
             var lines = File.ReadAllLines(path);
-
+            GetListOfMaterials(lines);
             foreach (var line in lines)
                 ProccesLine(line);
         }
@@ -68,6 +72,37 @@ namespace TGC.Group.Model
                     return;
                 }
             throw new InvalidOperationException($"Cannot find a correct parsing process for line {line}");
+        }
+
+        public void GetListOfMaterials(string[] lines)
+        {
+            var linesFiltered = FilterByKeyword(lines, MTLLIB);
+            foreach (var line in linesFiltered)
+                SetMtllib(line);
+        }
+
+        private void SetMtllib(string line)
+        {
+            if (line.Split(' ').Length != 3) throw new ArgumentException("El atributo Mtllib tiene formato incorrecto");
+            var attribute = line.Split(' ')[INDEXATTR];
+            if (!Path.GetExtension(attribute).Equals(".mtl"))
+            {
+                throw new ArgumentException("La extención de Mtllib es incorrecta, se esperaba: .mtl y se obtuvo: " + Path.GetExtension(attribute));
+            }
+            ListMtllib.Add(attribute);
+        }
+
+        private string[] FilterByKeyword(string[] lines, string mtllib)
+        {
+            List<string> linesWithKeyword = new List<string>();
+
+            foreach (string line in lines)
+            {
+                if (line.Split(' ').FirstOrDefault().Equals(MTLLIB))
+                    linesWithKeyword.Add(line);
+            }
+
+            return linesWithKeyword.ToArray();
         }
     }
 }
