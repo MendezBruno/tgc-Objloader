@@ -12,7 +12,6 @@ namespace TGC.Group.Model
         public TgcObjLoader()
         {
             Strategies = new List<ObjParseStrategy>();
-            Strategies.Add(new AddMtllibStrategy());
             Strategies.Add(new AddShadowStrategy());
             Strategies.Add(new AddUsemtlStrategy());
             Strategies.Add(new CreateNewMeshStrategy());
@@ -28,6 +27,8 @@ namespace TGC.Group.Model
 
         internal const string MTLLIB = "mtllib";
         private const int INDEXATTR = 2;
+        private const int ELEMENTOFMTLLIB = 2;
+        private const int INICIO = 0;
         public List<ObjParseStrategy> Strategies { get; set; }
 
         public List<ObjMesh> ListObjMesh { get; set; }
@@ -83,8 +84,8 @@ namespace TGC.Group.Model
 
         private void SetMtllib(string line)
         {
-            if (line.Split(' ').Length != 3) throw new ArgumentException("El atributo Mtllib tiene formato incorrecto");
-            var attribute = line.Split(' ')[INDEXATTR];
+            if (line.Split(' ').Length < ELEMENTOFMTLLIB) throw new ArgumentException("El atributo Mtllib tiene formato incorrecto");
+            var attribute = line.Remove(INICIO, INDEXATTR);
             if (!Path.GetExtension(attribute).Equals(".mtl"))
             {
                 throw new ArgumentException("La extención de Mtllib es incorrecta, se esperaba: .mtl y se obtuvo: " + Path.GetExtension(attribute));
@@ -92,13 +93,13 @@ namespace TGC.Group.Model
             ListMtllib.Add(attribute);
         }
 
-        private string[] FilterByKeyword(string[] lines, string mtllib)
+        private string[] FilterByKeyword(string[] lines, string keyWord)
         {
             List<string> linesWithKeyword = new List<string>();
 
             foreach (string line in lines)
             {
-                if (line.Split(' ').FirstOrDefault().Equals(MTLLIB))
+                if (line.Split(' ').FirstOrDefault().Equals(keyWord))
                     linesWithKeyword.Add(line);
             }
 
