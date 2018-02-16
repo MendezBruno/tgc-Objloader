@@ -28,10 +28,6 @@ namespace UnitTestProjectObj
                 dir = new DirectoryInfo(dir.Parent.FullName);
             }
             _fullobjpath = Path.Combine(dir.Parent.FullName, testDataFolder);
-         
-          
-
-
         }
 
         [TestCase]
