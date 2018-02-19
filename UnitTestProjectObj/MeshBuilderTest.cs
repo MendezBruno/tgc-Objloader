@@ -15,6 +15,7 @@ namespace UnitTestProjectObj
     {
         private TgcObjLoader _tgcObjLoader = new TgcObjLoader();
         private string _fullobjpath;
+        ObjMesh resObjMesh;
 
         [SetUp]
         public void Init()
@@ -27,19 +28,29 @@ namespace UnitTestProjectObj
                 dir = new DirectoryInfo(dir.Parent.FullName);
             }
             _fullobjpath = Path.Combine(dir.Parent.FullName, testDataFolder);
+            _tgcObjLoader.LoadObjFromFile(_fullobjpath);
+            resObjMesh = _tgcObjLoader.ListObjMesh.First();
 
         }
 
         [TestCase]
         public void BuildTgcMeshFromObjOk()
         {
-           
-            _tgcObjLoader.LoadObjFromFile(_fullobjpath);
-            ObjMesh resObjMesh = _tgcObjLoader.ListObjMesh.First();
+            
             TgcMesh tgcMesh = new MeshBuilder()
                 .instaceDxMesh(resObjMesh.FaceTrianglesList.Count, resObjMesh.VertexListV.Count)
                 .chargeBuffer(resObjMesh)
                 .build(resObjMesh);
+
+        }
+
+        [TestCase]
+        public void CreateInstaceDxMeshOk()
+        {
+            MeshBuilder auxMeshBuilder = new MeshBuilder()
+                .instaceDxMesh(resObjMesh.FaceTrianglesList.Count, resObjMesh.VertexListV.Count);
+            Assert.True(auxMeshBuilder.getInstaceDxMesh().NumberVertices == resObjMesh.VertexListV.Count);
+            Assert.True(auxMeshBuilder.getInstaceDxMesh().NumberFaces == resObjMesh.FaceTrianglesList.Count);
 
         }
     }

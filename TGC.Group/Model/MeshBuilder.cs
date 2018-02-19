@@ -27,8 +27,8 @@ namespace TGC.Group.Model
 
         public MeshBuilder instaceDxMesh(int cantFace, int cantVertex )
         {
-            this.dxMesh = new Mesh(cantFace, cantVertex,
-                MeshFlags.Managed, DiffuseMapVertexElements, D3DDevice.Instance.Device);
+            this.dxMesh = new Mesh(cantFace, cantFace * 3,
+                MeshFlags.Managed, VertexElements, D3DDevice.Instance.Device);
             return this;
         }
 
@@ -44,17 +44,20 @@ namespace TGC.Group.Model
                     
                     v.Position = objMesh.VertexListV[Convert.ToInt32(face.V1)];
                     v.Normal = objMesh.VertexListVn[Convert.ToInt32(face.Vn1)];
-                    v.Texture = objMesh.VertexListVn[Convert.ToInt32(face.Vt1)];
+                    v.Tu0 = objMesh.VertexListVt[Convert.ToInt32(face.Vt1)].X;
+                    v.Tv0 = objMesh.VertexListVt[Convert.ToInt32(face.Vt1)].Y;
                     v.Color = 255;  //TODO que corresponde poner aca con respecto obj Mesh
                     data.Write(v);
                     v.Position = objMesh.VertexListV[Convert.ToInt32(face.V2)];
                     v.Normal = objMesh.VertexListVn[Convert.ToInt32(face.Vn2)];
-                    v.Texture = objMesh.VertexListVn[Convert.ToInt32(face.Vt1)];
+                    v.Tu0 = objMesh.VertexListVt[Convert.ToInt32(face.Vt2)].X;
+                    v.Tv0 = objMesh.VertexListVt[Convert.ToInt32(face.Vt2)].Y;
                     v.Color = 255;  //TODO que corresponde poner aca con respecto obj Mesh
                     data.Write(v);
-                    v.Position = objMesh.VertexListV[Convert.ToInt32(face.V2)];
-                    v.Normal = objMesh.VertexListVn[Convert.ToInt32(face.Vn2)];
-                    v.Texture = objMesh.VertexListVn[Convert.ToInt32(face.Vt1)];
+                    v.Position = objMesh.VertexListV[Convert.ToInt32(face.V3)];
+                    v.Normal = objMesh.VertexListVn[Convert.ToInt32(face.Vn3)];
+                    v.Tu0 = objMesh.VertexListVt[Convert.ToInt32(face.Vt3)].X;
+                    v.Tv0 = objMesh.VertexListVt[Convert.ToInt32(face.Vt3)].Y;
                     v.Color = 255;  //TODO que corresponde poner aca con respecto obj Mesh
                     data.Write(v);
 
@@ -64,7 +67,7 @@ namespace TGC.Group.Model
             //Cargar indexBuffer en forma plana
             using (var ib = dxMesh.IndexBuffer)
             {
-                var indices = new short[objMesh.VertexListV.Count];
+                var indices = new short[objMesh.VertexListV.Count * 3];
                 for (var i = 0; i < indices.Length; i++)
                 {
                     indices[i] = (short)i;
@@ -89,7 +92,8 @@ namespace TGC.Group.Model
             public Vector3 Position;
             public Vector3 Normal;
             public int Color;
-            public Vector3 Texture;
+            public float Tu0;
+            public float Tv0;
         }
 
 
@@ -107,7 +111,7 @@ namespace TGC.Group.Model
             new VertexElement(0, 24, DeclarationType.Color,
                 DeclarationMethod.Default,
                 DeclarationUsage.Color, 0),
-            new VertexElement(0, 28, DeclarationType.Float3,
+            new VertexElement(0, 28, DeclarationType.Float2,
                 DeclarationMethod.Default,
                 DeclarationUsage.TextureCoordinate, 0),
             VertexElement.VertexDeclarationEnd
