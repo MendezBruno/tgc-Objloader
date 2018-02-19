@@ -1,6 +1,9 @@
 using System.Drawing;
+using System.IO;
+using System.Linq;
 using Microsoft.DirectX;
 using Microsoft.DirectX.DirectInput;
+using NUnit.Framework;
 using TGC.Core.Direct3D;
 using TGC.Core.Example;
 using TGC.Core.Geometry;
@@ -31,14 +34,22 @@ namespace TGC.Group.Model
             Description = Game.Default.Description;
         }
 
+
+
         //Caja que se muestra en el ejemplo.
         private TgcBox Box { get; set; }
 
         //Mesh de TgcLogo.
         private TgcMesh Mesh { get; set; }
 
+        //TgcMesh MeshDelObj
+        private TgcMesh MeshDelObj { get; set; }
+
         //Boleano para ver si dibujamos el boundingbox
         private bool BoundingBox { get; set; }
+
+        //Importardor de mesh por obj
+        private TgcObjLoader TgcObjLoader  = new TgcObjLoader();
 
         /// <summary>
         ///     Se llama una sola vez, al principio cuando se ejecuta el ejemplo.
@@ -60,17 +71,17 @@ namespace TGC.Group.Model
             var texture = TgcTexture.createTexture(pathTexturaCaja);
 
             //Creamos una caja 3D ubicada de dimensiones (5, 10, 5) y la textura como color.
-            var size = new Vector3(5, 10, 5);
+         //   var size = new Vector3(5, 10, 5);
             //Construimos una caja según los parámetros, por defecto la misma se crea con centro en el origen y se recomienda así para facilitar las transformaciones.
-            Box = TgcBox.fromSize(size, texture);
+        //    Box = TgcBox.fromSize(size, texture);
             //Posición donde quiero que este la caja, es común que se utilicen estructuras internas para las transformaciones.
             //Entonces actualizamos la posición lógica, luego podemos utilizar esto en render para posicionar donde corresponda con transformaciones.
-            Box.Position = new Vector3(-25, 0, 0);
+          //  Box.Position = new Vector3(-25, 0, 0);
 
             //Cargo el unico mesh que tiene la escena.
-            Mesh = new TgcSceneLoader().loadSceneFromFile(MediaDir + "LogoTGC-TgcScene.xml").Meshes[0];
+        //    Mesh = new TgcSceneLoader().loadSceneFromFile(MediaDir + "LogoTGC-TgcScene").Meshes[0];
             //Defino una escala en el modelo logico del mesh que es muy grande.
-            Mesh.Scale = new Vector3(0.5f, 0.5f, 0.5f);
+       //     Mesh.Scale = new Vector3(0.5f, 0.5f, 0.5f);
 
             //Suelen utilizarse objetos que manejan el comportamiento de la camara.
             //Lo que en realidad necesitamos gráficamente es una matriz de View.
@@ -83,6 +94,18 @@ namespace TGC.Group.Model
             Camara.SetCamera(cameraPosition, lookAt);
             //Internamente el framework construye la matriz de view con estos dos vectores.
             //Luego en nuestro juego tendremos que crear una cámara que cambie la matriz de view con variables como movimientos o animaciones de escenas.
+            TgcObjLoader.LoadObjFromFile(@"C:\Users\CIDESO\Desktop\cubocontextura.obj");
+            ObjMesh resObjMesh = TgcObjLoader.ListObjMesh.First();
+            MeshDelObj = new MeshBuilder()
+                .instaceDxMesh(resObjMesh.FaceTrianglesList.Count, resObjMesh.VertexListV.Count)
+                .chargeBuffer(resObjMesh)
+                .build(resObjMesh);
+            var size = new Vector3(5, 10, 5);
+            MeshDelObj.Scale = size;
+            MeshDelObj.Position = new Vector3(-25, 0, 0);
+            
+
+
         }
 
         /// <summary>
@@ -130,18 +153,23 @@ namespace TGC.Group.Model
 
             //Siempre antes de renderizar el modelo necesitamos actualizar la matriz de transformacion.
             //Debemos recordar el orden en cual debemos multiplicar las matrices, en caso de tener modelos jerárquicos, tenemos control total.
-            Box.Transform = Matrix.Scaling(Box.Scale) *
-                            Matrix.RotationYawPitchRoll(Box.Rotation.Y, Box.Rotation.X, Box.Rotation.Z) *
-                            Matrix.Translation(Box.Position);
+            //    Box.Transform = Matrix.Scaling(Box.Scale) *
+            //                    Matrix.RotationYawPitchRoll(Box.Rotation.Y, Box.Rotation.X, Box.Rotation.Z) *
+            //                     Matrix.Translation(Box.Position);
             //A modo ejemplo realizamos toda las multiplicaciones, pero aquí solo nos hacia falta la traslación.
             //Finalmente invocamos al render de la caja
-            Box.render();
+            //      Box.render();
 
             //Cuando tenemos modelos mesh podemos utilizar un método que hace la matriz de transformación estándar.
             //Es útil cuando tenemos transformaciones simples, pero OJO cuando tenemos transformaciones jerárquicas o complicadas.
-            Mesh.UpdateMeshTransform();
+            //     Mesh.UpdateMeshTransform();
             //Render del mesh
-            Mesh.render();
+            //    Mesh.render();
+            MeshDelObj.Transform = Matrix.Scaling(MeshDelObj.Scale) *
+                                Matrix.RotationYawPitchRoll(MeshDelObj.Rotation.Y, MeshDelObj.Rotation.X, MeshDelObj.Rotation.Z) *
+                                 Matrix.Translation(MeshDelObj.Position);
+            MeshDelObj.UpdateMeshTransform();
+            MeshDelObj.render();
 
             //Render de BoundingBox, muy útil para debug de colisiones.
             if (BoundingBox)
@@ -162,9 +190,9 @@ namespace TGC.Group.Model
         public override void Dispose()
         {
             //Dispose de la caja.
-            Box.dispose();
+            MeshDelObj.dispose();
             //Dispose del mesh.
-            Mesh.dispose();
+           // Mesh.dispose();
         }
     }
 }
