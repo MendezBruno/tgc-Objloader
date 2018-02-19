@@ -30,16 +30,28 @@ namespace TGC.Group.Model.ParserStrategy
             return action == Keyword;
         }
 
-        public Vector3 CreateVector3(string line)
+        public Object CreateVector3(string line)
         {
+            var vertex = new Object();
             var indices = line.Split(' ');
-            if (indices.Length != 4) throw new ArgumentException("El Archivo .obj no fue exportado de forma triangular");
-            var vertex = new Vector3
+            if (indices.Length != 4 && indices.Length != 3) throw new ArgumentException("El Archivo .obj no fue exportado de forma triangular");
+            if (indices.Length == 4)
+            { 
+                vertex = new Vector3
+                {
+                    X = float.Parse(indices[1], Style, Info),
+                    Y = float.Parse(indices[2], Style, Info),
+                    Z = float.Parse(indices[3], Style, Info)
+                };
+            }
+            else
             {
-                X = float.Parse(indices[1], Style, Info),
-                Y = float.Parse(indices[2], Style, Info),
-                Z = float.Parse(indices[3], Style, Info)
-            };
+                vertex = new Vector2
+                {
+                    X = float.Parse(indices[1], Style, Info),
+                    Y = float.Parse(indices[2], Style, Info)
+                };
+            }
             return vertex;
         }
     }

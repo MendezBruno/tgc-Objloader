@@ -21,13 +21,14 @@ namespace UnitTestProjectObj
         public void Init()
         {
             const string testDataFolder = "DatosPrueba\\cubo.obj";
-          
+            const string testDataCuboTextura = "DatosPrueba\\cubocontextura.obj";
+
             var dir = new DirectoryInfo(Path.GetFullPath(TestContext.CurrentContext.TestDirectory));
             while (!dir.Parent.Name.Equals("UnitTestProjectObj"))
             {
                 dir = new DirectoryInfo(dir.Parent.FullName);
             }
-            _fullobjpath = Path.Combine(dir.Parent.FullName, testDataFolder);
+            _fullobjpath = Path.Combine(dir.Parent.FullName, testDataCuboTextura);
         }
 
         [TestCase]

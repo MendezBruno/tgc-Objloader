@@ -24,9 +24,16 @@ namespace UnitTestProjectObj
         [Test]
         public void ProccesLinewithTextureOk()
         {
-            var line = "v 1.000000 -1.000000 -1.000000";
+            var line = "vt 0.666628 0.167070";
             _createTextCoordStrategy.ProccesLine(line, ListObjMesh);
             Assert.True(ListObjMesh.Last().VertexListVt.Count > 0);
+        }
+
+        [TestCase]
+        public void ProccesLineWithTextureFailsWhenCountParametersUp()
+        {
+            var line = "vt 0.666628 0.167070 0.167070 ";
+            Assert.That(() => { _createTextCoordStrategy.ProccesLine(line, ListObjMesh); }, Throws.ArgumentException);
         }
     }
 }
