@@ -106,13 +106,17 @@ namespace TGC.Group.Model
             TgcObjLoader.LoadObjFromFile(@"C:\Users\CIDESO\Desktop\cubo.obj");
             ObjMesh resObjMesh = TgcObjLoader.ListObjMesh.First();
             MeshDelObj = new MeshBuilder()
-                .instaceDxMeshColorSolo(resObjMesh.FaceTrianglesList.Count, resObjMesh.VertexListV.Count)
+                .InstaceDxMeshColorSolo(resObjMesh.FaceTrianglesList.Count, resObjMesh.VertexListV.Count)
                 .chargeBufferColorSolo(resObjMesh)
+                .SetAutotransform(true)
+                .SetEnable(true)
+                .SetHasBoundingBox(false)
                 .build(resObjMesh);
-            MeshDelObj.AutoTransformEnable = true;
-            MeshDelObj.Enabled = true;
-//            MeshDelObj.Scale = new Vector3(0.5f, 0.5f, 0.5f);
-//            MeshDelObj.Position = new Vector3(-25, 0, 0);
+ //           MeshDelObj.AutoTransformEnable = true;
+ //           MeshDelObj.Enabled = true;
+            MeshDelObj.Scale = new Vector3(8.0f, 8.5f, 8.5f);
+            MeshDelObj.Position = new Vector3(-25, 0, 0);
+            MeshDelObj.BoundingBox.move(new Vector3(25, 0, 0));
             
 
 
@@ -182,10 +186,10 @@ namespace TGC.Group.Model
 
            
 
-        //    MeshDelObj.Transform = Matrix.Scaling(MeshDelObj.Scale) *
-        //                        Matrix.RotationYawPitchRoll(MeshDelObj.Rotation.Y, MeshDelObj.Rotation.X, MeshDelObj.Rotation.Z) *
-        //                        Matrix.Translation(MeshDelObj.Position);
-        //    MeshDelObj.UpdateMeshTransform();
+            MeshDelObj.Transform = Matrix.Scaling(MeshDelObj.Scale) *
+                                Matrix.RotationYawPitchRoll(MeshDelObj.Rotation.Y, MeshDelObj.Rotation.X, MeshDelObj.Rotation.Z) *
+                                Matrix.Translation(MeshDelObj.Position);
+            MeshDelObj.UpdateMeshTransform();
             MeshDelObj.render();
 
             //Render de BoundingBox, muy útil para debug de colisiones.
@@ -193,6 +197,7 @@ namespace TGC.Group.Model
             {
                 Box.BoundingBox.render();
                 Mesh.BoundingBox.render();
+                MeshDelObj.render();
             }
 
             //Finaliza el render y presenta en pantalla, al igual que el preRender se debe para casos puntuales es mejor utilizar a mano las operaciones de EndScene y PresentScene

@@ -9,6 +9,7 @@ using TGC.Core.SceneLoader;
 using static TGC.Core.SceneLoader.TgcSceneLoader;
 using Microsoft.DirectX;
 using Microsoft.DirectX.PrivateImplementationDetails;
+using TGC.Core.BoundingVolumes;
 
 namespace TGC.Group.Model
 {
@@ -16,6 +17,9 @@ namespace TGC.Group.Model
     {
         internal TgcMesh tgcMesh;
         internal Mesh dxMesh;
+        internal bool autoTransform;
+        internal bool enable;
+        internal bool hasBoundingBox;
         public IMeshFactory MeshFactory { get; set; }
         public Device Device { get; set; }
 
@@ -28,12 +32,34 @@ namespace TGC.Group.Model
         
 
 
-        public MeshBuilder instaceDxMesh(int cantFace, int cantVertex )
+        public MeshBuilder InstaceDxMesh(int cantFace, int cantVertex )
         {
            this.dxMesh = new Mesh(cantFace, cantFace * 3,
                 MeshFlags.Managed, VertexElements, D3DDevice.Instance.Device);
            return this;
         }
+
+        public MeshBuilder SetAutotransform(bool flag)
+        {
+            this.autoTransform = flag;
+            return this;
+        }
+
+        public MeshBuilder SetEnable(bool flag)
+        {
+            this.enable = flag;
+            return this;
+        }
+
+        public MeshBuilder SetHasBoundingBox(bool flag)
+        {
+            this.hasBoundingBox = flag;
+            return this;
+        }
+
+        
+
+
 
         public MeshBuilder chargeBuffer(ObjMesh objMesh)
         {
@@ -82,7 +108,7 @@ namespace TGC.Group.Model
         }
 
 
-        public MeshBuilder instaceDxMeshColorSolo(int cantFace, int cantVertex)
+        public MeshBuilder InstaceDxMeshColorSolo(int cantFace, int cantVertex)
         {
             this.dxMesh = new Mesh(cantFace, cantFace * 3,
                  MeshFlags.Managed, VertexColorVertexElements, D3DDevice.Instance.Device);
@@ -131,7 +157,29 @@ namespace TGC.Group.Model
 
         public TgcMesh build(ObjMesh objMesh)
         {
-          return  MeshFactory.createNewMesh(dxMesh, objMesh.Name, TgcMesh.MeshRenderType.VERTEX_COLOR);
+            TgcMesh unMesh =  MeshFactory.createNewMesh(dxMesh, objMesh.Name, TgcMesh.MeshRenderType.VERTEX_COLOR);
+            SetBoundingBox(unMesh);
+            unMesh.AutoTransformEnable = autoTransform;
+            unMesh.Enabled = enable;
+            return unMesh;
+        }
+
+        private void SetBoundingBox(TgcMesh unMesh)
+        {
+            //Crear BoundingBox, aprovechar lo que viene del XML o crear uno por nuestra cuenta
+            if (hasBoundingBox)
+            {
+                unMesh.BoundingBox = new TgcBoundingAxisAlignBox(
+                    new Vector3(1,1,1),   //Esto es re saraza TODO hay que ver si la info del obj puede calcular los puntos minimos y maximos. o si se pueden agregar al archivo.
+                    new Vector3(1, 1, 1),
+                    unMesh.Position,
+                    unMesh.Scale
+                );
+            }
+            else
+            {
+                unMesh.createBoundingBox();
+            }
         }
 
 
@@ -252,5 +300,10 @@ namespace TGC.Group.Model
         {
             return dxMesh;
         }
+
+
+
+
+
     }
 }
