@@ -89,7 +89,7 @@ namespace TGC.Group.Model
             Mesh = new TgcSceneLoader().loadSceneFromFile(MediaDir + "LogoTGC-TgcScene.xml").Meshes[0];
             //Defino una escala en el modelo logico del mesh que es muy grande.
             Mesh.Scale = new Vector3(0.5f, 0.5f, 0.5f);
-
+            
             myBox = new TgcSceneLoader().loadSceneFromFile(MediaDir + "cubo-TgcScene.xml").Meshes[0];
 
             //Suelen utilizarse objetos que manejan el comportamiento de la camara.
@@ -103,7 +103,7 @@ namespace TGC.Group.Model
             Camara.SetCamera(cameraPosition, lookAt);
             //Internamente el framework construye la matriz de view con estos dos vectores.
             //Luego en nuestro juego tendremos que crear una cámara que cambie la matriz de view con variables como movimientos o animaciones de escenas.
-            TgcObjLoader.LoadObjFromFile(@"C:\Users\bruno\Desktop\cubo.obj");
+            TgcObjLoader.LoadObjFromFile(@"C:\Users\CIDESO\Desktop\cubo.obj");
             ObjMesh resObjMesh = TgcObjLoader.ListObjMesh.First();
             MeshDelObj = new MeshBuilder()
                 .instaceDxMeshColorSolo(resObjMesh.FaceTrianglesList.Count, resObjMesh.VertexListV.Count)
@@ -111,8 +111,8 @@ namespace TGC.Group.Model
                 .build(resObjMesh);
             MeshDelObj.AutoTransformEnable = true;
             MeshDelObj.Enabled = true;
-         //    MeshDelObj.Scale = new Vector3(0.5f, 0.5f, 0.5f);
-         //    MeshDelObj.Position = new Vector3(-25, 0, 0);
+//            MeshDelObj.Scale = new Vector3(0.5f, 0.5f, 0.5f);
+//            MeshDelObj.Position = new Vector3(-25, 0, 0);
             
 
 
@@ -170,20 +170,22 @@ namespace TGC.Group.Model
             //Finalmente invocamos al render de la caja
             //      Box.render();
 
-        //    myBox.render();
+            //    myBox.render();
 
             //Cuando tenemos modelos mesh podemos utilizar un método que hace la matriz de transformación estándar.
             //Es útil cuando tenemos transformaciones simples, pero OJO cuando tenemos transformaciones jerárquicas o complicadas.
-                 Mesh.UpdateMeshTransform();
+            //           Mesh.UpdateMeshTransform();
             //Render del mesh
-                Mesh.render();
+            //          Mesh.render();
 
-         //   myBoxTgcMesh.render();
+            //   myBoxTgcMesh.render();
 
-            MeshDelObj.Transform = Matrix.Scaling(MeshDelObj.Scale) *
-                                Matrix.RotationYawPitchRoll(MeshDelObj.Rotation.Y, MeshDelObj.Rotation.X, MeshDelObj.Rotation.Z) *
-                                Matrix.Translation(MeshDelObj.Position);
-            MeshDelObj.UpdateMeshTransform();
+           
+
+        //    MeshDelObj.Transform = Matrix.Scaling(MeshDelObj.Scale) *
+        //                        Matrix.RotationYawPitchRoll(MeshDelObj.Rotation.Y, MeshDelObj.Rotation.X, MeshDelObj.Rotation.Z) *
+        //                        Matrix.Translation(MeshDelObj.Position);
+        //    MeshDelObj.UpdateMeshTransform();
             MeshDelObj.render();
 
             //Render de BoundingBox, muy útil para debug de colisiones.

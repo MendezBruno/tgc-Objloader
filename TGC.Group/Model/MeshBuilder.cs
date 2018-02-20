@@ -101,15 +101,15 @@ namespace TGC.Group.Model
 
                     v.Position = objMesh.VertexListV[Convert.ToInt32(face.V1) - 1];
                     v.Normal = objMesh.VertexListVn[Convert.ToInt32(face.Vn1) - 1];
-                    v.Color = 128;  //TODO que corresponde poner aca con respecto obj Mesh
+                    v.Color = -16777047;  //TODO que corresponde poner aca con respecto obj Mesh
                     data.Write(v);
                     v.Position = objMesh.VertexListV[Convert.ToInt32(face.V2) - 1];
                     v.Normal = objMesh.VertexListVn[Convert.ToInt32(face.Vn2) - 1];
-                    v.Color = 128;  //TODO que corresponde poner aca con respecto obj Mesh
+                    v.Color = -16777047;  //TODO que corresponde poner aca con respecto obj Mesh
                     data.Write(v);
                     v.Position = objMesh.VertexListV[Convert.ToInt32(face.V3) - 1];
                     v.Normal = objMesh.VertexListVn[Convert.ToInt32(face.Vn3) - 1];
-                    v.Color = 128;  //TODO que corresponde poner aca con respecto obj Mesh
+                    v.Color = -16777047;  //TODO que corresponde poner aca con respecto obj Mesh
                     data.Write(v);
 
                 });
