@@ -81,6 +81,54 @@ namespace TGC.Group.Model
             return this;
         }
 
+
+        public MeshBuilder instaceDxMeshColorSolo(int cantFace, int cantVertex)
+        {
+            this.dxMesh = new Mesh(cantFace, cantFace * 3,
+                 MeshFlags.Managed, VertexColorVertexElements, D3DDevice.Instance.Device);
+            return this;
+        }
+
+        public MeshBuilder chargeBufferColorSolo(ObjMesh objMesh)
+        {
+            //Cargar VertexBuffer
+            using (var vb = this.dxMesh.VertexBuffer)
+            {
+                var data = vb.Lock(0, 0, LockFlags.None);
+                var v = new VertexColorVertex();
+                objMesh.FaceTrianglesList.ForEach(face =>
+                {
+
+                    v.Position = objMesh.VertexListV[Convert.ToInt32(face.V1) - 1];
+                    v.Normal = objMesh.VertexListVn[Convert.ToInt32(face.Vn1) - 1];
+                    v.Color = 128;  //TODO que corresponde poner aca con respecto obj Mesh
+                    data.Write(v);
+                    v.Position = objMesh.VertexListV[Convert.ToInt32(face.V2) - 1];
+                    v.Normal = objMesh.VertexListVn[Convert.ToInt32(face.Vn2) - 1];
+                    v.Color = 128;  //TODO que corresponde poner aca con respecto obj Mesh
+                    data.Write(v);
+                    v.Position = objMesh.VertexListV[Convert.ToInt32(face.V3) - 1];
+                    v.Normal = objMesh.VertexListVn[Convert.ToInt32(face.Vn3) - 1];
+                    v.Color = 128;  //TODO que corresponde poner aca con respecto obj Mesh
+                    data.Write(v);
+
+                });
+                vb.Unlock();
+            }
+            //Cargar indexBuffer en forma plana
+            using (var ib = dxMesh.IndexBuffer)
+            {
+                var indices = new short[objMesh.FaceTrianglesList.Count * 3];
+                for (var i = 0; i < indices.Length; i++)
+                {
+                    indices[i] = (short)i;
+                }
+                ib.SetData(indices, 0, LockFlags.None);
+            }
+
+            return this;
+        }
+
         public TgcMesh build(ObjMesh objMesh)
         {
           return  MeshFactory.createNewMesh(dxMesh, objMesh.Name, TgcMesh.MeshRenderType.VERTEX_COLOR);
@@ -119,6 +167,35 @@ namespace TGC.Group.Model
                 DeclarationUsage.TextureCoordinate, 0),
             VertexElement.VertexDeclarationEnd
         };
+
+
+
+        /// <summary>
+        ///     FVF para formato de malla VERTEX_COLOR
+        /// </summary>
+        public static readonly VertexElement[] VertexColorVertexElements =
+        {
+            new VertexElement(0, 0, DeclarationType.Float3,
+                DeclarationMethod.Default,
+                DeclarationUsage.Position, 0),
+            new VertexElement(0, 12, DeclarationType.Float3,
+                DeclarationMethod.Default,
+                DeclarationUsage.Normal, 0),
+            new VertexElement(0, 24, DeclarationType.Color,
+                DeclarationMethod.Default,
+                DeclarationUsage.Color, 0),
+            VertexElement.VertexDeclarationEnd
+        };
+
+        /// <summary>
+        ///     Estructura de Vertice para formato de malla VERTEX_COLOR
+        /// </summary>
+        public struct VertexColorVertex
+        {
+            public Vector3 Position;
+            public Vector3 Normal;
+            public int Color;
+        }
 
 
         #region MeshFactory
