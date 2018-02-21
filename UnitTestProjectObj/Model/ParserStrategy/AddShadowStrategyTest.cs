@@ -45,5 +45,7 @@ namespace UnitTestProjectObj.Model.ParserStrategy
             var line = "s badParameter";
             Assert.That(() => { _addShadowStrategy.ProccesLine(line, ListObjMesh); }, Throws.ArgumentException);
         }
+
+        //TODO hacer el test cuando s viene 1 ó 0 por si es smooth o no
     }
 }

@@ -103,7 +103,7 @@ namespace TGC.Group.Model
             Camara.SetCamera(cameraPosition, lookAt);
             //Internamente el framework construye la matriz de view con estos dos vectores.
             //Luego en nuestro juego tendremos que crear una cámara que cambie la matriz de view con variables como movimientos o animaciones de escenas.
-            TgcObjLoader.LoadObjFromFile(@"C:\Users\CIDESO\Desktop\cubo.obj");
+            TgcObjLoader.LoadObjFromFile(@"C:\Users\CIDESO\Desktop\tgcito head+cuerpo.obj");
             ObjMesh resObjMesh = TgcObjLoader.ListObjMesh.First();
             MeshDelObj = new MeshBuilder()
                 .InstaceDxMeshColorSolo(resObjMesh.FaceTrianglesList.Count, resObjMesh.VertexListV.Count)
@@ -114,9 +114,9 @@ namespace TGC.Group.Model
                 .build(resObjMesh);
  //           MeshDelObj.AutoTransformEnable = true;
  //           MeshDelObj.Enabled = true;
-            MeshDelObj.Scale = new Vector3(8.0f, 8.5f, 8.5f);
-            MeshDelObj.Position = new Vector3(-25, 0, 0);
-            MeshDelObj.BoundingBox.move(new Vector3(25, 0, 0));
+   //         MeshDelObj.Scale = new Vector3(8.0f, 8.5f, 8.5f);
+   //         MeshDelObj.Position = new Vector3(-25, 0, 0);
+   //         MeshDelObj.BoundingBox.move(new Vector3(25, 0, 0));
             
 
 
@@ -186,10 +186,10 @@ namespace TGC.Group.Model
 
            
 
-            MeshDelObj.Transform = Matrix.Scaling(MeshDelObj.Scale) *
+        /*    MeshDelObj.Transform = Matrix.Scaling(MeshDelObj.Scale) *
                                 Matrix.RotationYawPitchRoll(MeshDelObj.Rotation.Y, MeshDelObj.Rotation.X, MeshDelObj.Rotation.Z) *
                                 Matrix.Translation(MeshDelObj.Position);
-            MeshDelObj.UpdateMeshTransform();
+            MeshDelObj.UpdateMeshTransform();  */
             MeshDelObj.render();
 
             //Render de BoundingBox, muy útil para debug de colisiones.
