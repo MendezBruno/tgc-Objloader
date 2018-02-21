@@ -31,6 +31,7 @@ namespace TGC.Group.Model
         private const int INICIO = 0;
         public List<ObjParseStrategy> Strategies { get; set; }
 
+        public ObjMaterialsLoader ObjMaterialsLoader = new ObjMaterialsLoader();
         public List<ObjMesh> ListObjMesh { get; set; }
         public List<string> ListMtllib { get; set; }
 
@@ -55,8 +56,13 @@ namespace TGC.Group.Model
 
         public void LoadObjFromFile(string path)
         {
+            //Se leen todas las lineas
             var lines = File.ReadAllLines(path);
+            //Se recolectan los materiales
             GetListOfMaterials(lines);
+            //Se hace parse de los materiales
+            ObjMaterialsLoader.LoadMaterialsFromFiles(path, ListMtllib);  //TODO ver si devuelve una lista de materiales o le pasamos el objmesh como parametro
+            //Se Parse de los objetos
             foreach (var line in lines)
                 ProccesLine(line);
         }

@@ -39,11 +39,8 @@ namespace UnitTestProjectObj
             Assert.True(_tgcObjLoader.ListObjMesh.Count > 0);
             ObjMesh resObjMesh = _tgcObjLoader.ListObjMesh.First();
             Assert.True(resObjMesh.VertexListV.Count == 8);
-
-            
-
         }
-     
+
 
         [TestCase]
         public void GetArrayLinesOk()
