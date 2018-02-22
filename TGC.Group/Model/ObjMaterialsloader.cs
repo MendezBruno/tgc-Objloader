@@ -11,6 +11,7 @@ namespace TGC.Group.Model
         public ObjMaterialsLoader()
         {
             Strategies = new List<ObjMaterialsParseStrategy>();
+            ListObjMaterialMesh = new List<ObjMaterialMesh>();
 
         }
 
@@ -19,14 +20,10 @@ namespace TGC.Group.Model
 
         public static void LoadMaterialsFromFiles(string pathMtllib, List<string> listMtllib)
         {
-
-
             foreach (string mtllib in listMtllib)
             {
                 ParseMtlLib(pathMtllib + "" + mtllib);
             }
-
-            
         }
 
         private static void ParseMtlLib(string path)
