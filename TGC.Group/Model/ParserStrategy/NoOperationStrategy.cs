@@ -12,7 +12,7 @@ namespace TGC.Group.Model.ParserStrategy
 
         public NoOperationStrategy()
         {
-           this._keyWords = new string[] { COMMENT,EMPTYLINE,WHITELINE,MTLLIB};
+           this._keyWords = new string[] { COMMENT,EMPTYLINE,WHITELINE,MTLLIB };
         }
 
         public override void ProccesLine(string line, List<ObjMesh> listObjMesh)

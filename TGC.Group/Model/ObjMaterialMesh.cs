@@ -5,7 +5,7 @@ namespace TGC.Group.Model
     public class ObjMaterialMesh
     {
         //Material Name 
-
+        public string Name { get; set; }
         //Material color & ilumination
         private Vector3 Ka { get; set; }
         private Vector3 kd { get; set; }
@@ -29,19 +29,22 @@ namespace TGC.Group.Model
               Reflection: Ray trace off
            10 Casts shadows onto invisible surfaces
         */
-        int ilum { get; set; }
-        float d { get; set; }
-        float Ns { get; set; }
-        int sharpness { get; set; }
-        float Ni { get; set; }
+        private int Ilum { get; set; }
+        private float d { get; set; }
+        private float Ns { get; set; }
+        private int sharpness { get; set; }
+        private float Ni { get; set; }
 
 
         //Texture mas statament 
+        
 
         //Reflection map statament
 
 
-        ObjMaterialMesh() { }
+        public ObjMaterialMesh(string name) {
+            this.Name = name;
+        }
 
         
     }

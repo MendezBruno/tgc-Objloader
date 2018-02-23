@@ -30,7 +30,7 @@ namespace TGC.Group.Model.ParserStrategy
             return action == Keyword;
         }
 
-        public Object CreateVector3(string line)
+        public Object CreateVector3(string line) //TODO esto podria ir en una clase utils porque se repite para materiales
         {
             var vertex = new Object();
             var indices = line.Split(' ');

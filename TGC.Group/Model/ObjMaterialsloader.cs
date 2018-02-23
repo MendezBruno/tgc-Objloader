@@ -12,7 +12,6 @@ namespace TGC.Group.Model
         {
             Strategies = new List<ObjMaterialsParseStrategy>();
             ListObjMaterialMesh = new List<ObjMaterialMesh>();
-
         }
 
         public static List<ObjMaterialsParseStrategy> Strategies { get; set; }
@@ -22,7 +21,15 @@ namespace TGC.Group.Model
         {
             foreach (string mtllib in listMtllib)
             {
-                ParseMtlLib(pathMtllib + "" + mtllib);
+                if (File.Exists(pathMtllib + "" + mtllib))  //TODO agregar el retroceso de carpeta
+                {
+                    ParseMtlLib(pathMtllib + "" + mtllib);
+                }
+                else
+                {
+                    throw new InvalidOperationException($"Cannot find action file: {mtllib}");
+                }
+              
             }
         }
 
@@ -31,14 +38,24 @@ namespace TGC.Group.Model
             //Se leen todas las lineas
             var lines = File.ReadAllLines(path);
 
-            //Se Parse de los objetos
-            foreach (var line in lines)
-                ProccesLine(line);
+            //separar las lineas en sentencias
+            var statements = splitForstatements(lines);
+
+            //Parse de las sentencias
+            foreach (var statement in statements)
+                ProccesStatement(statement);
         }
 
-        private static void ProccesLine(string line)
+        private static List<string[]> splitForstatements(string[] lines)
         {
-            var action = line.Split(' ').FirstOrDefault();
+            throw new NotImplementedException();
+        }
+
+        private static void ProccesStatement(string[] line)
+        {
+
+            //por Cada sentencia completamos el objeto ObjMaterialMesh creado.
+         /*   var action = line.Split(' ').FirstOrDefault();
             if (action == null && !String.IsNullOrWhiteSpace(line)) throw new InvalidOperationException($"Cannot find action for this line {line}");
 
             foreach (var strategy in Strategies)
@@ -47,7 +64,7 @@ namespace TGC.Group.Model
                     strategy.ProccesLine(line, ListObjMaterialMesh);
                     return;
                 }
-            throw new InvalidOperationException($"Cannot find a correct parsing process for line {line}");
+            throw new InvalidOperationException($"Cannot find a correct parsing process for line {line}"); */
         }
     }
 }

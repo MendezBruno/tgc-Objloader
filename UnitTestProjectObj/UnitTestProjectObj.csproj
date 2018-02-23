@@ -57,6 +57,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="MeshBuilderTest.cs" />
+    <Compile Include="Model\ParseMaterialStrategy\CreateNewMaterialStrategyTest.cs" />
     <Compile Include="Model\ParserStrategy\AddShadowStrategyTest.cs" />
     <Compile Include="Model\ParserStrategy\AddUsemtlStrategyTest.cs" />
     <Compile Include="Model\ParserStrategy\CreateFaceStrategyTest.cs" />
@@ -66,6 +67,7 @@
     <Compile Include="Model\ParserStrategy\CreateVertexStrategyTest.cs" />
     <Compile Include="Model\ParserStrategy\NoOperationStrategyTest.cs" />
     <Compile Include="ObjLoaderTest.cs" />
+    <Compile Include="ObjMaterialLoaderTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

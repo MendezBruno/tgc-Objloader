@@ -14,7 +14,7 @@ namespace UnitTestProjectObj
 
         private TgcObjLoader _tgcObjLoader = new TgcObjLoader();
         private string _fullobjpath;
-        private string _fullobjpathHome;
+       
 
 
         [SetUp]
