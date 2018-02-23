@@ -19,14 +19,14 @@ namespace UnitTestProjectObj
         public void Init()
         {
             const string testDataArchivoBle = "DatosPrueba\\cubo.obj";  //TODO agregar el archivo para testear
-            const string testDataArchivoBla = "DatosPrueba\\cubocontextura.obj";  //TODO agregar el archivo para testear
+            const string testDataArchivoBla = "DatosPrueba\\cubotexturacaja.obj";  //TODO agregar el archivo para testear
 
             var dir = new DirectoryInfo(Path.GetFullPath(TestContext.CurrentContext.TestDirectory));
             while (!dir.Parent.Name.Equals("UnitTestProjectObj"))
             {
                 dir = new DirectoryInfo(dir.Parent.FullName);
             }
-            _fullMaterialPath = Path.Combine(dir.Parent.FullName, testDataArchivoBle);
+            _fullMaterialPath = Path.Combine(dir.Parent.FullName, testDataArchivoBla);
         }
 
 
@@ -41,6 +41,13 @@ namespace UnitTestProjectObj
         {
             var lines = File.ReadAllLines(_fullMaterialPath);
             Assert.True(lines.Length > 0);
+        }
+
+        [TestCase]
+        public void GetPathMaterialOk()
+        {
+            string pathMaterial = _objMaterialLoader.GetPathMaterial(_fullMaterialPath, "\\cubotexturacaja.mtl");
+            Assert.True(File.Exists(pathMaterial));
         }
     }
 }

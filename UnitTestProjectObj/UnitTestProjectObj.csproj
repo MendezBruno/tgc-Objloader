@@ -58,6 +58,7 @@
   <ItemGroup>
     <Compile Include="MeshBuilderTest.cs" />
     <Compile Include="Model\ParseMaterialStrategy\CreateNewMaterialStrategyTest.cs" />
+    <Compile Include="Model\ParseMaterialStrategy\ParseMaterialAndColorStrategyTest.cs" />
     <Compile Include="Model\ParserStrategy\AddShadowStrategyTest.cs" />
     <Compile Include="Model\ParserStrategy\AddUsemtlStrategyTest.cs" />
     <Compile Include="Model\ParserStrategy\CreateFaceStrategyTest.cs" />

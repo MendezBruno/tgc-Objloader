@@ -103,7 +103,7 @@ namespace TGC.Group.Model
             Camara.SetCamera(cameraPosition, lookAt);
             //Internamente el framework construye la matriz de view con estos dos vectores.
             //Luego en nuestro juego tendremos que crear una cámara que cambie la matriz de view con variables como movimientos o animaciones de escenas.
-            TgcObjLoader.LoadObjFromFile(@"C:\Users\CIDESO\Desktop\tgcito head+cuerpo.obj");
+            TgcObjLoader.LoadObjFromFile(@"C:\Users\CIDESO\Desktop\cubo.obj");
             ObjMesh resObjMesh = TgcObjLoader.ListObjMesh.First();
             MeshDelObj = new MeshBuilder()
                 .InstaceDxMeshColorSolo(resObjMesh.FaceTrianglesList.Count, resObjMesh.VertexListV.Count)

@@ -7,10 +7,10 @@ namespace TGC.Group.Model
         //Material Name 
         public string Name { get; set; }
         //Material color & ilumination
-        private Vector3 Ka { get; set; }
-        private Vector3 kd { get; set; }
-        private Vector3 Ks { get; set; }
-        private Vector3 Tf { get; set; }
+        public Vector3 Ka { get; set; }
+        public Vector3 kd { get; set; }
+        public Vector3 Ks { get; set; }
+        public Vector3 Tf { get; set; }
         /*
          ILUM REFENCE NUMBERS
             0 Color on and Ambient off
@@ -29,11 +29,11 @@ namespace TGC.Group.Model
               Reflection: Ray trace off
            10 Casts shadows onto invisible surfaces
         */
-        private int Ilum { get; set; }
-        private float d { get; set; }
-        private float Ns { get; set; }
-        private int sharpness { get; set; }
-        private float Ni { get; set; }
+        public int Ilum { get; set; }
+        public float d { get; set; }
+        public float Ns { get; set; }
+        public int sharpness { get; set; }
+        public float Ni { get; set; }
 
 
         //Texture mas statament 

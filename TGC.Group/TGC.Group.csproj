@@ -102,6 +102,7 @@
     <Compile Include="Model\ObjMeshBuilder.cs" />
     <Compile Include="Model\ParseMaterialsStrategy\CreateNewMaterialStrategy.cs" />
     <Compile Include="Model\ParseMaterialsStrategy\ObjMaterialsParseStrategy.cs" />
+    <Compile Include="Model\ParseMaterialsStrategy\ParseMaterialAndColorStrategy.cs" />
     <Compile Include="Model\ParserStrategy\AddShadowStrategy.cs" />
     <Compile Include="Model\ParserStrategy\AddUsemtlStrategy.cs" />
     <Compile Include="Model\ParserStrategy\CreateFaceStrategy.cs" />

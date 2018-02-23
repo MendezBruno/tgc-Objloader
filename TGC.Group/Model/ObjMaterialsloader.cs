@@ -8,6 +8,8 @@ namespace TGC.Group.Model
 {
     public class ObjMaterialsLoader
     {
+         const string SEPARADOR = "\\";
+
         public ObjMaterialsLoader()
         {
             Strategies = new List<ObjMaterialsParseStrategy>();
@@ -21,9 +23,10 @@ namespace TGC.Group.Model
         {
             foreach (string mtllib in listMtllib)
             {
-                if (File.Exists(pathMtllib + "" + mtllib))  //TODO agregar el retroceso de carpeta
+                string pathMaterial = Path.GetDirectoryName(pathMtllib) +SEPARADOR+ mtllib;
+                if (File.Exists(pathMaterial))  //TODO agregar el retroceso de carpeta
                 {
-                    ParseMtlLib(pathMtllib + "" + mtllib);
+                    ParseMtlLib(pathMaterial);
                 }
                 else
                 {
@@ -33,29 +36,48 @@ namespace TGC.Group.Model
             }
         }
 
+        public string GetPathMaterial(string pathMtllib, string mtllib)
+        {
+            return Path.GetDirectoryName(pathMtllib) +SEPARADOR+ mtllib;
+        }
+
         private static void ParseMtlLib(string path)
         {
             //Se leen todas las lineas
             var lines = File.ReadAllLines(path);
 
             //separar las lineas en sentencias
-            var statements = splitForstatements(lines);
+            //var statements = splitForStatements(lines);
 
             //Parse de las sentencias
-            foreach (var statement in statements)
-                ProccesStatement(statement);
+            foreach (var line in lines)
+                ProccesLine(line);
         }
 
-        private static List<string[]> splitForstatements(string[] lines)
+        /*
+        private static List<string[]> splitForStatements(string[] lines)
         {
-            throw new NotImplementedException();
-        }
+            List<string> statements = new List<string>();
+            List<string> statement = new List<string>();
+            foreach (var line in lines)
+            {
+                if (!String.IsNullOrWhiteSpace(line))
+                {
+                    statement.Add(line);
+                }
+                else
+                {
+                    statements.Add(statement);
+                    List<string> statement = new List<string>();
 
-        private static void ProccesStatement(string[] line)
+                }
+
+            }
+        }*/
+
+        private static void ProccesLine(string line)
         {
-
-            //por Cada sentencia completamos el objeto ObjMaterialMesh creado.
-         /*   var action = line.Split(' ').FirstOrDefault();
+            var action = line.Split(' ').FirstOrDefault();
             if (action == null && !String.IsNullOrWhiteSpace(line)) throw new InvalidOperationException($"Cannot find action for this line {line}");
 
             foreach (var strategy in Strategies)
@@ -64,7 +86,7 @@ namespace TGC.Group.Model
                     strategy.ProccesLine(line, ListObjMaterialMesh);
                     return;
                 }
-            throw new InvalidOperationException($"Cannot find a correct parsing process for line {line}"); */
+            throw new InvalidOperationException($"Cannot find a correct parsing process for line {line}"); 
         }
     }
 }
