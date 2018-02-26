@@ -16,7 +16,7 @@ namespace TGC.Group.Model.ParseMaterialsStrategy
 
         public ParseMaterialAndColorStrategy()
         {
-            this._keyWords = new string[] { Ns, Ka, Kd, Ks, Ke, Ni, d, Ilumn };
+            this._keyWords = new string[] { Ns, Ka, Kd, Ks, Ke, Ni, d, illum };
             this._vector3Variables = new string[] { Ka, Kd, Ks, Ke};
             this._vectorVariables = new string[] { Ns, Ni, d };
         }
@@ -39,7 +39,7 @@ namespace TGC.Group.Model.ParseMaterialsStrategy
                pInfo.SetValue(auxObjMaterialMesh, ParseLineToFLoatValue(line), null);
             }
 
-           if (key.Equals(Ilumn))
+           if (key.Equals(illum))
            {
                pInfo.SetValue(auxObjMaterialMesh, ParseLineToIntValue(line), null);
             }

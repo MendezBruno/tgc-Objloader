@@ -19,7 +19,7 @@ namespace TGC.Group.Model.ParseMaterialsStrategy
         internal const string Ke = "Ke";
         internal const string Ni = "Ni";
         internal const string d = "d";
-        internal const string Ilumn = "illum";
+        internal const string illum = "illum";
         internal const string COMMENT = "#";
         internal const string WHITELINE = "      ";
         internal const string EMPTYLINE = "";

@@ -29,7 +29,7 @@ namespace UnitTestProjectObj
         public void Init()
         {
             const string testDataFolder = "DatosPrueba\\cubo.obj";
-            const string testDataCuboTextura = "DatosPrueba\\cubocontextura.obj";
+            const string testDataCuboTextura = "DatosPrueba\\cubotexturacaja.obj";
 
             var dir = new DirectoryInfo(Path.GetFullPath(TestContext.CurrentContext.TestDirectory));
             while (!dir.Parent.Name.Equals("UnitTestProjectObj"))

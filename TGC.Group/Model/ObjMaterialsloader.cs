@@ -49,34 +49,10 @@ namespace TGC.Group.Model
             //Se leen todas las lineas
             var lines = File.ReadAllLines(path);
 
-            //separar las lineas en sentencias
-            //var statements = splitForStatements(lines);
-
             //Parse de las sentencias
             foreach (var line in lines)
                 ProccesLine(line);
         }
-
-        /*
-        private static List<string[]> splitForStatements(string[] lines)
-        {
-            List<string> statements = new List<string>();
-            List<string> statement = new List<string>();
-            foreach (var line in lines)
-            {
-                if (!String.IsNullOrWhiteSpace(line))
-                {
-                    statement.Add(line);
-                }
-                else
-                {
-                    statements.Add(statement);
-                    List<string> statement = new List<string>();
-
-                }
-
-            }
-        }*/
 
         private void ProccesLine(string line)
         {

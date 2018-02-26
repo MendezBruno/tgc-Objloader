@@ -21,7 +21,7 @@ namespace UnitTestProjectObj
         public void Init()
         {
             const string testDataFolder = "DatosPrueba\\cubo.obj";
-            const string testDataCuboTextura = "DatosPrueba\\cubocontextura.obj";
+            const string testDataCuboTextura = "DatosPrueba\\cubotexturacaja.obj";
 
             var dir = new DirectoryInfo(Path.GetFullPath(TestContext.CurrentContext.TestDirectory));
             while (!dir.Parent.Name.Equals("UnitTestProjectObj"))
@@ -107,7 +107,7 @@ namespace UnitTestProjectObj
         {
             var lines = File.ReadAllLines(_fullobjpath);
             _tgcObjLoader.GetListOfMaterials(lines);
-            Assert.True(_tgcObjLoader.ListMtllib.First().Equals("Textura.mtl"));
+            Assert.True(_tgcObjLoader.ListMtllib.First().Equals("cubotexturacaja.mtl"));
         }
 
         [TestCase]
@@ -115,7 +115,7 @@ namespace UnitTestProjectObj
         {
             var lines = File.ReadAllLines(_fullobjpath);
             string mtllib = _tgcObjLoader.FilterByKeyword(lines, "mtllib")[0];
-            Assert.True(mtllib.Equals("mtllib Cubo Triangulado Textura.mtl"));
+            Assert.True(mtllib.Equals("mtllib cubotexturacaja.mtl"));
         }
 
         [TestCase]

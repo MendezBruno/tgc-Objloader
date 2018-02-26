@@ -60,7 +60,7 @@ namespace UnitTestProjectObj.Model.ParseMaterialStrategy
         [TestCase]
         public void ProccesLineWithIlumValueOk()
         {
-            var line = "ilum 2";
+            var line = "illum 2";
             _parseMaterialAndColorStrategy.ProccesLine(line, ListObjMaterialMesh);
             Assert.NotNull(ListObjMaterialMesh.First().illum);
         }
