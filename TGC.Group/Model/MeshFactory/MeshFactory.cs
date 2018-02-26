@@ -17,12 +17,12 @@ namespace TGC.Group.Model.MeshFactory
         /// <summary>
         ///     Crear una nueva instancia de la clase TgcMesh o derivados
         /// </summary>
-        /// <param name="d3dMesh">Mesh de Direct3D</param>
+        /// <param name="d3DMesh">Mesh de Direct3D</param>
         /// <param name="meshName">Nombre de la malla</param>
         /// <param name="renderType">Tipo de renderizado de la malla</param>
         /// <param name="meshData">Datos de la malla</param>
         /// <returns>Instancia de TgcMesh creada</returns>
-        TgcMesh createNewMesh(Mesh d3dMesh, string meshName, TgcMesh.MeshRenderType renderType);
+        TgcMesh createNewMesh(Mesh d3DMesh, string meshName, TgcMesh.MeshRenderType renderType);
 
         /// <summary>
         ///     Crear una nueva malla que es una instancia de otra malla original.

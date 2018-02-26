@@ -84,14 +84,16 @@ namespace TGC.Group.Model
         public void GetListOfMaterials(string[] lines)
         {
             var linesFiltered = FilterByKeyword(lines, MTLLIB);
+            if (linesFiltered.Length == 0) return;
             foreach (var line in linesFiltered)
                 SetMtllib(line);
         }
 
         private void SetMtllib(string line)
         {
-            if (line.Split(' ').Length < ELEMENTOFMTLLIB) throw new ArgumentException("El atributo Mtllib tiene formato incorrecto");
-            var attribute = line.Remove(INICIO, INDEXATTR);
+            string[] splitLine = line.Split(' ');
+            if (splitLine.Length < ELEMENTOFMTLLIB) throw new ArgumentException("El atributo Mtllib tiene formato incorrecto");
+            var attribute = splitLine.Last(); //TODO ver que pasa con los nombres de textura que tienen espacio
             if (!Path.GetExtension(attribute).Equals(".mtl"))
             {
                 throw new ArgumentException("La extención de Mtllib es incorrecta, se esperaba: .mtl y se obtuvo: " + Path.GetExtension(attribute));
@@ -99,7 +101,7 @@ namespace TGC.Group.Model
             ListMtllib.Add(attribute);
         }
 
-        private string[] FilterByKeyword(string[] lines, string keyWord)
+        public string[] FilterByKeyword(string[] lines, string keyWord)
         {
             List<string> linesWithKeyword = new List<string>();
 

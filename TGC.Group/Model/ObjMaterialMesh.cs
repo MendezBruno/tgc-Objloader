@@ -8,7 +8,7 @@ namespace TGC.Group.Model
         public string Name { get; set; }
         //Material color & ilumination
         public Vector3 Ka { get; set; }
-        public Vector3 kd { get; set; }
+        public Vector3 Kd { get; set; }
         public Vector3 Ks { get; set; }
         public Vector3 Tf { get; set; }
         /*
@@ -29,10 +29,10 @@ namespace TGC.Group.Model
               Reflection: Ray trace off
            10 Casts shadows onto invisible surfaces
         */
-        public int Ilum { get; set; }
+        public int illum { get; set; }
         public float d { get; set; }
         public float Ns { get; set; }
-        public int sharpness { get; set; }
+        public int Sharpness { get; set; }
         public float Ni { get; set; }
 
 

@@ -8,17 +8,17 @@ namespace TGC.Group.Model.ParseMaterialsStrategy
 {
     public class CreateNewMaterialStrategy: ObjMaterialsParseStrategy
     {
-        private const int nameMaterial = 1;
+        private const int NameMaterial = 1;
 
         public CreateNewMaterialStrategy()
         {
-            Keyword = NEWMTL;
+            Keyword = Newmtl;
         }
 
         public override void ProccesLine(string line, List<ObjMaterialMesh> listObjMaterialMesh)
         {
             var split = line.Split(' ');
-            listObjMaterialMesh.Add(new ObjMaterialMesh(split[nameMaterial]));
+            listObjMaterialMesh.Add(new ObjMaterialMesh(split[NameMaterial]));
         }
 
        

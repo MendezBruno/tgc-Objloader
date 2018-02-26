@@ -10,37 +10,39 @@ namespace TGC.Group.Model.ParseMaterialsStrategy
     public class ParseMaterialAndColorStrategy: ObjMaterialsParseStrategy
     {
         private readonly string[] _keyWords;
-        private const char  ESPACIO = ' ';
+        private const char  Espacio = ' ';
         private readonly  string[] _vector3Variables;
         private readonly string[] _vectorVariables;
 
         public ParseMaterialAndColorStrategy()
         {
-            this._keyWords = new string[] { NS, KA, KD, KS, KE, NI, D, ILUMN };
-            this._vector3Variables = new string[] { KA, KD, KS, KE};
-            this._vectorVariables = new string[] { NS, NI, D };
+            this._keyWords = new string[] { Ns, Ka, Kd, Ks, Ke, Ni, d, Ilumn };
+            this._vector3Variables = new string[] { Ka, Kd, Ks, Ke};
+            this._vectorVariables = new string[] { Ns, Ni, d };
         }
 
        public override void ProccesLine(string line, List<ObjMaterialMesh> listObjMaterialMesh)
        {
-           string key = line.Split(ESPACIO).FirstOrDefault();
-           if (this._vector3Variables.Contains(key))
+           string key = line.Split(Espacio).FirstOrDefault();
+           ObjMaterialMesh auxObjMaterialMesh = listObjMaterialMesh.Last();
+           PropertyInfo pInfo = auxObjMaterialMesh.GetType().GetProperty(key);
+           if (pInfo == null) throw new ArgumentException("No se encuantra el atributo de clase con la key: ", key);
+            if (this._vector3Variables.Contains(key))
            {
-               listObjMaterialMesh.Last().GetType().GetMember(key); //= createVector3(line);
-               //TODO asignar
+               //= createVector3(line);
+               pInfo.SetValue(auxObjMaterialMesh, CreateVector3(line),null);
+               
            }
 
            if (this._vectorVariables.Contains(key))
            {
-               listObjMaterialMesh.Last().GetType(); //= parsearFloat(line);
-               //TODO asignar
-           }
+               pInfo.SetValue(auxObjMaterialMesh, ParseLineToFLoatValue(line), null);
+            }
 
-           if (key.Equals(ILUMN))
+           if (key.Equals(Ilumn))
            {
-               listObjMaterialMesh.Last().GetType(); //= asignar Ilum
-               //TODO asignar
-           }
+               pInfo.SetValue(auxObjMaterialMesh, ParseLineToIntValue(line), null);
+            }
 
         }
 

@@ -103,6 +103,22 @@ namespace UnitTestProjectObj
         }
 
         [TestCase]
+        public void GetListOfMaterialsWithNameOK()
+        {
+            var lines = File.ReadAllLines(_fullobjpath);
+            _tgcObjLoader.GetListOfMaterials(lines);
+            Assert.True(_tgcObjLoader.ListMtllib.First().Equals("Textura.mtl"));
+        }
+
+        [TestCase]
+        public void FilterByKeyWordOK()
+        {
+            var lines = File.ReadAllLines(_fullobjpath);
+            string mtllib = _tgcObjLoader.FilterByKeyword(lines, "mtllib")[0];
+            Assert.True(mtllib.Equals("mtllib Cubo Triangulado Textura.mtl"));
+        }
+
+        [TestCase]
         public void GetListwithOutMaterialsOk()
         {
 

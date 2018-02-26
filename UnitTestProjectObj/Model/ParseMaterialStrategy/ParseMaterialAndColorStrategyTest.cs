@@ -25,12 +25,61 @@ namespace UnitTestProjectObj.Model.ParseMaterialStrategy
         public List<ObjMaterialMesh> ListObjMaterialMesh { get; set; }
 
 
-        [Test]
+        [TestCase]
         public void ProccesLineWithAmbientValueOk()
         {
             var line = "Ka 0.000000 0.000000 0.000000";
             _parseMaterialAndColorStrategy.ProccesLine(line, ListObjMaterialMesh);
-            Assert.True(ListObjMaterialMesh.First().Name.Equals("Material.001"));
+            Assert.NotNull(ListObjMaterialMesh.First().Ka);
         }
+
+        [TestCase]
+        public void ProccesLineWithdiffuseValueOk()
+        {
+            var line = "Kd 0.640000 0.640000 0.640000";
+            _parseMaterialAndColorStrategy.ProccesLine(line, ListObjMaterialMesh);
+            Assert.NotNull(ListObjMaterialMesh.First().Kd);
+        }
+
+        [TestCase]
+        public void ProccesLineWithSpecularValueOk()
+        {
+            var line = "Ks 0.500000 0.500000 0.500000";
+            _parseMaterialAndColorStrategy.ProccesLine(line, ListObjMaterialMesh);
+            Assert.NotNull(ListObjMaterialMesh.First().Ks);
+        }
+
+        [TestCase]
+        public void ProccesLineWithDissolveValueOk()
+        {
+            var line = "d 1.000000";
+            _parseMaterialAndColorStrategy.ProccesLine(line, ListObjMaterialMesh);
+            Assert.NotNull(ListObjMaterialMesh.First().d);
+        }
+
+        [TestCase]
+        public void ProccesLineWithIlumValueOk()
+        {
+            var line = "ilum 2";
+            _parseMaterialAndColorStrategy.ProccesLine(line, ListObjMaterialMesh);
+            Assert.NotNull(ListObjMaterialMesh.First().illum);
+        }
+
+        [TestCase]
+        public void ProccesLineWithSpecularComponentValueOk()
+        {
+            var line = "Ns 96.078431";
+            _parseMaterialAndColorStrategy.ProccesLine(line, ListObjMaterialMesh);
+            Assert.NotNull(ListObjMaterialMesh.First().Ns);
+        }
+
+        [TestCase]
+        public void ProccesLineWithOpticalDensityValueOk()
+        {
+            var line = "Ni 96.078431";
+            _parseMaterialAndColorStrategy.ProccesLine(line, ListObjMaterialMesh);
+            Assert.NotNull(ListObjMaterialMesh.First().Ni);
+        }
+
     }
 }

@@ -8,29 +8,32 @@ namespace TGC.Group.Model
 {
     public class ObjMaterialsLoader
     {
-         const string SEPARADOR = "\\";
+        const string Separador = "\\";
 
         public ObjMaterialsLoader()
         {
             Strategies = new List<ObjMaterialsParseStrategy>();
+            Strategies.Add(new CreateNewMaterialStrategy());
+            Strategies.Add(new ParseMaterialAndColorStrategy());
+            Strategies.Add(new NoOperationStrategyForMaterial());
             ListObjMaterialMesh = new List<ObjMaterialMesh>();
         }
 
-        public static List<ObjMaterialsParseStrategy> Strategies { get; set; }
-        public static List<ObjMaterialMesh> ListObjMaterialMesh { get; set; }
+        public List<ObjMaterialsParseStrategy> Strategies { get; set; }
+        public List<ObjMaterialMesh> ListObjMaterialMesh { get; set; }
 
-        public static void LoadMaterialsFromFiles(string pathMtllib, List<string> listMtllib)
+        public void LoadMaterialsFromFiles(string pathMtllib, List<string> listMtllib)
         {
             foreach (string mtllib in listMtllib)
             {
-                string pathMaterial = Path.GetDirectoryName(pathMtllib) +SEPARADOR+ mtllib;
-                if (File.Exists(pathMaterial))  //TODO agregar el retroceso de carpeta
+                string pathMaterial = Path.GetDirectoryName(pathMtllib) +Separador+ mtllib;
+                if (File.Exists(pathMaterial))  
                 {
                     ParseMtlLib(pathMaterial);
                 }
                 else
                 {
-                    throw new InvalidOperationException($"Cannot find action file: {mtllib}");
+                    throw new InvalidOperationException($"Cannot find file: {mtllib}");
                 }
               
             }
@@ -38,10 +41,10 @@ namespace TGC.Group.Model
 
         public string GetPathMaterial(string pathMtllib, string mtllib)
         {
-            return Path.GetDirectoryName(pathMtllib) +SEPARADOR+ mtllib;
+            return Path.GetDirectoryName(pathMtllib) +Separador+ mtllib;
         }
 
-        private static void ParseMtlLib(string path)
+        private void ParseMtlLib(string path)
         {
             //Se leen todas las lineas
             var lines = File.ReadAllLines(path);
@@ -75,7 +78,7 @@ namespace TGC.Group.Model
             }
         }*/
 
-        private static void ProccesLine(string line)
+        private void ProccesLine(string line)
         {
             var action = line.Split(' ').FirstOrDefault();
             if (action == null && !String.IsNullOrWhiteSpace(line)) throw new InvalidOperationException($"Cannot find action for this line {line}");

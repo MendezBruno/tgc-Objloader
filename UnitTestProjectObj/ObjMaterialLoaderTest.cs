@@ -13,6 +13,7 @@ namespace UnitTestProjectObj
     class ObjMaterialLoaderTest
     {
         ObjMaterialsLoader _objMaterialLoader = new ObjMaterialsLoader();
+        private TgcObjLoader _tgcObjLoader = new TgcObjLoader();
         private string _fullMaterialPath;
 
         [SetUp]
@@ -27,13 +28,19 @@ namespace UnitTestProjectObj
                 dir = new DirectoryInfo(dir.Parent.FullName);
             }
             _fullMaterialPath = Path.Combine(dir.Parent.FullName, testDataArchivoBla);
+
+
+            //Obtengo la lista de materiales para las pruebas
+            var lines = File.ReadAllLines(_fullMaterialPath);
+            _tgcObjLoader.GetListOfMaterials(lines);
         }
 
 
         [TestCase]
         public void LoadObjMaterialFromFileOk()
         {
-            
+            _objMaterialLoader.LoadMaterialsFromFiles(_fullMaterialPath, _tgcObjLoader.ListMtllib);
+            Assert.NotNull(_objMaterialLoader.ListObjMaterialMesh.First());
         }
 
         [TestCase]
