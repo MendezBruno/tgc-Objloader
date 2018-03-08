@@ -19,6 +19,7 @@ namespace UnitTestProjectObj
         private TgcObjLoader _tgcObjLoader = new TgcObjLoader();
         private string _fullobjpath;
         ObjMesh resObjMesh;
+        private List<ObjMaterialMesh> listObjMaterialMesh;
         internal Mesh dxMesh;
         private System.Windows.Forms.Panel panel3D;
         public static D3DDevice Instance;
@@ -39,7 +40,7 @@ namespace UnitTestProjectObj
             _fullobjpath = Path.Combine(dir.Parent.FullName, testDataCuboTextura);
             _tgcObjLoader.LoadObjFromFile(_fullobjpath);
             resObjMesh = _tgcObjLoader.ListObjMesh.First();
-
+            listObjMaterialMesh = _tgcObjLoader.ObjMaterialsLoader.ListObjMaterialMesh;
             //Instanciamos un panel para crear un divice
             panel3D = new System.Windows.Forms.Panel();
             //Crear Graphics Device
@@ -179,6 +180,19 @@ namespace UnitTestProjectObj
             Assert.True(tgcMesh.Rotation.Equals(new Vector3(8.0f, 8.5f, 8.5f)));
         }
 
+        [TestCase]
+        public void TgcMeshBuildWithTextureOk()
+        {
+            TgcMesh tgcMesh = new MeshBuilder()
+                .InstaceDxMesh(resObjMesh.FaceTrianglesList.Count, resObjMesh.VertexListV.Count)
+                .chargeBuffer(resObjMesh)
+                .SetAutotransform(true)
+                .SetEnable(true)
+                .SetHasBoundingBox(true)
+                .chargeMaterial(listObjMaterialMesh)
+                .build(resObjMesh);
+            Assert.True(tgcMesh.Materials.Length > 0); 
+        }
         //Estos test se van hacer despues pensando en que puede haber un refactor de tipo estrategia para la creacion del mesh
         //TODO el test de cuando el mesh es solo color
         //TODO el test de cuando el mesh es color y difuse

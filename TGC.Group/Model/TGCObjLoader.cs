@@ -35,20 +35,6 @@ namespace TGC.Group.Model
         public List<ObjMesh> ListObjMesh { get; set; }
         public List<string> ListMtllib { get; set; }
 
-        public string GetPathObj()
-        {
-            var openFileDialog1 = new OpenFileDialog
-            {
-                InitialDirectory = "c:\\",
-                Filter = "obj files (*.obj)|*.obj|All files (*.*)|*.*",
-                FilterIndex = 2,
-                RestoreDirectory = true
-            };
-
-
-            return openFileDialog1.ShowDialog() == DialogResult.OK ? openFileDialog1.FileName : "";
-        }
-
         public string GetPathObjforCurrentDirectory()
         {
             return Path.Combine(Directory.GetCurrentDirectory(), @"UnitTestProjectObj\DatosPrueba\cubo.obj");
@@ -62,7 +48,7 @@ namespace TGC.Group.Model
             GetListOfMaterials(lines);
             //Se hace parse de los materiales
             ObjMaterialsLoader.LoadMaterialsFromFiles(path, ListMtllib);  //TODO ver si devuelve una lista de materiales o le pasamos el objmesh como parametro
-            //Se Parse de los objetos
+            //Se Parsea de los objetos
             foreach (var line in lines)
                 ProccesLine(line);
         }

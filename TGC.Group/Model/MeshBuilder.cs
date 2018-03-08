@@ -155,6 +155,14 @@ namespace TGC.Group.Model
             return this;
         }
 
+        public MeshBuilder chargeMaterial(List<ObjMaterialMesh> listObjMaterialMesh)
+        {
+
+
+            return this;
+        }
+
+
         public TgcMesh build(ObjMesh objMesh)
         {
             TgcMesh unMesh =  MeshFactory.createNewMesh(dxMesh, objMesh.Name, TgcMesh.MeshRenderType.VERTEX_COLOR);
@@ -302,8 +310,6 @@ namespace TGC.Group.Model
         }
 
 
-
-
-
+     
     }
 }
