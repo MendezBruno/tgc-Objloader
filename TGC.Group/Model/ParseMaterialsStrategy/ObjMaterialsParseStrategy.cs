@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web.UI.WebControls;
 using Microsoft.DirectX;
+using Microsoft.DirectX.Direct3D;
 
 namespace TGC.Group.Model.ParseMaterialsStrategy
 {
@@ -37,19 +38,17 @@ namespace TGC.Group.Model.ParseMaterialsStrategy
         return action == Keyword;
         }
 
-        public Vector3 CreateVector3(string line) //TODO esto podria ir en una clase utils porque se repite para Obj
+        public ColorValue CreateColorValue(string line) //TODO esto podria ir en una clase utils porque se repite para Obj
         {
            var indices = line.Split(' ');
            if (indices.Length != 4) throw new ArgumentException("El Archivo esta corrupto o tiene cantidad incorrecta de parametros");
-           return  new Vector3
-                {
-                    X = float.Parse(indices[1], Style, Info),
-                    Y = float.Parse(indices[2], Style, Info),
-                    Z = float.Parse(indices[3], Style, Info)
-                };
-           
-           
-        }
+           return  new ColorValue
+                (
+                    float.Parse(indices[1], Style, Info),
+                    float.Parse(indices[2], Style, Info),
+                    float.Parse(indices[3], Style, Info)
+                );
+         }
 
         public float ParseLineToFLoatValue(string line)
         {

@@ -29,8 +29,8 @@ namespace TGC.Group.Model.ParseMaterialsStrategy
            if (pInfo == null) throw new ArgumentException("No se encuantra el atributo de clase con la key: ", key);
             if (this._vector3Variables.Contains(key))
            {
-               //= createVector3(line);
-               pInfo.SetValue(auxObjMaterialMesh, CreateVector3(line),null);
+               //= createColoValue(line);
+               pInfo.SetValue(auxObjMaterialMesh, CreateColorValue(line), null);
                
            }
 

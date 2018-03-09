@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
+using TGC.Core.SceneLoader;
 using TGC.Group.Model.ParserStrategy;
 
 namespace TGC.Group.Model
@@ -22,6 +23,7 @@ namespace TGC.Group.Model
             Strategies.Add(new NoOperationStrategy());
             ListObjMesh = new List<ObjMesh>();
             ListMtllib = new List<string>();
+            MeshBuilder meshBuilder = new MeshBuilder();
            
         }
 
@@ -34,6 +36,7 @@ namespace TGC.Group.Model
         public ObjMaterialsLoader ObjMaterialsLoader = new ObjMaterialsLoader();
         public List<ObjMesh> ListObjMesh { get; set; }
         public List<string> ListMtllib { get; set; }
+        public MeshBuilder MeshBuilder { get; set; }
 
         public string GetPathObjforCurrentDirectory()
         {
@@ -45,10 +48,8 @@ namespace TGC.Group.Model
             //Se leen todas las lineas
             var lines = File.ReadAllLines(path);
             //Se recolectan los materiales
-            GetListOfMaterials(lines);
-            //Se hace parse de los materiales
-            ObjMaterialsLoader.LoadMaterialsFromFiles(path, ListMtllib);  //TODO ver si devuelve una lista de materiales o le pasamos el objmesh como parametro
-            //Se Parsea de los objetos
+            GetListOfMaterials(lines, path);
+             //Se Parsea de los objetos
             foreach (var line in lines)
                 ProccesLine(line);
         }
@@ -67,12 +68,15 @@ namespace TGC.Group.Model
             throw new InvalidOperationException($"Cannot find a correct parsing process for line {line}");
         }
 
-        public void GetListOfMaterials(string[] lines)
+        public void GetListOfMaterials(string[] lines, string path)
         {
             var linesFiltered = FilterByKeyword(lines, MTLLIB);
             if (linesFiltered.Length == 0) return;
             foreach (var line in linesFiltered)
                 SetMtllib(line);
+            //Se hace parse de los materiales
+            ObjMaterialsLoader.LoadMaterialsFromFiles(path, ListMtllib);  //TODO ver si devuelve una lista de materiales o le pasamos el objmesh como parametro
+            MeshBuilder.AddMaterials(ObjMaterialsLoader.ListObjMaterialMesh);
         }
 
         private void SetMtllib(string line)
@@ -98,6 +102,14 @@ namespace TGC.Group.Model
             }
 
             return linesWithKeyword.ToArray();
+        }
+
+        public TgcMesh LoadTgcMeshFromObj(string fullobjpath, int index)
+        {
+            LoadObjFromFile(fullobjpath);
+            MeshBuilder.InstaceDxMesh(ListObjMesh[index].FaceTrianglesList.Count);
+
+            return MeshBuilder.build(ListObjMesh[index]); //TODO pasarle el name no mas
         }
     }
 }

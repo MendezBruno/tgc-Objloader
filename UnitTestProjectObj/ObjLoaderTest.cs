@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net.Mime;
 using System.Reflection;
 using NUnit.Framework;
+using TGC.Core.SceneLoader;
 using TGC.Group.Model;
 
 namespace UnitTestProjectObj
@@ -111,7 +112,7 @@ namespace UnitTestProjectObj
         }
 
         [TestCase]
-        public void FilterByKeyWordOK()
+        public void FilterByKeyWordOk()
         {
             var lines = File.ReadAllLines(_fullobjpath);
             string mtllib = _tgcObjLoader.FilterByKeyword(lines, "mtllib")[0];
@@ -123,5 +124,15 @@ namespace UnitTestProjectObj
         {
 
         }
+
+        [TestCase]
+        public void LoadTgcMeshFromObjOk()
+        {
+            var _tgcObjLoader = new TgcObjLoader();
+            TgcMesh tgcMesh = _tgcObjLoader.LoadTgcMeshFromObj(_fullobjpath);
+            Assert.NotNull(tgcMesh);
+        }
+
+
     }
 }

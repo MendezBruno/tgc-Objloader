@@ -72,6 +72,12 @@ namespace UnitTestProjectObj
         }
 
         [TestCase]
+        public void  AddMaterialToBuilderOk()
+        {
+
+        }
+
+        [TestCase]
         public void CreateInstaceDxMeshOk()
         {
             MeshBuilder auxMeshBuilder = new MeshBuilder()

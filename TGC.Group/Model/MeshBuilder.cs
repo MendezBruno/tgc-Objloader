@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,23 +21,42 @@ namespace TGC.Group.Model
         internal bool autoTransform;
         internal bool enable;
         internal bool hasBoundingBox;
+        internal VertexElement[] VertexElementInstance { get; set; }
         public IMeshFactory MeshFactory { get; set; }
         public Device Device { get; set; }
-
 
         public MeshBuilder()
         {
             MeshFactory = new DefaultMeshFactory();
+            VertexElementInstance = VertexColorVertexElements;
         }
 
-        
-
-
-        public MeshBuilder InstaceDxMesh(int cantFace, int cantVertex )
+        public Mesh getInstaceDxMesh()
         {
-           this.dxMesh = new Mesh(cantFace, cantFace * 3,
-                MeshFlags.Managed, VertexElements, D3DDevice.Instance.Device);
-           return this;
+            return dxMesh;
+        }
+
+
+        public MeshBuilder AddMaterials(List<ObjMaterialMesh> listObjMaterialMesh)
+        {
+            //create material
+            // TODO
+            var materialsArray = new List<TgcSceneLoaderMaterialAux>();
+            listObjMaterialMesh.ForEach((objMaterialMesh =>
+                    {
+                        materialsArray.Add(createTextureAndMaterial(objMaterialMesh));
+                    }
+                    ));
+            //set nueva mesh strategy
+            VertexElementInstance = DiffuseMapVertexElements; // TODO ver que pasa caundo viene ligthmap
+            return this;
+        }
+
+        public MeshBuilder InstaceDxMesh(int cantFace)
+        {
+            this.dxMesh = new Mesh(cantFace, cantFace * 3,
+                MeshFlags.Managed, VertexElementInstance, D3DDevice.Instance.Device);
+            return this;
         }
 
         public MeshBuilder SetAutotransform(bool flag)
@@ -205,9 +225,9 @@ namespace TGC.Group.Model
 
 
         /// <summary>
-        ///     FVF para formato de malla 
+        ///     FVF para formato de malla  DIFFUSE_MAP
         /// </summary>
-        public static readonly VertexElement[] VertexElements =
+        public static readonly VertexElement[] DiffuseMapVertexElements =
         {
             new VertexElement(0, 0, DeclarationType.Float3,
                 DeclarationMethod.Default,
@@ -252,6 +272,62 @@ namespace TGC.Group.Model
             public Vector3 Normal;
             public int Color;
         }
+
+        /// <summary>
+        ///     Estructura auxiliar para cargar SubMaterials y Texturas
+        /// </summary>
+        private class TgcSceneLoaderMaterialAux
+        {
+            public Material materialId;
+            public TgcSceneLoaderMaterialAux[] subMaterials;
+            public string textureFileName;
+            public string texturePath;
+        }
+
+        /// <summary>
+        ///     Crea Material y Textura
+        /// </summary>
+
+        private TgcSceneLoaderMaterialAux createTextureAndMaterial(ObjMaterialMesh objMaterialMesh)
+        {
+            var matAux = new TgcSceneLoaderMaterialAux();
+
+            //Crear material
+            var material = new Material();
+            matAux.materialId = material;
+            material.AmbientColor = new ColorValue(
+                materialData.ambientColor[0],
+                materialData.ambientColor[1],
+                materialData.ambientColor[2],
+                materialData.ambientColor[3]);
+            material.DiffuseColor = new ColorValue(
+                materialData.diffuseColor[0],
+                materialData.diffuseColor[1],
+                materialData.diffuseColor[2],
+                materialData.diffuseColor[3]);
+            material.SpecularColor = new ColorValue(
+                materialData.specularColor[0],
+                materialData.specularColor[1],
+                materialData.specularColor[2],
+                materialData.specularColor[3]);
+
+            //TODO ver que hacer con la opacity
+
+            //guardar datos de textura
+            if (materialData.fileName != null)
+            {
+                matAux.texturePath = texturesPath + materialData.fileName;
+                matAux.textureFileName = materialData.fileName;
+            }
+            else
+            {
+                matAux.texturePath = null;
+                matAux.textureFileName = null;
+            }
+            return matAux;
+        }
+
+        
 
 
         #region MeshFactory
@@ -304,12 +380,7 @@ namespace TGC.Group.Model
 
         #endregion MeshFactory
 
-        public Mesh getInstaceDxMesh()
-        {
-            return dxMesh;
-        }
 
-
-     
+      
     }
 }

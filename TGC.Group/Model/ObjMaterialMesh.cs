@@ -1,4 +1,5 @@
 ﻿using Microsoft.DirectX;
+using Microsoft.DirectX.Direct3D;
 
 namespace TGC.Group.Model
 {
@@ -7,10 +8,10 @@ namespace TGC.Group.Model
         //Material Name 
         public string Name { get; set; }
         //Material color & ilumination
-        public Vector3 Ka { get; set; }
-        public Vector3 Kd { get; set; }
-        public Vector3 Ks { get; set; }
-        public Vector3 Tf { get; set; }
+        public ColorValue Ka { get; set; }
+        public ColorValue Kd { get; set; }
+        public ColorValue Ks { get; set; }
+        public ColorValue Tf { get; set; }
         /*
          ILUM REFENCE NUMBERS
             0 Color on and Ambient off
