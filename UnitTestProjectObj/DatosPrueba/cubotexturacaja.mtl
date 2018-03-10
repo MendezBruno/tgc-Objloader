@@ -9,3 +9,9 @@ Ks 0.500000 0.500000 0.500000
 Ni 1.000000
 d 1.000000
 illum 2
+map_Kd C:\workspace\Proyectos Net\tgc-Objloader\UnitTestProjectObj\DatosPrueba\caja.jpg
+disp C:\workspace\Proyectos Net\tgc-Objloader\UnitTestProjectObj\DatosPrueba\caja.jpg
+map_bump C:\workspace\Proyectos Net\tgc-Objloader\UnitTestProjectObj\DatosPrueba\caja.jpg
+map_Ka C:\workspace\Proyectos Net\tgc-Objloader\UnitTestProjectObj\DatosPrueba\caja.jpg
+map_Ks C:\workspace\Proyectos Net\tgc-Objloader\UnitTestProjectObj\DatosPrueba\caja.jpg
+map_d C:\workspace\Proyectos Net\tgc-Objloader\UnitTestProjectObj\DatosPrueba\caja.jpg

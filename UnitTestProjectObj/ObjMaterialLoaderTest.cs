@@ -32,7 +32,7 @@ namespace UnitTestProjectObj
 
             //Obtengo la lista de materiales para las pruebas
             var lines = File.ReadAllLines(_fullMaterialPath);
-            _tgcObjLoader.GetListOfMaterials(lines);
+            _tgcObjLoader.GetListOfMaterials(lines, _fullMaterialPath);
         }
 
 

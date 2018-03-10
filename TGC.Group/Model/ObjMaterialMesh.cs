@@ -38,7 +38,13 @@ namespace TGC.Group.Model
 
 
         //Texture mas statament 
-        
+        //TODO prodia ser una estructura de dato que represente la sentencia de textura
+        public string map_Kd { get; set; }
+        public string disp { get; set; }
+        public string map_bump { get; set; }
+        public string map_ka { get; set; }
+        public string map_Ks { get; set; }
+        public string map_d { get; set; }
 
         //Reflection map statament
 

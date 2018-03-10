@@ -37,14 +37,14 @@ namespace TGC.Group.Model
         }
 
 
-        public MeshBuilder AddMaterials(List<ObjMaterialMesh> listObjMaterialMesh)
+        public MeshBuilder AddMaterials(List<ObjMaterialMesh> listObjMaterialMesh, string materialPath)
         {
             //create material
             // TODO
             var materialsArray = new List<TgcSceneLoaderMaterialAux>();
             listObjMaterialMesh.ForEach((objMaterialMesh =>
                     {
-                        materialsArray.Add(createTextureAndMaterial(objMaterialMesh));
+                        materialsArray.Add(createTextureAndMaterial(objMaterialMesh, materialPath));
                     }
                     ));
             //set nueva mesh strategy
@@ -295,29 +295,17 @@ namespace TGC.Group.Model
             //Crear material
             var material = new Material();
             matAux.materialId = material;
-            material.AmbientColor = new ColorValue(
-                materialData.ambientColor[0],
-                materialData.ambientColor[1],
-                materialData.ambientColor[2],
-                materialData.ambientColor[3]);
-            material.DiffuseColor = new ColorValue(
-                materialData.diffuseColor[0],
-                materialData.diffuseColor[1],
-                materialData.diffuseColor[2],
-                materialData.diffuseColor[3]);
-            material.SpecularColor = new ColorValue(
-                materialData.specularColor[0],
-                materialData.specularColor[1],
-                materialData.specularColor[2],
-                materialData.specularColor[3]);
+            material.AmbientColor = objMaterialMesh.Ka;
+            material.DiffuseColor = objMaterialMesh.Kd;
+            material.SpecularColor = objMaterialMesh.Ks;
 
             //TODO ver que hacer con la opacity
 
             //guardar datos de textura
-            if (materialData.fileName != null)
+            if (objMaterialMesh.getTextura() != null)
             {
-                matAux.texturePath = texturesPath + materialData.fileName;
-                matAux.textureFileName = materialData.fileName;
+                matAux.texturePath = getTextura();
+                matAux.textureFileName = getTexturaFileName();
             }
             else
             {
