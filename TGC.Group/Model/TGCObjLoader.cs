@@ -23,8 +23,9 @@ namespace TGC.Group.Model
             Strategies.Add(new NoOperationStrategy());
             ListObjMesh = new List<ObjMesh>();
             ListMtllib = new List<string>();
-            MeshBuilder meshBuilder = new MeshBuilder();
-           
+            MeshBuilder = new MeshBuilder();
+            ObjMaterialsLoader = new ObjMaterialsLoader();
+
         }
 
         internal const string MTLLIB = "mtllib";
@@ -33,7 +34,7 @@ namespace TGC.Group.Model
         private const int INICIO = 0;
         public List<ObjParseStrategy> Strategies { get; set; }
 
-        public ObjMaterialsLoader ObjMaterialsLoader = new ObjMaterialsLoader();
+        public ObjMaterialsLoader ObjMaterialsLoader;
         public List<ObjMesh> ListObjMesh { get; set; }
         public List<string> ListMtllib { get; set; }
         public MeshBuilder MeshBuilder { get; set; }
@@ -70,13 +71,18 @@ namespace TGC.Group.Model
 
         public void GetListOfMaterials(string[] lines, string path)
         {
+            //se obtiene puramente todas las lineas que son de material
             var linesFiltered = FilterByKeyword(lines, MTLLIB);
+            //nos fijamos si tiene material
             if (linesFiltered.Length == 0) return;
+            //agregamos la ruta de la carpeta donde se encuentran los materiales
+            ObjMaterialsLoader.SetDirectoryPathMaterial(path);
+            //
             foreach (var line in linesFiltered)
                 SetMtllib(line);
             //Se hace parse de los materiales
             ObjMaterialsLoader.LoadMaterialsFromFiles(path, ListMtllib);  //TODO ver si devuelve una lista de materiales o le pasamos el objmesh como parametro
-            MeshBuilder.AddMaterials(ObjMaterialsLoader.ListObjMaterialMesh);
+            MeshBuilder.AddMaterials(ObjMaterialsLoader);
         }
 
         private void SetMtllib(string line)

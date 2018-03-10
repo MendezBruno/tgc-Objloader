@@ -99,7 +99,7 @@ namespace UnitTestProjectObj
         public void GetListOfMaterialsOk()
         {
             var lines = File.ReadAllLines(_fullobjpath);
-            _tgcObjLoader.GetListOfMaterials(lines);
+            _tgcObjLoader.GetListOfMaterials(lines, _fullobjpath);
             Assert.True(_tgcObjLoader.ListMtllib.Count > 0);
         }
 
@@ -107,7 +107,7 @@ namespace UnitTestProjectObj
         public void GetListOfMaterialsWithNameOK()
         {
             var lines = File.ReadAllLines(_fullobjpath);
-            _tgcObjLoader.GetListOfMaterials(lines);
+            _tgcObjLoader.GetListOfMaterials(lines, _fullobjpath);
             Assert.True(_tgcObjLoader.ListMtllib.First().Equals("cubotexturacaja.mtl"));
         }
 
@@ -129,7 +129,7 @@ namespace UnitTestProjectObj
         public void LoadTgcMeshFromObjOk()
         {
             var _tgcObjLoader = new TgcObjLoader();
-            TgcMesh tgcMesh = _tgcObjLoader.LoadTgcMeshFromObj(_fullobjpath);
+            TgcMesh tgcMesh = _tgcObjLoader.LoadTgcMeshFromObj(_fullobjpath, 0);
             Assert.NotNull(tgcMesh);
         }
 

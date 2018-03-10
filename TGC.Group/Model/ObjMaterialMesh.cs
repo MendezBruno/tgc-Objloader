@@ -1,4 +1,5 @@
-﻿using Microsoft.DirectX;
+﻿using System.IO;
+using Microsoft.DirectX;
 using Microsoft.DirectX.Direct3D;
 
 namespace TGC.Group.Model
@@ -53,6 +54,16 @@ namespace TGC.Group.Model
             this.Name = name;
         }
 
-        
+
+        public string getTextura()
+        {
+            return File.Exists(map_d)? map_d : null; // prodia ser cualquiera, TODO indentificar bien cual usar
+        }
+
+
+        public string getTexturaFileName()
+        {
+            return File.Exists(map_d) ? Path.GetFileName(map_d): null;
+        }
     }
 }

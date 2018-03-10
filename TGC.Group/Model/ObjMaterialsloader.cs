@@ -21,6 +21,7 @@ namespace TGC.Group.Model
 
         public List<ObjMaterialsParseStrategy> Strategies { get; set; }
         public List<ObjMaterialMesh> ListObjMaterialMesh { get; set; }
+        public string currentDirectory { get; set; }
 
         public void LoadMaterialsFromFiles(string pathMtllib, List<string> listMtllib)
         {
@@ -41,7 +42,7 @@ namespace TGC.Group.Model
 
         public string GetPathMaterial(string pathMtllib, string mtllib)
         {
-            return Path.GetDirectoryName(pathMtllib) +Separador+ mtllib;
+            return currentDirectory + Separador + mtllib;
         }
 
         private void ParseMtlLib(string path)
@@ -66,6 +67,11 @@ namespace TGC.Group.Model
                     return;
                 }
             throw new InvalidOperationException($"Cannot find a correct parsing process for line {line}"); 
+        }
+
+        public void SetDirectoryPathMaterial(string path)
+        {
+            currentDirectory = Path.GetDirectoryName(path);
         }
     }
 }

@@ -63,7 +63,7 @@ namespace UnitTestProjectObj
         {
 
             TgcMesh tgcMesh = new MeshBuilder()
-                .InstaceDxMesh(resObjMesh.FaceTrianglesList.Count, resObjMesh.VertexListV.Count)
+                .InstaceDxMesh(resObjMesh.FaceTrianglesList.Count)
                 .chargeBuffer(resObjMesh)
                 .build(resObjMesh);
             Assert.NotNull(tgcMesh);
@@ -81,7 +81,7 @@ namespace UnitTestProjectObj
         public void CreateInstaceDxMeshOk()
         {
             MeshBuilder auxMeshBuilder = new MeshBuilder()
-                .InstaceDxMesh(resObjMesh.FaceTrianglesList.Count, resObjMesh.VertexListV.Count);
+                .InstaceDxMesh(resObjMesh.FaceTrianglesList.Count);
             Assert.True(auxMeshBuilder.getInstaceDxMesh().NumberVertices == resObjMesh.FaceTrianglesList.Count * 3);
             Assert.True(auxMeshBuilder.getInstaceDxMesh().NumberFaces == resObjMesh.FaceTrianglesList.Count);
             Assert.NotNull(auxMeshBuilder.getInstaceDxMesh());
@@ -92,7 +92,7 @@ namespace UnitTestProjectObj
         public void CreateInstanceDxMeshWithNumberVerticesOK()
         {
             MeshBuilder auxMeshBuilder = new MeshBuilder()
-               .InstaceDxMesh(resObjMesh.FaceTrianglesList.Count, resObjMesh.VertexListV.Count);
+               .InstaceDxMesh(resObjMesh.FaceTrianglesList.Count);
             Assert.True(auxMeshBuilder.getInstaceDxMesh().NumberVertices == resObjMesh.FaceTrianglesList.Count * 3);
          
         }
@@ -101,7 +101,7 @@ namespace UnitTestProjectObj
         public void CreateInstanceDxMeshWithNumberFacesOK()
         {
             MeshBuilder auxMeshBuilder = new MeshBuilder()
-               .InstaceDxMesh(resObjMesh.FaceTrianglesList.Count, resObjMesh.VertexListV.Count);
+               .InstaceDxMesh(resObjMesh.FaceTrianglesList.Count);
             Assert.True(auxMeshBuilder.getInstaceDxMesh().NumberFaces == resObjMesh.FaceTrianglesList.Count);
             
         }
@@ -111,7 +111,7 @@ namespace UnitTestProjectObj
         {
 
             TgcMesh tgcMesh = new MeshBuilder()
-                .InstaceDxMesh(resObjMesh.FaceTrianglesList.Count, resObjMesh.VertexListV.Count)
+                .InstaceDxMesh(resObjMesh.FaceTrianglesList.Count)
                 .chargeBuffer(resObjMesh)
                 .SetAutotransform(true)
                 .build(resObjMesh);
@@ -123,7 +123,7 @@ namespace UnitTestProjectObj
         {
 
             TgcMesh tgcMesh = new MeshBuilder()
-                .InstaceDxMesh(resObjMesh.FaceTrianglesList.Count, resObjMesh.VertexListV.Count)
+                .InstaceDxMesh(resObjMesh.FaceTrianglesList.Count)
                 .chargeBuffer(resObjMesh)
                 .SetEnable(true)
                 .build(resObjMesh);
@@ -135,7 +135,7 @@ namespace UnitTestProjectObj
         {
 
             TgcMesh tgcMesh = new MeshBuilder()
-                .InstaceDxMesh(resObjMesh.FaceTrianglesList.Count, resObjMesh.VertexListV.Count)
+                .InstaceDxMesh(resObjMesh.FaceTrianglesList.Count)
                 .chargeBuffer(resObjMesh)
                 .SetEnable(true)
                 .SetAutotransform(true)
@@ -148,7 +148,7 @@ namespace UnitTestProjectObj
         public void TgcMeshBuildedCanSetPosition()
         {
             TgcMesh tgcMesh = new MeshBuilder()
-                .InstaceDxMesh(resObjMesh.FaceTrianglesList.Count, resObjMesh.VertexListV.Count)
+                .InstaceDxMesh(resObjMesh.FaceTrianglesList.Count)
                 .chargeBuffer(resObjMesh)
                 .SetAutotransform(true)
                 .SetEnable(true)
@@ -162,7 +162,7 @@ namespace UnitTestProjectObj
         public void TgcMeshBuildedCanSetScale()
         {
             TgcMesh tgcMesh = new MeshBuilder()
-                .InstaceDxMesh(resObjMesh.FaceTrianglesList.Count, resObjMesh.VertexListV.Count)
+                .InstaceDxMesh(resObjMesh.FaceTrianglesList.Count)
                 .chargeBuffer(resObjMesh)
                 .SetAutotransform(true)
                 .SetEnable(true)
@@ -176,7 +176,7 @@ namespace UnitTestProjectObj
         public void TgcMeshBuildedCanSet()
         {
             TgcMesh tgcMesh = new MeshBuilder()
-                .InstaceDxMesh(resObjMesh.FaceTrianglesList.Count, resObjMesh.VertexListV.Count)
+                .InstaceDxMesh(resObjMesh.FaceTrianglesList.Count)
                 .chargeBuffer(resObjMesh)
                 .SetAutotransform(true)
                 .SetEnable(true)
@@ -190,7 +190,7 @@ namespace UnitTestProjectObj
         public void TgcMeshBuildWithTextureOk()
         {
             TgcMesh tgcMesh = new MeshBuilder()
-                .InstaceDxMesh(resObjMesh.FaceTrianglesList.Count, resObjMesh.VertexListV.Count)
+                .InstaceDxMesh(resObjMesh.FaceTrianglesList.Count)
                 .chargeBuffer(resObjMesh)
                 .SetAutotransform(true)
                 .SetEnable(true)

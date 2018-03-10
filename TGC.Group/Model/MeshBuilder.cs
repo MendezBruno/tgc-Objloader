@@ -28,7 +28,7 @@ namespace TGC.Group.Model
         public MeshBuilder()
         {
             MeshFactory = new DefaultMeshFactory();
-            VertexElementInstance = VertexColorVertexElements;
+            VertexElementInstance = VertexColorVertexElements; //por defecto solo color (?) 
         }
 
         public Mesh getInstaceDxMesh()
@@ -37,16 +37,17 @@ namespace TGC.Group.Model
         }
 
 
-        public MeshBuilder AddMaterials(List<ObjMaterialMesh> listObjMaterialMesh, string materialPath)
+        public MeshBuilder AddMaterials(ObjMaterialsLoader ObjMaterialLoader)
         {
             //create material
             // TODO
             var materialsArray = new List<TgcSceneLoaderMaterialAux>();
-            listObjMaterialMesh.ForEach((objMaterialMesh =>
+            ObjMaterialLoader.ListObjMaterialMesh.ForEach((objMaterialMesh =>
                     {
-                        materialsArray.Add(createTextureAndMaterial(objMaterialMesh, materialPath));
+                        materialsArray.Add(createTextureAndMaterial(objMaterialMesh, ObjMaterialLoader.currentDirectory));
                     }
-                    ));
+            ));
+
             //set nueva mesh strategy
             VertexElementInstance = DiffuseMapVertexElements; // TODO ver que pasa caundo viene ligthmap
             return this;
@@ -288,7 +289,7 @@ namespace TGC.Group.Model
         ///     Crea Material y Textura
         /// </summary>
 
-        private TgcSceneLoaderMaterialAux createTextureAndMaterial(ObjMaterialMesh objMaterialMesh)
+        private TgcSceneLoaderMaterialAux createTextureAndMaterial(ObjMaterialMesh objMaterialMesh, string currentDirectory)
         {
             var matAux = new TgcSceneLoaderMaterialAux();
 
@@ -300,18 +301,10 @@ namespace TGC.Group.Model
             material.SpecularColor = objMaterialMesh.Ks;
 
             //TODO ver que hacer con la opacity
-
             //guardar datos de textura
-            if (objMaterialMesh.getTextura() != null)
-            {
-                matAux.texturePath = getTextura();
-                matAux.textureFileName = getTexturaFileName();
-            }
-            else
-            {
-                matAux.texturePath = null;
-                matAux.textureFileName = null;
-            }
+            matAux.texturePath = objMaterialMesh.getTextura() ?? currentDirectory;
+            matAux.textureFileName = objMaterialMesh.getTexturaFileName();
+            
             return matAux;
         }
 
