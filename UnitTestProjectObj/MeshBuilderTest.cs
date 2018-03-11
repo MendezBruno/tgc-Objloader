@@ -63,7 +63,7 @@ namespace UnitTestProjectObj
         {
 
             TgcMesh tgcMesh = new MeshBuilder()
-                .InstaceDxMesh(resObjMesh.FaceTrianglesList.Count)
+                .AddDxMesh(resObjMesh.FaceTrianglesList.Count)
                 .chargeBuffer(resObjMesh)
                 .build(resObjMesh);
             Assert.NotNull(tgcMesh);
@@ -71,17 +71,19 @@ namespace UnitTestProjectObj
 
         }
 
+        /*
         [TestCase]
         public void  AddMaterialToBuilderOk()
         {
 
         }
+        */
 
         [TestCase]
         public void CreateInstaceDxMeshOk()
         {
             MeshBuilder auxMeshBuilder = new MeshBuilder()
-                .InstaceDxMesh(resObjMesh.FaceTrianglesList.Count);
+                .AddDxMesh(resObjMesh.FaceTrianglesList.Count);
             Assert.True(auxMeshBuilder.getInstaceDxMesh().NumberVertices == resObjMesh.FaceTrianglesList.Count * 3);
             Assert.True(auxMeshBuilder.getInstaceDxMesh().NumberFaces == resObjMesh.FaceTrianglesList.Count);
             Assert.NotNull(auxMeshBuilder.getInstaceDxMesh());
@@ -92,7 +94,7 @@ namespace UnitTestProjectObj
         public void CreateInstanceDxMeshWithNumberVerticesOK()
         {
             MeshBuilder auxMeshBuilder = new MeshBuilder()
-               .InstaceDxMesh(resObjMesh.FaceTrianglesList.Count);
+               .AddDxMesh(resObjMesh.FaceTrianglesList.Count);
             Assert.True(auxMeshBuilder.getInstaceDxMesh().NumberVertices == resObjMesh.FaceTrianglesList.Count * 3);
          
         }
@@ -101,7 +103,7 @@ namespace UnitTestProjectObj
         public void CreateInstanceDxMeshWithNumberFacesOK()
         {
             MeshBuilder auxMeshBuilder = new MeshBuilder()
-               .InstaceDxMesh(resObjMesh.FaceTrianglesList.Count);
+               .AddDxMesh(resObjMesh.FaceTrianglesList.Count);
             Assert.True(auxMeshBuilder.getInstaceDxMesh().NumberFaces == resObjMesh.FaceTrianglesList.Count);
             
         }
@@ -111,7 +113,7 @@ namespace UnitTestProjectObj
         {
 
             TgcMesh tgcMesh = new MeshBuilder()
-                .InstaceDxMesh(resObjMesh.FaceTrianglesList.Count)
+                .AddDxMesh(resObjMesh.FaceTrianglesList.Count)
                 .chargeBuffer(resObjMesh)
                 .SetAutotransform(true)
                 .build(resObjMesh);
@@ -123,32 +125,20 @@ namespace UnitTestProjectObj
         {
 
             TgcMesh tgcMesh = new MeshBuilder()
-                .InstaceDxMesh(resObjMesh.FaceTrianglesList.Count)
+                .AddDxMesh(resObjMesh.FaceTrianglesList.Count)
                 .chargeBuffer(resObjMesh)
                 .SetEnable(true)
                 .build(resObjMesh);
             Assert.True(tgcMesh.Enabled);
         }
 
-        [TestCase]
-        public void BuildTgcMeshWithBoundingBoxOk()  //TODO el boundingbox no deberia estar acoplado al mesh
-        {
-
-            TgcMesh tgcMesh = new MeshBuilder()
-                .InstaceDxMesh(resObjMesh.FaceTrianglesList.Count)
-                .chargeBuffer(resObjMesh)
-                .SetEnable(true)
-                .SetAutotransform(true)
-                .SetHasBoundingBox(false)
-                .build(resObjMesh);
-            Assert.NotNull(tgcMesh.BoundingBox);
-        }
+        
 
         [TestCase]
         public void TgcMeshBuildedCanSetPosition()
         {
             TgcMesh tgcMesh = new MeshBuilder()
-                .InstaceDxMesh(resObjMesh.FaceTrianglesList.Count)
+                .AddDxMesh(resObjMesh.FaceTrianglesList.Count)
                 .chargeBuffer(resObjMesh)
                 .SetAutotransform(true)
                 .SetEnable(true)
@@ -162,7 +152,7 @@ namespace UnitTestProjectObj
         public void TgcMeshBuildedCanSetScale()
         {
             TgcMesh tgcMesh = new MeshBuilder()
-                .InstaceDxMesh(resObjMesh.FaceTrianglesList.Count)
+                .AddDxMesh(resObjMesh.FaceTrianglesList.Count)
                 .chargeBuffer(resObjMesh)
                 .SetAutotransform(true)
                 .SetEnable(true)
@@ -176,7 +166,7 @@ namespace UnitTestProjectObj
         public void TgcMeshBuildedCanSet()
         {
             TgcMesh tgcMesh = new MeshBuilder()
-                .InstaceDxMesh(resObjMesh.FaceTrianglesList.Count)
+                .AddDxMesh(resObjMesh.FaceTrianglesList.Count)
                 .chargeBuffer(resObjMesh)
                 .SetAutotransform(true)
                 .SetEnable(true)
@@ -190,14 +180,28 @@ namespace UnitTestProjectObj
         public void TgcMeshBuildWithTextureOk()
         {
             TgcMesh tgcMesh = new MeshBuilder()
-                .InstaceDxMesh(resObjMesh.FaceTrianglesList.Count)
+                .AddDxMesh(resObjMesh.FaceTrianglesList.Count)
                 .chargeBuffer(resObjMesh)
                 .SetAutotransform(true)
                 .SetEnable(true)
                 .SetHasBoundingBox(true)
-                .chargeMaterial(listObjMaterialMesh)
+                .AddMaterials(_tgcObjLoader.ObjMaterialsLoader)
                 .build(resObjMesh);
             Assert.True(tgcMesh.Materials.Length > 0); 
+        }
+
+        [TestCase]
+        public void BuildTgcMeshWithBoundingBoxOk()  //TODO el boundingbox no deberia estar acoplado al mesh
+        {
+
+            TgcMesh tgcMesh = new MeshBuilder()
+                .AddDxMesh(resObjMesh.FaceTrianglesList.Count)
+                .chargeBuffer(resObjMesh)
+                .SetEnable(true)
+                .SetAutotransform(true)
+                .SetHasBoundingBox(false)
+                .build(resObjMesh);
+            Assert.NotNull(tgcMesh.BoundingBox);
         }
         //Estos test se van hacer despues pensando en que puede haber un refactor de tipo estrategia para la creacion del mesh
         //TODO el test de cuando el mesh es solo color

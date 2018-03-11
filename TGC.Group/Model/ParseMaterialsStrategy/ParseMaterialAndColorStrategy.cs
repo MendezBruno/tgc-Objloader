@@ -17,7 +17,7 @@ namespace TGC.Group.Model.ParseMaterialsStrategy
 
         public ParseMaterialAndColorStrategy()
         {
-            this._keyWords = new string[] { Ns, Ka, Kd, Ks, Ke, Ni, d, illum };
+            this._keyWords = new string[] { Ns, Ka, Kd, Ks, Ke, Ni, d, illum, map_Kd, disp, map_bump, map_Ka, map_ks, map_d };
             this._ColorVariables = new string[] { Ka, Kd, Ks, Ke};
             this._vectorVariables = new string[] { Ns, Ni, d };
             this._pathTextureVariables = new string[] { map_Kd, disp, map_bump, map_Ka, map_ks, map_d };
@@ -47,7 +47,7 @@ namespace TGC.Group.Model.ParseMaterialsStrategy
 
            if (this._pathTextureVariables.Contains(key))
            {
-               pInfo.SetValue(auxObjMaterialMesh, ParseLineToStringValue(line), null);
+               pInfo.SetValue(auxObjMaterialMesh, ParsePathToStringExistValue(line), null);
            }
 
         }

@@ -43,7 +43,7 @@ namespace TGC.Group.Model
         public string map_Kd { get; set; }
         public string disp { get; set; }
         public string map_bump { get; set; }
-        public string map_ka { get; set; }
+        public string map_Ka { get; set; }
         public string map_Ks { get; set; }
         public string map_d { get; set; }
 

@@ -53,6 +53,7 @@ namespace UnitTestProjectObj
         [TestCase]
         public void GetPathMaterialOk()
         {
+            _objMaterialLoader.SetDirectoryPathMaterial(_fullMaterialPath);
             string pathMaterial = _objMaterialLoader.GetPathMaterial(_fullMaterialPath, "\\cubotexturacaja.mtl");
             Assert.True(File.Exists(pathMaterial));
         }

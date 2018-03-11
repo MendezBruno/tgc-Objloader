@@ -23,7 +23,7 @@ namespace UnitTestProjectObj.Model.ParseMaterialStrategy
         public List<ObjMaterialMesh> ListObjMaterialMesh { get; set; }
 
 
-        [Test]
+        [TestCase]
         public void ProccesLineNewObjetOk()
         {
             var line = "newmtl Material.001";

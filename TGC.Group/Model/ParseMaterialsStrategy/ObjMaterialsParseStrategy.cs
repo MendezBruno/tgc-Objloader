@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -27,7 +28,7 @@ namespace TGC.Group.Model.ParseMaterialsStrategy
         internal const string disp = "disp";
         internal const string map_bump = "map_bump";
         internal const string map_Ka = "map_Ka";
-        internal const string map_ks = "map_ks";
+        internal const string map_ks = "map_Ks";
         internal const string map_d = "map_d";
         // otras keywords
         internal const string COMMENT = "#";
@@ -44,7 +45,7 @@ namespace TGC.Group.Model.ParseMaterialsStrategy
 
         public virtual bool ResponseTo(string action)
         {
-        return action == Keyword;
+             return action == Keyword;
         }
 
         public ColorValue CreateColorValue(string line) //TODO esto podria ir en una clase utils porque se repite para Obj
@@ -73,11 +74,11 @@ namespace TGC.Group.Model.ParseMaterialsStrategy
             return int.Parse(indices[1], Style, Info);
         }
 
-        public object ParseLineToStringValue(string line)
+        public object ParsePathToStringExistValue(string line)
         {
-            var indices = line.Split(' ');
-            if (indices.Length != 2) throw new ArgumentException("El Archivo esta corrupto o tiene cantidad incorrecta de parametros");
-            return indices[1];
+            var path = line.Substring(line.Split(' ').First().Length);
+            // TODO ver como verifacar que el string sea un path throw new ArgumentException("La ruta no es un PATH valido");
+            return path;
         }
     }
 }

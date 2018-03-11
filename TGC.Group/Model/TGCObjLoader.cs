@@ -113,7 +113,7 @@ namespace TGC.Group.Model
         public TgcMesh LoadTgcMeshFromObj(string fullobjpath, int index)
         {
             LoadObjFromFile(fullobjpath);
-            MeshBuilder.InstaceDxMesh(ListObjMesh[index].FaceTrianglesList.Count);
+            MeshBuilder.AddDxMesh(ListObjMesh[index].FaceTrianglesList.Count);
 
             return MeshBuilder.build(ListObjMesh[index]); //TODO pasarle el name no mas
         }

@@ -11,6 +11,7 @@ using static TGC.Core.SceneLoader.TgcSceneLoader;
 using Microsoft.DirectX;
 using Microsoft.DirectX.PrivateImplementationDetails;
 using TGC.Core.BoundingVolumes;
+using TGC.Core.Textures;
 
 namespace TGC.Group.Model
 {
@@ -18,10 +19,13 @@ namespace TGC.Group.Model
     {
         internal TgcMesh tgcMesh;
         internal Mesh dxMesh;
+        internal Material[] meshMaterials;
+        internal TgcTexture[] meshTextures;
         internal bool autoTransform;
         internal bool enable;
         internal bool hasBoundingBox;
         internal VertexElement[] VertexElementInstance { get; set; }
+        internal List<TgcObjMaterialAux> materialsArray { get; set; }
         public IMeshFactory MeshFactory { get; set; }
         public Device Device { get; set; }
 
@@ -37,26 +41,65 @@ namespace TGC.Group.Model
         }
 
 
-        public MeshBuilder AddMaterials(ObjMaterialsLoader ObjMaterialLoader)
+        public MeshBuilder AddMaterials(ObjMaterialsLoader objMaterialLoader)
         {
             //create material
             // TODO
-            var materialsArray = new List<TgcSceneLoaderMaterialAux>();
-            ObjMaterialLoader.ListObjMaterialMesh.ForEach((objMaterialMesh =>
+            materialsArray = new List<TgcObjMaterialAux>();
+            objMaterialLoader.ListObjMaterialMesh.ForEach((objMaterialMesh =>
                     {
-                        materialsArray.Add(createTextureAndMaterial(objMaterialMesh, ObjMaterialLoader.currentDirectory));
+                        materialsArray.Add(createTextureAndMaterial(objMaterialMesh, objMaterialLoader.currentDirectory));
                     }
             ));
 
             //set nueva mesh strategy
             VertexElementInstance = DiffuseMapVertexElements; // TODO ver que pasa caundo viene ligthmap
+            
+            //contruyo la textura y los materiales que envié
+            ChargueMaterials(materialsArray);
             return this;
         }
 
-        public MeshBuilder InstaceDxMesh(int cantFace)
+        private void ChargueMaterials(List<TgcObjMaterialAux> tgcObjMaterialAuxes)
         {
-            this.dxMesh = new Mesh(cantFace, cantFace * 3,
-                MeshFlags.Managed, VertexElementInstance, D3DDevice.Instance.Device);
+            var matAux = tgcObjMaterialAuxes.First();
+            Material[] meshMaterials;
+            TgcTexture[] meshTextures;
+            if (tgcObjMaterialAuxes.Count <= 1)
+            {
+                meshMaterials = new[] { matAux.materialId };
+                meshTextures = new[]
+                    {TgcTexture.createTexture(D3DDevice.Instance.Device, matAux.textureFileName, matAux.texturePath)};
+            }
+
+            //Configurar Material y Textura para varios SubSet
+            else
+            {
+                //Cargar attributeBuffer con los id de las texturas de cada triángulo
+                var attributeBuffer = dxMesh.LockAttributeBufferArray(LockFlags.None);
+               //  TODO  Array.Copy(meshData.materialsIds, attributeBuffer, attributeBuffer.Length);  //aca tengo que ver que son todos los materials ID
+                dxMesh.UnlockAttributeBuffer(attributeBuffer);
+
+                //Cargar array de Materials y Texturas
+                meshMaterials = new Material[tgcObjMaterialAuxes.Count - 1];
+                meshTextures = new TgcTexture[tgcObjMaterialAuxes.Count - 1];
+                tgcObjMaterialAuxes.ForEach((objMaterial) =>
+                    {
+                        /*
+                        meshMaterials[m] = matAux.subMaterials[m].materialId;
+                        meshTextures[m] = TgcTexture.createTexture(D3DDevice.Instance.Device,
+                            matAux.subMaterials[m].textureFileName,
+                            matAux.subMaterials[m].texturePath);
+                            */
+                    });
+                    
+                
+            }
+        }
+
+        public MeshBuilder AddDxMesh(int cantFace)
+        {
+            this.dxMesh = new Mesh(cantFace, cantFace * 3, MeshFlags.Managed, VertexElementInstance, D3DDevice.Instance.Device);
             return this;
         }
 
@@ -175,15 +218,7 @@ namespace TGC.Group.Model
 
             return this;
         }
-
-        public MeshBuilder chargeMaterial(List<ObjMaterialMesh> listObjMaterialMesh)
-        {
-
-
-            return this;
-        }
-
-
+        
         public TgcMesh build(ObjMesh objMesh)
         {
             TgcMesh unMesh =  MeshFactory.createNewMesh(dxMesh, objMesh.Name, TgcMesh.MeshRenderType.VERTEX_COLOR);
@@ -277,10 +312,10 @@ namespace TGC.Group.Model
         /// <summary>
         ///     Estructura auxiliar para cargar SubMaterials y Texturas
         /// </summary>
-        private class TgcSceneLoaderMaterialAux
+        internal class TgcObjMaterialAux
         {
             public Material materialId;
-            public TgcSceneLoaderMaterialAux[] subMaterials;
+           // public TgcSceneLoaderMaterialAux[] subMaterials; por el momento no lo voy a usar
             public string textureFileName;
             public string texturePath;
         }
@@ -289,9 +324,9 @@ namespace TGC.Group.Model
         ///     Crea Material y Textura
         /// </summary>
 
-        private TgcSceneLoaderMaterialAux createTextureAndMaterial(ObjMaterialMesh objMaterialMesh, string currentDirectory)
+        private TgcObjMaterialAux createTextureAndMaterial(ObjMaterialMesh objMaterialMesh, string currentDirectory)
         {
-            var matAux = new TgcSceneLoaderMaterialAux();
+            var matAux = new TgcObjMaterialAux();
 
             //Crear material
             var material = new Material();
