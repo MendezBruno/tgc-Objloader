@@ -82,7 +82,7 @@ namespace TGC.Group.Model
                 SetMtllib(line);
             //Se hace parse de los materiales
             ObjMaterialsLoader.LoadMaterialsFromFiles(path, ListMtllib);  //TODO ver si devuelve una lista de materiales o le pasamos el objmesh como parametro
-            //MeshBuilder.AddMaterials(ObjMaterialsLoader); definitivamente esto no tendria que ir aca
+           // MeshBuilder.AddMaterials(ObjMaterialsLoader);
         }
 
         private void SetMtllib(string line)
@@ -113,7 +113,15 @@ namespace TGC.Group.Model
         public TgcMesh LoadTgcMeshFromObj(string fullobjpath, int index)
         {
             LoadObjFromFile(fullobjpath);
-            MeshBuilder.AddDxMesh(ListObjMesh[index].FaceTrianglesList.Count);
+            ObjMesh objMesh = ListObjMesh[index];
+            MeshBuilder.AddMaterials(ObjMaterialsLoader)
+                        .AddDxMesh(objMesh.FaceTrianglesList.Count)
+                        .chargeBuffer(objMesh)
+                        .SetEnable(true)
+                        .SetAutotransform(true)
+                        .SetHasBoundingBox(false)
+                        .build(objMesh);
+
 
             return MeshBuilder.build(ListObjMesh[index]); //TODO pasarle el name no mas
         }

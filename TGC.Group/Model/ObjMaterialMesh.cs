@@ -57,7 +57,7 @@ namespace TGC.Group.Model
 
         public string getTextura()
         {
-            return File.Exists(map_d)? map_d : null; // prodia ser cualquiera, TODO indentificar bien cual usar
+            return File.Exists(map_d)? Path.GetFullPath(map_d) :null; // prodia ser cualquiera, TODO indentificar bien cual usar
         }
 
 

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -147,19 +148,19 @@ namespace TGC.Group.Model
                     v.Normal = objMesh.VertexListVn[Convert.ToInt32(face.Vn1) -1];
                     v.Tu0 = objMesh.VertexListVt[Convert.ToInt32(face.Vt1)-1].X;
                     v.Tv0 = objMesh.VertexListVt[Convert.ToInt32(face.Vt1)-1].Y;
-                    v.Color = 255;  //TODO que corresponde poner aca con respecto obj Mesh
+                  //  v.Color = 255;  //TODO que corresponde poner aca con respecto obj Mesh
                     data.Write(v);
                     v.Position = objMesh.VertexListV[Convert.ToInt32(face.V2)-1];
                     v.Normal = objMesh.VertexListVn[Convert.ToInt32(face.Vn2)-1];
                     v.Tu0 = objMesh.VertexListVt[Convert.ToInt32(face.Vt2)-1].X;
                     v.Tv0 = objMesh.VertexListVt[Convert.ToInt32(face.Vt2)-1].Y;
-                    v.Color = 255;  //TODO que corresponde poner aca con respecto obj Mesh
+                  //  v.Color = 255;  //TODO que corresponde poner aca con respecto obj Mesh
                     data.Write(v);
                     v.Position = objMesh.VertexListV[Convert.ToInt32(face.V3)-1];
                     v.Normal = objMesh.VertexListVn[Convert.ToInt32(face.Vn3)-1];
                     v.Tu0 = objMesh.VertexListVt[Convert.ToInt32(face.Vt3)-1].X;
                     v.Tv0 = objMesh.VertexListVt[Convert.ToInt32(face.Vt3)-1].Y;
-                    v.Color = 255;  //TODO que corresponde poner aca con respecto obj Mesh
+                 //   v.Color = 255;  //TODO que corresponde poner aca con respecto obj Mesh
                     data.Write(v);
 
                 });
@@ -347,7 +348,7 @@ namespace TGC.Group.Model
 
             //TODO ver que hacer con la opacity
             //guardar datos de textura
-            matAux.texturePath = objMaterialMesh.getTextura() ?? currentDirectory + SEPARADOR +objMaterialMesh.getTexturaFileName();
+            matAux.texturePath = objMaterialMesh.getTextura() ?? Path.GetFullPath(currentDirectory + SEPARADOR + objMaterialMesh.getTexturaFileName());
             matAux.textureFileName = objMaterialMesh.getTexturaFileName();
             
             return matAux;
