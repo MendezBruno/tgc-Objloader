@@ -63,7 +63,7 @@ namespace TGC.Group.Model
 
         public string getTexturaFileName()
         {
-            return File.Exists(map_d) ? Path.GetFileName(map_d): null;
+            return Path.GetFileName(map_d);
         }
     }
 }

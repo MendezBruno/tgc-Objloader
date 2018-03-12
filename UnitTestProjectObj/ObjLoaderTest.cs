@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net.Mime;
 using System.Reflection;
 using NUnit.Framework;
+using TGC.Core.Direct3D;
 using TGC.Core.SceneLoader;
 using TGC.Group.Model;
 
@@ -15,7 +16,8 @@ namespace UnitTestProjectObj
 
         private TgcObjLoader _tgcObjLoader = new TgcObjLoader();
         private string _fullobjpath;
-       
+        private System.Windows.Forms.Panel panel3D;
+
 
 
         [SetUp]
@@ -30,6 +32,20 @@ namespace UnitTestProjectObj
                 dir = new DirectoryInfo(dir.Parent.FullName);
             }
             _fullobjpath = Path.Combine(dir.Parent.FullName, testDataCuboTextura);
+            //Instanciamos un panel para crear un divice
+            panel3D = new System.Windows.Forms.Panel();
+            //Crear Graphics Device
+            // 
+            // panel3D
+            // 
+            this.panel3D.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel3D.Location = new System.Drawing.Point(0, 0);
+            this.panel3D.Name = "panel3D";
+            this.panel3D.Size = new System.Drawing.Size(784, 561);
+            this.panel3D.TabIndex = 0;
+
+            D3DDevice.Instance.InitializeD3DDevice(panel3D);
+
         }
 
         [TestCase]
@@ -106,6 +122,7 @@ namespace UnitTestProjectObj
         [TestCase]
         public void GetListOfMaterialsWithNameOK()
         {
+            var _tgcObjLoader = new TgcObjLoader();
             var lines = File.ReadAllLines(_fullobjpath);
             _tgcObjLoader.GetListOfMaterials(lines, _fullobjpath);
             Assert.True(_tgcObjLoader.ListMtllib.First().Equals("cubotexturacaja.mtl"));
@@ -114,6 +131,7 @@ namespace UnitTestProjectObj
         [TestCase]
         public void FilterByKeyWordOk()
         {
+            var _tgcObjLoader = new TgcObjLoader();
             var lines = File.ReadAllLines(_fullobjpath);
             string mtllib = _tgcObjLoader.FilterByKeyword(lines, "mtllib")[0];
             Assert.True(mtllib.Equals("mtllib cubotexturacaja.mtl"));

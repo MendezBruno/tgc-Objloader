@@ -82,7 +82,7 @@ namespace TGC.Group.Model
                 SetMtllib(line);
             //Se hace parse de los materiales
             ObjMaterialsLoader.LoadMaterialsFromFiles(path, ListMtllib);  //TODO ver si devuelve una lista de materiales o le pasamos el objmesh como parametro
-            MeshBuilder.AddMaterials(ObjMaterialsLoader);
+            //MeshBuilder.AddMaterials(ObjMaterialsLoader); definitivamente esto no tendria que ir aca
         }
 
         private void SetMtllib(string line)

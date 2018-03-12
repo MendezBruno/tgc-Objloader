@@ -17,10 +17,13 @@ namespace TGC.Group.Model
 {
     public class MeshBuilder
     {
+        //Constante
+        internal const string SEPARADOR = "\\";
+        //Variables
         internal TgcMesh tgcMesh;
         internal Mesh dxMesh;
-        internal Material[] meshMaterials;
-        internal TgcTexture[] meshTextures;
+        internal Material[] meshMaterials { get; set; }
+        internal TgcTexture[] meshTextures { get; set; }
         internal bool autoTransform;
         internal bool enable;
         internal bool hasBoundingBox;
@@ -63,8 +66,6 @@ namespace TGC.Group.Model
         private void ChargueMaterials(List<TgcObjMaterialAux> tgcObjMaterialAuxes)
         {
             var matAux = tgcObjMaterialAuxes.First();
-            Material[] meshMaterials;
-            TgcTexture[] meshTextures;
             if (tgcObjMaterialAuxes.Count <= 1)
             {
                 meshMaterials = new[] { matAux.materialId };
@@ -77,7 +78,7 @@ namespace TGC.Group.Model
             {
                 //Cargar attributeBuffer con los id de las texturas de cada triángulo
                 var attributeBuffer = dxMesh.LockAttributeBufferArray(LockFlags.None);
-               //  TODO  Array.Copy(meshData.materialsIds, attributeBuffer, attributeBuffer.Length);  //aca tengo que ver que son todos los materials ID
+                Array.Copy(GetMaterialsIds(tgcObjMaterialAuxes).ToArray(), attributeBuffer, attributeBuffer.Length);  //aca tengo que ver que son todos los materials ID
                 dxMesh.UnlockAttributeBuffer(attributeBuffer);
 
                 //Cargar array de Materials y Texturas
@@ -85,16 +86,23 @@ namespace TGC.Group.Model
                 meshTextures = new TgcTexture[tgcObjMaterialAuxes.Count - 1];
                 tgcObjMaterialAuxes.ForEach((objMaterial) =>
                     {
-                        /*
-                        meshMaterials[m] = matAux.subMaterials[m].materialId;
-                        meshTextures[m] = TgcTexture.createTexture(D3DDevice.Instance.Device,
-                            matAux.subMaterials[m].textureFileName,
-                            matAux.subMaterials[m].texturePath);
-                            */
+                        meshMaterials[tgcObjMaterialAuxes.IndexOf(objMaterial)] = objMaterial.materialId;
+                        meshTextures[tgcObjMaterialAuxes.IndexOf(objMaterial)] = TgcTexture.createTexture(D3DDevice.Instance.Device,
+                            objMaterial.textureFileName,
+                            objMaterial.texturePath);
+                            
                     });
-                    
-                
             }
+        }
+
+        private ArrayList GetMaterialsIds(List<TgcObjMaterialAux> tgcObjMaterialAuxes)
+        {
+            var matrialsIds = new ArrayList();
+            tgcObjMaterialAuxes.ForEach((objMaterial) =>
+            {
+               matrialsIds.Add(objMaterial.materialId);
+            });
+            return matrialsIds;
         }
 
         public MeshBuilder AddDxMesh(int cantFace)
@@ -225,6 +233,8 @@ namespace TGC.Group.Model
             SetBoundingBox(unMesh);
             unMesh.AutoTransformEnable = autoTransform;
             unMesh.Enabled = enable;
+            unMesh.Materials = meshMaterials;
+            unMesh.DiffuseMaps = meshTextures;
             return unMesh;
         }
 
@@ -337,7 +347,7 @@ namespace TGC.Group.Model
 
             //TODO ver que hacer con la opacity
             //guardar datos de textura
-            matAux.texturePath = objMaterialMesh.getTextura() ?? currentDirectory;
+            matAux.texturePath = objMaterialMesh.getTextura() ?? currentDirectory + SEPARADOR +objMaterialMesh.getTexturaFileName();
             matAux.textureFileName = objMaterialMesh.getTexturaFileName();
             
             return matAux;
