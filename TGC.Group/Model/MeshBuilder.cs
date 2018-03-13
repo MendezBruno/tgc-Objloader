@@ -148,19 +148,19 @@ namespace TGC.Group.Model
                     v.Normal = objMesh.VertexListVn[Convert.ToInt32(face.Vn1) -1];
                     v.Tu0 = objMesh.VertexListVt[Convert.ToInt32(face.Vt1)-1].X;
                     v.Tv0 = objMesh.VertexListVt[Convert.ToInt32(face.Vt1)-1].Y;
-                  //  v.Color = 255;  //TODO que corresponde poner aca con respecto obj Mesh
+                    v.Color = -1;  //TODO que corresponde poner aca con respecto obj Mesh
                     data.Write(v);
                     v.Position = objMesh.VertexListV[Convert.ToInt32(face.V2)-1];
                     v.Normal = objMesh.VertexListVn[Convert.ToInt32(face.Vn2)-1];
                     v.Tu0 = objMesh.VertexListVt[Convert.ToInt32(face.Vt2)-1].X;
                     v.Tv0 = objMesh.VertexListVt[Convert.ToInt32(face.Vt2)-1].Y;
-                  //  v.Color = 255;  //TODO que corresponde poner aca con respecto obj Mesh
+                    v.Color = -1;  //TODO que corresponde poner aca con respecto obj Mesh
                     data.Write(v);
                     v.Position = objMesh.VertexListV[Convert.ToInt32(face.V3)-1];
                     v.Normal = objMesh.VertexListVn[Convert.ToInt32(face.Vn3)-1];
                     v.Tu0 = objMesh.VertexListVt[Convert.ToInt32(face.Vt3)-1].X;
                     v.Tv0 = objMesh.VertexListVt[Convert.ToInt32(face.Vt3)-1].Y;
-                 //   v.Color = 255;  //TODO que corresponde poner aca con respecto obj Mesh
+                    v.Color = -1;  //TODO que corresponde poner aca con respecto obj Mesh
                     data.Write(v);
 
                 });
@@ -230,7 +230,7 @@ namespace TGC.Group.Model
         
         public TgcMesh build(ObjMesh objMesh)
         {
-            TgcMesh unMesh =  MeshFactory.createNewMesh(dxMesh, objMesh.Name, TgcMesh.MeshRenderType.VERTEX_COLOR);
+            TgcMesh unMesh =  MeshFactory.createNewMesh(dxMesh, objMesh.Name, TgcMesh.MeshRenderType.DIFFUSE_MAP);
             SetBoundingBox(unMesh);
             unMesh.AutoTransformEnable = autoTransform;
             unMesh.Enabled = enable;

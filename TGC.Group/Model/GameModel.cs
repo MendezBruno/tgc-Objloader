@@ -113,7 +113,7 @@ namespace TGC.Group.Model
                 .SetHasBoundingBox(false)
                 .build(resObjMesh);
            */
-            MeshDelObj = TgcObjLoader.LoadTgcMeshFromObj(@"C:\workspace\Proyectos Net\tgc-Objloader\UnitTestProjectObj\DatosPrueba\cubotexturacaja.obj", 0);
+            MeshDelObj = TgcObjLoader.LoadTgcMeshFromObj(@"I:\proyectos net\tgc-group\UnitTestProjectObj\DatosPrueba\cubotexturacaja.obj", 0);
 
             //           MeshDelObj.AutoTransformEnable = true;
             //           MeshDelObj.Enabled = true;
