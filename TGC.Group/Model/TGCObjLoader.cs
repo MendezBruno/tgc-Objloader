@@ -116,14 +116,14 @@ namespace TGC.Group.Model
             ObjMesh objMesh = ListObjMesh[index];
             MeshBuilder.AddMaterials(ObjMaterialsLoader)
                         .AddDxMesh(objMesh.FaceTrianglesList.Count)
-                        .chargeBuffer(objMesh)
+                        .ChargeBuffer(objMesh)
                         .SetEnable(true)
                         .SetAutotransform(true)
                         .SetHasBoundingBox(false)
-                        .build(objMesh);
+                        .Build(objMesh);
 
 
-            return MeshBuilder.build(ListObjMesh[index]); //TODO pasarle el name no mas
+            return MeshBuilder.Build(ListObjMesh[index]); //TODO pasarle el name no mas
         }
     }
 }

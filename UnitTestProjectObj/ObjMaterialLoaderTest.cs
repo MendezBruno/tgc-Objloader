@@ -13,8 +13,6 @@ namespace UnitTestProjectObj
     [TestFixture]
     class ObjMaterialLoaderTest
     {
-        ObjMaterialsLoader _objMaterialLoader = new ObjMaterialsLoader();
-        private TgcObjLoader _tgcObjLoader = new TgcObjLoader();
         private string _fullMaterialPath;
         private System.Windows.Forms.Panel panel3D;
 

@@ -151,6 +151,12 @@ namespace UnitTestProjectObj
             Assert.NotNull(tgcMesh);
         }
 
+        [TestCase]
+        public void EnsureRightTypeRenderIsLoaded()
+        {
+            //TODO asegurar que si tiene material el tipo de render sea difuse map, o si tiene ligth map que sea difuse mas ligth map
+        }
+
        
 
 

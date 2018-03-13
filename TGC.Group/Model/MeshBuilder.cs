@@ -23,13 +23,13 @@ namespace TGC.Group.Model
         //Variables
         internal TgcMesh tgcMesh;
         internal Mesh dxMesh;
-        internal Material[] meshMaterials { get; set; }
-        internal TgcTexture[] meshTextures { get; set; }
+        internal Material[] MeshMaterials { get; set; }
+        internal TgcTexture[] MeshTextures { get; set; }
         internal bool autoTransform;
         internal bool enable;
         internal bool hasBoundingBox;
         internal VertexElement[] VertexElementInstance { get; set; }
-        internal List<TgcObjMaterialAux> materialsArray { get; set; }
+        internal List<TgcObjMaterialAux> MaterialsArray { get; set; }
         public IMeshFactory MeshFactory { get; set; }
         public Device Device { get; set; }
 
@@ -39,20 +39,25 @@ namespace TGC.Group.Model
             VertexElementInstance = VertexColorVertexElements; //por defecto solo color (?) 
         }
 
-        public Mesh getInstaceDxMesh()
+        public Mesh GetInstaceDxMesh()
         {
             return dxMesh;
         }
 
-
+        /// <summary>
+        ///     Agrega El/Los materiales, cambia el tipo de VertexElement y luego los hace el set de los atributos 
+        ///     meshMaterials y meshTextures
+        /// </summary>
+        /// <param name="objMaterialLoader">Clase ObjMaterialLader</param>
+        /// <returns>MeshBuilder</returns>
         public MeshBuilder AddMaterials(ObjMaterialsLoader objMaterialLoader)
         {
             //create material
             // TODO
-            materialsArray = new List<TgcObjMaterialAux>();
+            MaterialsArray = new List<TgcObjMaterialAux>();
             objMaterialLoader.ListObjMaterialMesh.ForEach((objMaterialMesh =>
                     {
-                        materialsArray.Add(createTextureAndMaterial(objMaterialMesh, objMaterialLoader.currentDirectory));
+                        MaterialsArray.Add(createTextureAndMaterial(objMaterialMesh, objMaterialLoader.currentDirectory));
                     }
             ));
 
@@ -60,20 +65,27 @@ namespace TGC.Group.Model
             VertexElementInstance = DiffuseMapVertexElements; // TODO ver que pasa caundo viene ligthmap
             
             //contruyo la textura y los materiales que envié
-            ChargueMaterials(materialsArray);
+            ChargueMaterials(MaterialsArray);
             return this;
         }
 
+        /// <summary>
+        ///     Agrega El/Los materiales y luego los hace el set de los atributos 
+        ///      meshMaterials y meshTextures
+        /// </summary>
+        /// <param name="objMaterialLoader">Mesh de Direct3D</param>
+        /// <returns>MeshBuilder</returns>
         private void ChargueMaterials(List<TgcObjMaterialAux> tgcObjMaterialAuxes)
         {
             var matAux = tgcObjMaterialAuxes.First();
+
             if (tgcObjMaterialAuxes.Count <= 1)
             {
-                meshMaterials = new[] { matAux.materialId };
-                meshTextures = new[]
+                MeshMaterials = new[] { matAux.materialId };
+                MeshTextures = new[]
                     {TgcTexture.createTexture(D3DDevice.Instance.Device, matAux.textureFileName, matAux.texturePath)};
             }
-
+            
             //Configurar Material y Textura para varios SubSet
             else
             {
@@ -83,12 +95,12 @@ namespace TGC.Group.Model
                 dxMesh.UnlockAttributeBuffer(attributeBuffer);
 
                 //Cargar array de Materials y Texturas
-                meshMaterials = new Material[tgcObjMaterialAuxes.Count - 1];
-                meshTextures = new TgcTexture[tgcObjMaterialAuxes.Count - 1];
+                MeshMaterials = new Material[tgcObjMaterialAuxes.Count - 1];
+                MeshTextures = new TgcTexture[tgcObjMaterialAuxes.Count - 1];
                 tgcObjMaterialAuxes.ForEach((objMaterial) =>
                     {
-                        meshMaterials[tgcObjMaterialAuxes.IndexOf(objMaterial)] = objMaterial.materialId;
-                        meshTextures[tgcObjMaterialAuxes.IndexOf(objMaterial)] = TgcTexture.createTexture(D3DDevice.Instance.Device,
+                        MeshMaterials[tgcObjMaterialAuxes.IndexOf(objMaterial)] = objMaterial.materialId;
+                        MeshTextures[tgcObjMaterialAuxes.IndexOf(objMaterial)] = TgcTexture.createTexture(D3DDevice.Instance.Device,
                             objMaterial.textureFileName,
                             objMaterial.texturePath);
                             
@@ -134,7 +146,7 @@ namespace TGC.Group.Model
 
 
 
-        public MeshBuilder chargeBuffer(ObjMesh objMesh)
+        public MeshBuilder ChargeBuffer(ObjMesh objMesh)
         {
             //Cargar VertexBuffer
             using (var vb = this.dxMesh.VertexBuffer)
@@ -228,20 +240,20 @@ namespace TGC.Group.Model
             return this;
         }
         
-        public TgcMesh build(ObjMesh objMesh)
+        public TgcMesh Build(ObjMesh objMesh)
         {
             TgcMesh unMesh =  MeshFactory.createNewMesh(dxMesh, objMesh.Name, TgcMesh.MeshRenderType.DIFFUSE_MAP);
             SetBoundingBox(unMesh);
             unMesh.AutoTransformEnable = autoTransform;
             unMesh.Enabled = enable;
-            unMesh.Materials = meshMaterials;
-            unMesh.DiffuseMaps = meshTextures;
+            unMesh.Materials = MeshMaterials;
+            unMesh.DiffuseMaps = MeshTextures;
             return unMesh;
         }
 
         private void SetBoundingBox(TgcMesh unMesh)
         {
-            //Crear BoundingBox, aprovechar lo que viene del XML o crear uno por nuestra cuenta
+            //Crear BoundingBox, aprovechar lo que viene del OBJ o crear uno por nuestra cuenta
             if (hasBoundingBox)
             {
                 unMesh.BoundingBox = new TgcBoundingAxisAlignBox(
@@ -346,68 +358,13 @@ namespace TGC.Group.Model
             material.DiffuseColor = objMaterialMesh.Kd;
             material.SpecularColor = objMaterialMesh.Ks;
 
-            //TODO ver que hacer con la opacity
+            //TODO ver que hacer con Ni, con d, con Ns.
+
             //guardar datos de textura
             matAux.texturePath = objMaterialMesh.getTextura() ?? Path.GetFullPath(currentDirectory + SEPARADOR + objMaterialMesh.getTexturaFileName());
             matAux.textureFileName = objMaterialMesh.getTexturaFileName();
             
             return matAux;
         }
-
-        
-
-
-        #region MeshFactory
-
-        /// <summary>
-        ///     Factory para permitir crear una instancia especifica de la clase TgcMesh
-        /// </summary>
-        public interface IMeshFactory
-        {
-            /// <summary>
-            ///     Crear una nueva instancia de la clase TgcMesh o derivados
-            /// </summary>
-            /// <param name="d3DMesh">Mesh de Direct3D</param>
-            /// <param name="meshName">Nombre de la malla</param>
-            /// <param name="renderType">Tipo de renderizado de la malla</param>
-            /// <param name="meshData">Datos de la malla</param>
-            /// <returns>Instancia de TgcMesh creada</returns>
-            TgcMesh createNewMesh(Mesh d3DMesh, string meshName, TgcMesh.MeshRenderType renderType);
-
-            /// <summary>
-            ///     Crear una nueva malla que es una instancia de otra malla original.
-            ///     Crear una instancia de la clase TgcMesh o derivados
-            /// </summary>
-            /// <param name="name">Nombre de la malla</param>
-            /// <param name="parentInstance">Malla original desde la cual basarse</param>
-            /// <param name="translation">Traslación respecto de la malla original</param>
-            /// <param name="rotation">Rotación respecto de la malla original</param>
-            /// <param name="scale">Escala respecto de la malla original</param>
-            /// <returns>Instancia de TgcMesh creada</returns>
-            TgcMesh createNewMeshInstance(string meshName, TgcMesh originalMesh, Vector3 translation, Vector3 rotation,
-                Vector3 scale);
-        }
-
-        /// <summary>
-        ///     Factory default que crea una instancia de la clase TgcMesh
-        /// </summary>
-        public class DefaultMeshFactory : IMeshFactory
-        {
-            public TgcMesh createNewMesh(Mesh d3dMesh, string meshName, TgcMesh.MeshRenderType renderType)
-            {
-                return new TgcMesh(d3dMesh, meshName, renderType);
-            }
-
-            public TgcMesh createNewMeshInstance(string meshName, TgcMesh originalMesh, Vector3 translation,
-                Vector3 rotation, Vector3 scale)
-            {
-                return new TgcMesh(meshName, originalMesh, translation, rotation, scale);
-            }
-        }
-
-        #endregion MeshFactory
-
-
-      
     }
 }

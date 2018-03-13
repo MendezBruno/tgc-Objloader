@@ -16,7 +16,7 @@ namespace TGC.Group.Model
 
         ObjMeshBuilder(MeshBuilder builder)
         {
-           this.dxMesh = builder.getInstaceDxMesh();
+           this.dxMesh = builder.GetInstaceDxMesh();
         }
 
 
