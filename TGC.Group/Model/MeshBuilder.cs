@@ -67,7 +67,7 @@ namespace TGC.Group.Model
             VertexElementInstance = DiffuseMapVertexElements; // TODO ver que pasa caundo viene ligthmap
             
             //contruyo la textura y los materiales que envié
-            ChargueMaterials(MaterialsArray);
+           // ChargueMaterials(MaterialsArray);
             return this;
         }
 
@@ -77,11 +77,13 @@ namespace TGC.Group.Model
         /// </summary>
         /// <param name="objMaterialLoader">Mesh de Direct3D</param>
         /// <returns>MeshBuilder</returns>
-        private void ChargueMaterials(List<TgcObjMaterialAux> tgcObjMaterialAuxes)
+        public MeshBuilder ChargueMaterials()
         {
-            if (tgcObjMaterialAuxes.Count <= 1)
+            
+
+            if (MaterialsArray.Count <= 1)
             {
-                var matAux = tgcObjMaterialAuxes.First();
+                var matAux = MaterialsArray.First();
                 MeshMaterials = new[] { matAux.materialId };
                 MeshTextures = new[]
                     {TgcTexture.createTexture(D3DDevice.Instance.Device, matAux.textureFileName, matAux.texturePath)};
@@ -91,17 +93,19 @@ namespace TGC.Group.Model
             else
             {
                 //Cargar array de Materials y Texturas
-                MeshMaterials = new Material[tgcObjMaterialAuxes.Count - 1];
-                MeshTextures = new TgcTexture[tgcObjMaterialAuxes.Count - 1];
-                tgcObjMaterialAuxes.ForEach((objMaterial) =>
+                MeshMaterials = new Material[MaterialsArray.Count - 1];
+                MeshTextures = new TgcTexture[MaterialsArray.Count - 1];
+                MaterialsArray.ForEach((objMaterial) =>
                     {
-                        MeshMaterials[tgcObjMaterialAuxes.IndexOf(objMaterial)] = objMaterial.materialId;
-                        MeshTextures[tgcObjMaterialAuxes.IndexOf(objMaterial)] = TgcTexture.createTexture(D3DDevice.Instance.Device,
+                        MeshMaterials[MaterialsArray.IndexOf(objMaterial)] = objMaterial.materialId;
+                        MeshTextures[MaterialsArray.IndexOf(objMaterial)] = TgcTexture.createTexture(D3DDevice.Instance.Device,
                             objMaterial.textureFileName,
                             objMaterial.texturePath);
                             
                     });
             }
+
+            return this;
         }
 
         public void ChargeAttrbuteBuffer(int[] materialsIds)
@@ -352,7 +356,7 @@ namespace TGC.Group.Model
             material.DiffuseColor = objMaterialMesh.Kd;
             material.SpecularColor = objMaterialMesh.Ks;
 
-            //TODO ver que hacer con Ni, con d, con Ns.
+            //TODO ver que hacer con Ni, con d, con Ns, con Ke.
 
             //guardar datos de textura
             matAux.texturePath = objMaterialMesh.getTextura() ?? Path.GetFullPath(currentDirectory + SEPARADOR + objMaterialMesh.getTexturaFileName());

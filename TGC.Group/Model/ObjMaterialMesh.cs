@@ -12,7 +12,9 @@ namespace TGC.Group.Model
         public ColorValue Ka { get; set; }
         public ColorValue Kd { get; set; }
         public ColorValue Ks { get; set; }
+        public ColorValue Ke { get; set; }
         public ColorValue Tf { get; set; }
+
         /*
          ILUM REFENCE NUMBERS
             0 Color on and Ambient off
@@ -36,13 +38,14 @@ namespace TGC.Group.Model
         public float Ns { get; set; }
         public int Sharpness { get; set; }
         public float Ni { get; set; }
+        public float Tr { get; set; }
 
 
         //Texture mas statament 
         //TODO prodia ser una estructura de dato que represente la sentencia de textura
         public string map_Kd { get; set; }
         public string disp { get; set; }
-        public string map_bump { get; set; }
+        public string map_Bump { get; set; }
         public string map_Ka { get; set; }
         public string map_Ks { get; set; }
         public string map_d { get; set; }

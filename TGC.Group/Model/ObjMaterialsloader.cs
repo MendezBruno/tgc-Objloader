@@ -57,7 +57,7 @@ namespace TGC.Group.Model
 
         private void ProccesLine(string line)
         {
-            var action = line.Split(' ').FirstOrDefault();
+            var action = line.Split(' ').FirstOrDefault().Trim();
             if (action == null && !String.IsNullOrWhiteSpace(line)) throw new InvalidOperationException($"Cannot find action for this line {line}");
 
             foreach (var strategy in Strategies)

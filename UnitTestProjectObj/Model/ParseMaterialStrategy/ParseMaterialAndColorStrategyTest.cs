@@ -81,5 +81,13 @@ namespace UnitTestProjectObj.Model.ParseMaterialStrategy
             Assert.NotNull(ListObjMaterialMesh.First().Ni);
         }
 
+        [TestCase]
+        public void ProccesLineWithTabCaracterInsertedNotFailed()
+        {
+            var line = "    Ns 96.078431";
+            _parseMaterialAndColorStrategy.ProccesLine(line, ListObjMaterialMesh);
+            Assert.NotNull(ListObjMaterialMesh.First().Ns);
+        }
+
     }
 }

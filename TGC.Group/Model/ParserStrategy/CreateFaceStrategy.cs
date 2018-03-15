@@ -21,10 +21,12 @@ namespace TGC.Group.Model.ParserStrategy
 
         public override void ProccesLine(string line, List<ObjMesh> listObjMesh)
         {
-            var f = line.Remove(0, 2).Split(VERTEXDELIMITER);
-            var arrayVertex1 = CheckFormatCorrect(f[0]);
-            var arrayVertex2 = CheckFormatCorrect(f[1]);
-            var arrayVertex3 = CheckFormatCorrect(f[2]);
+
+
+            var f = CheckFaceFormatCorrect(line);
+            var arrayVertex1 = CheckTriangleFormatCorrect(f[0]);
+            var arrayVertex2 = CheckTriangleFormatCorrect(f[1]);
+            var arrayVertex3 = CheckTriangleFormatCorrect(f[2]);
 
             var face = new FaceTriangle(arrayVertex1[VERTEX], arrayVertex2[VERTEX], arrayVertex3[VERTEX]);
             ;
@@ -42,13 +44,22 @@ namespace TGC.Group.Model.ParserStrategy
             listObjMesh.Last().FaceTrianglesList.Add(face);
         }
 
-        private string[] CheckFormatCorrect(string f)
+        private string[] CheckTriangleFormatCorrect(string f)
         {
             var arrayVertex = f.Split(TYPEVERTEXDELIMITER);
-            if (arrayVertex.Length == 4) throw new ArgumentException("Formato no soportado");
+            if (arrayVertex.Length == 4) throw new ArgumentException("Formato no soportado, cantidad de vertices: 4 ");
             if (arrayVertex.Length > 4 || arrayVertex.Length == 0)
-                throw new ArgumentException("Cantidad de argumentos invalidos");
+                throw new ArgumentException($"Cantidad de argumentos invalidos, se esperaban entre 1 y 3 y se obtuvieron: {arrayVertex.Length}");
             return arrayVertex;
+        }
+
+        private string[] CheckFaceFormatCorrect(string line)
+        {
+            var face = line.Remove(0, 2).Split(VERTEXDELIMITER);
+            if (face.Length == 4) throw new ArgumentException("Formato no soportado, Se esperaba exportado en forma triangular");
+            if (face.Length > 4 || face.Length == 0)
+                throw new ArgumentException("Cantidad de argumentos invalidos");
+            return face;
         }
     }
 }

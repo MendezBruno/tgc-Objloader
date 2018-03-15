@@ -116,6 +116,7 @@ namespace TGC.Group.Model
             ObjMesh objMesh = ListObjMesh[index];
             MeshBuilder.AddMaterials(ObjMaterialsLoader)
                         .AddDxMesh(objMesh.FaceTrianglesList.Count)
+                        .ChargueMaterials()
                         .ChargeBuffer(objMesh)
                         .SetEnable(true)
                         .SetAutotransform(true)

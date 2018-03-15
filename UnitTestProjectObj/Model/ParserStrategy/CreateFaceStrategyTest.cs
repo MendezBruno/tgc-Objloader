@@ -60,5 +60,12 @@ namespace UnitTestProjectObj
             _addUsemtlStrategy.ProccesLine(line, ListObjMesh);
             Assert.True(ListObjMesh.Last().FaceTrianglesList.Last().Usemtl.Equals("Material.001"));
         }
+
+        [TestCase]
+        public void CreateFaceProccesLineWithTextureFailsWhenCountParametersUp()
+        {
+            var line = "f 2/2/1 4/1/1 1/1/1 1/1/1";
+            Assert.That(() => { _createFaceStrategy.ProccesLine(line, ListObjMesh); }, Throws.ArgumentException);
+        }
     }
 }

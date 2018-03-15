@@ -103,23 +103,23 @@ namespace TGC.Group.Model
             Camara.SetCamera(cameraPosition, lookAt);
             //Internamente el framework construye la matriz de view con estos dos vectores.
             //Luego en nuestro juego tendremos que crear una cámara que cambie la matriz de view con variables como movimientos o animaciones de escenas.
-           // TgcObjLoader.LoadObjFromFile(@"C:\Users\CIDESO\Desktop\cubo.obj");
-           // ObjMesh resObjMesh = TgcObjLoader.ListObjMesh.First();
-           /* MeshDelObj = new MeshBuilder()
-                .InstaceDxMeshColorSolo(resObjMesh.FaceTrianglesList.Count, resObjMesh.VertexListV.Count)
-                .chargeBufferColorSolo(resObjMesh)
-                .SetAutotransform(true)
-                .SetEnable(true)
-                .SetHasBoundingBox(false)
-                .build(resObjMesh);
-           */
-            MeshDelObj = TgcObjLoader.LoadTgcMeshFromObj(@"I:\proyectos net\tgc-group\UnitTestProjectObj\DatosPrueba\cubotexturacaja.obj", 0);
-
+            // TgcObjLoader.LoadObjFromFile(@"C:\Users\CIDESO\Desktop\cubo.obj");
+            // ObjMesh resObjMesh = TgcObjLoader.ListObjMesh.First();
+            /* MeshDelObj = new MeshBuilder()
+                 .InstaceDxMeshColorSolo(resObjMesh.FaceTrianglesList.Count, resObjMesh.VertexListV.Count)
+                 .chargeBufferColorSolo(resObjMesh)
+                 .SetAutotransform(true)
+                 .SetEnable(true)
+                 .SetHasBoundingBox(false)
+                 .build(resObjMesh);
+            */
+            //MeshDelObj = TgcObjLoader.LoadTgcMeshFromObj(@"I:\proyectos net\tgc-group\UnitTestProjectObj\DatosPrueba\cubotexturacaja.obj", 0);
+            MeshDelObj = TgcObjLoader.LoadTgcMeshFromObj(@"C:\Users\bmendez\Desktop\bb8.obj",0);
             //           MeshDelObj.AutoTransformEnable = true;
             //           MeshDelObj.Enabled = true;
-                     MeshDelObj.Scale = new Vector3(8.0f, 8.5f, 8.5f);
-                     MeshDelObj.Position = new Vector3(-25, 0, 0);
-                     MeshDelObj.BoundingBox.move(new Vector3(25, 0, 0));
+               //      MeshDelObj.Scale = new Vector3(8.0f, 8.5f, 8.5f);
+              //       MeshDelObj.Position = new Vector3(-25, 0, 0);
+             //        MeshDelObj.BoundingBox.move(new Vector3(25, 0, 0));
 
 
 

@@ -21,12 +21,14 @@ namespace TGC.Group.Model.ParseMaterialsStrategy
         internal const string Ks = "Ks";
         internal const string Ke = "Ke";
         internal const string Ni = "Ni";
+        internal const string Tr = "Tr";
+        internal const string Tf = "Tf";
         internal const string d = "d";
         internal const string illum = "illum";
         // variable keywords que pertenecen a la sentencia de textura
         internal const string map_Kd = "map_Kd";
         internal const string disp = "disp";
-        internal const string map_bump = "map_bump";
+        internal const string map_Bump = "map_Bump";
         internal const string map_Ka = "map_Ka";
         internal const string map_ks = "map_Ks";
         internal const string map_d = "map_d";
