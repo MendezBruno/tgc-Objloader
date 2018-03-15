@@ -75,6 +75,7 @@ namespace TGC.Group.Model
         ///     Agrega El/Los materiales y luego los hace el set de los atributos 
         ///      meshMaterials y meshTextures
         /// </summary>
+       
         /// <returns>MeshBuilder</returns>
         public MeshBuilder ChargueMaterials()
         {
@@ -88,6 +89,7 @@ namespace TGC.Group.Model
             //Configurar Material y Textura para varios SubSet
             else
             {
+            
                 //Cargar array de Materials y Texturas
                 MeshMaterials = new Material[MaterialsArray.Count - 1];
                 MeshTextures = new TgcTexture[MaterialsArray.Count - 1];
@@ -97,6 +99,7 @@ namespace TGC.Group.Model
                         MeshTextures[MaterialsArray.IndexOf(objMaterial)] = TgcTexture.createTexture(D3DDevice.Instance.Device,
                             objMaterial.textureFileName,
                             objMaterial.texturePath);
+                            
                     });
             }
 
@@ -161,6 +164,7 @@ namespace TGC.Group.Model
             return this;
         }
 
+        
 
 
 
@@ -272,6 +276,8 @@ namespace TGC.Group.Model
                 }
                 ib.SetData(indices, 0, LockFlags.None);
             }
+
+            return this;
         }
 
         /// <summary>
