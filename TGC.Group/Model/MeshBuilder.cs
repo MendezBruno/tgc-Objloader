@@ -21,16 +21,18 @@ namespace TGC.Group.Model
         //Constante
         internal const string SEPARADOR = "\\";
         //Variables
-        internal TgcMesh tgcMesh;
-        internal Mesh dxMesh;
-        internal Material[] MeshMaterials { get; set; }
-        internal TgcTexture[] MeshTextures { get; set; }
-        internal bool autoTransform;
-        internal bool enable;
-        internal bool hasBoundingBox;
-        internal VertexElement[] VertexElementInstance { get; set; }
-        internal List<TgcObjMaterialAux> MaterialsArray { get; set; }
+        private TgcMesh tgcMesh { get; set; }
+        private Mesh dxMesh { get; set; }
         public IMeshFactory MeshFactory { get; set; }
+        private int[] materialsIds { get; set; }
+        private Material[] MeshMaterials { get; set; }
+        private TgcTexture[] MeshTextures { get; set; }
+        private bool autoTransform { get; set; }
+        private bool enable { get; set; }
+        private bool hasBoundingBox { get; set; }
+        private VertexElement[] VertexElementInstance { get; set; }
+        private List<TgcObjMaterialAux> MaterialsArray { get; set; }
+       
         public Device Device { get; set; }
 
         public MeshBuilder()
@@ -77,10 +79,9 @@ namespace TGC.Group.Model
         /// <returns>MeshBuilder</returns>
         private void ChargueMaterials(List<TgcObjMaterialAux> tgcObjMaterialAuxes)
         {
-            var matAux = tgcObjMaterialAuxes.First();
-
             if (tgcObjMaterialAuxes.Count <= 1)
             {
+                var matAux = tgcObjMaterialAuxes.First();
                 MeshMaterials = new[] { matAux.materialId };
                 MeshTextures = new[]
                     {TgcTexture.createTexture(D3DDevice.Instance.Device, matAux.textureFileName, matAux.texturePath)};
@@ -89,11 +90,6 @@ namespace TGC.Group.Model
             //Configurar Material y Textura para varios SubSet
             else
             {
-                //Cargar attributeBuffer con los id de las texturas de cada triángulo
-                var attributeBuffer = dxMesh.LockAttributeBufferArray(LockFlags.None);
-                Array.Copy(GetMaterialsIds(tgcObjMaterialAuxes).ToArray(), attributeBuffer, attributeBuffer.Length);  //aca tengo que ver que son todos los materials ID
-                dxMesh.UnlockAttributeBuffer(attributeBuffer);
-
                 //Cargar array de Materials y Texturas
                 MeshMaterials = new Material[tgcObjMaterialAuxes.Count - 1];
                 MeshTextures = new TgcTexture[tgcObjMaterialAuxes.Count - 1];
@@ -108,14 +104,12 @@ namespace TGC.Group.Model
             }
         }
 
-        private ArrayList GetMaterialsIds(List<TgcObjMaterialAux> tgcObjMaterialAuxes)
+        public void ChargeAttrbuteBuffer(int[] materialsIds)
         {
-            var matrialsIds = new ArrayList();
-            tgcObjMaterialAuxes.ForEach((objMaterial) =>
-            {
-               matrialsIds.Add(objMaterial.materialId);
-            });
-            return matrialsIds;
+            //Cargar attributeBuffer con los id de las texturas de cada triángulo
+            var attributeBuffer = dxMesh.LockAttributeBufferArray(LockFlags.None);
+            Array.Copy(materialsIds , attributeBuffer, attributeBuffer.Length);  //aca tengo que ver que son todos los materials ID
+            dxMesh.UnlockAttributeBuffer(attributeBuffer);
         }
 
         public MeshBuilder AddDxMesh(int cantFace)

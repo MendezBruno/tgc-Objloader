@@ -69,6 +69,7 @@
     <Compile Include="Model\ParserStrategy\NoOperationStrategyTest.cs" />
     <Compile Include="ObjLoaderTest.cs" />
     <Compile Include="ObjMaterialLoaderTest.cs" />
+    <Compile Include="ObjMeshTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
