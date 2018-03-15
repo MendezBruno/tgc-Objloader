@@ -30,7 +30,7 @@ namespace UnitTestProjectObj
         public void Init()
         {
             //constantes
-            const string testDataFolder = "DatosPrueba\\cubo.obj";
+            const string testDatabb8Multimaterial = "DatosPrueba\\bb8\\bb8.obj";
             const string testDataCuboTextura = "DatosPrueba\\cubotexturacaja.obj";
 
             //Instanciamos un panel para crear un divice
@@ -107,7 +107,7 @@ namespace UnitTestProjectObj
                 .AddMaterials(_tgcObjLoader.ObjMaterialsLoader)
                 .AddDxMesh(resObjMesh.FaceTrianglesList.Count)
                 .ChargeBuffer(resObjMesh)
-                .SetAutotransform(true)
+                .AddAutotransform(true)
                 .Build(resObjMesh);
             Assert.True(tgcMesh.AutoTransformEnable);
         }
@@ -140,7 +140,7 @@ namespace UnitTestProjectObj
                 .AddMaterials(_tgcObjLoader.ObjMaterialsLoader)
                 .AddDxMesh(resObjMesh.FaceTrianglesList.Count)
                 .ChargeBuffer(resObjMesh)
-                .SetAutotransform(true)
+                .AddAutotransform(true)
                 .SetEnable(true)
                 .SetHasBoundingBox(false)
                 .Build(resObjMesh);
@@ -158,7 +158,7 @@ namespace UnitTestProjectObj
                 .AddMaterials(_tgcObjLoader.ObjMaterialsLoader)
                 .AddDxMesh(resObjMesh.FaceTrianglesList.Count)
                 .ChargeBuffer(resObjMesh)
-                .SetAutotransform(true)
+                .AddAutotransform(true)
                 .SetEnable(true)
                 .SetHasBoundingBox(false)
                 .Build(resObjMesh);
@@ -176,7 +176,7 @@ namespace UnitTestProjectObj
                 .AddMaterials(_tgcObjLoader.ObjMaterialsLoader)
                 .AddDxMesh(resObjMesh.FaceTrianglesList.Count)
                 .ChargeBuffer(resObjMesh)
-                .SetAutotransform(true)
+                .AddAutotransform(true)
                 .SetEnable(true)
                 .SetHasBoundingBox(false)
                 .Build(resObjMesh);
@@ -193,9 +193,10 @@ namespace UnitTestProjectObj
             resObjMesh = _tgcObjLoader.ListObjMesh.First();
             TgcMesh tgcMesh = new MeshBuilder()
                 .AddMaterials(_tgcObjLoader.ObjMaterialsLoader)
+                .ChargueMaterials()
                 .AddDxMesh(resObjMesh.FaceTrianglesList.Count)
                 .ChargeBuffer(resObjMesh)
-                .SetAutotransform(true)
+                .AddAutotransform(true)
                 .SetEnable(true)
                 .SetHasBoundingBox(true)
                 .Build(resObjMesh);
@@ -214,7 +215,7 @@ namespace UnitTestProjectObj
                 .AddDxMesh(resObjMesh.FaceTrianglesList.Count)
                 .ChargeBuffer(resObjMesh)
                 .SetEnable(true)
-                .SetAutotransform(true)
+                .AddAutotransform(true)
                 .SetHasBoundingBox(false)
                 .Build(resObjMesh);
             Assert.NotNull(tgcMesh.BoundingBox);
@@ -229,7 +230,18 @@ namespace UnitTestProjectObj
         [TestCase]
         public void AddMaterialToBuilderOk()
         {
-            //TODO agregar un material y chequear que se cargo correctamente
+            TgcObjLoader _tgcObjLoader = new TgcObjLoader();
+            _tgcObjLoader.LoadObjFromFile(_fullobjpath);
+            resObjMesh = _tgcObjLoader.ListObjMesh.First();
+            MeshBuilder meshBuilder = new MeshBuilder()
+                .AddMaterials(_tgcObjLoader.ObjMaterialsLoader).ChargueMaterials();
+            Assert.NotNull(meshBuilder.MeshMaterials);
+        }
+
+        [TestCase]
+        public void AddMultiMaterialToBuilderOk()
+        {
+            //TODO agregar mas de un material y chequear que se cargo correctamente
         }
 
         [TestCase]

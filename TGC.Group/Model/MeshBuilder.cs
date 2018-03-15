@@ -25,7 +25,7 @@ namespace TGC.Group.Model
         private Mesh dxMesh { get; set; }
         public IMeshFactory MeshFactory { get; set; }
         private int[] materialsIds { get; set; }
-        private Material[] MeshMaterials { get; set; }
+        public Material[] MeshMaterials { get; set; }
         private TgcTexture[] MeshTextures { get; set; }
         private bool autoTransform { get; set; }
         private bool enable { get; set; }
@@ -75,12 +75,9 @@ namespace TGC.Group.Model
         ///     Agrega El/Los materiales y luego los hace el set de los atributos 
         ///      meshMaterials y meshTextures
         /// </summary>
-        /// <param name="objMaterialLoader">Mesh de Direct3D</param>
         /// <returns>MeshBuilder</returns>
         public MeshBuilder ChargueMaterials()
         {
-            
-
             if (MaterialsArray.Count <= 1)
             {
                 var matAux = MaterialsArray.First();
@@ -88,7 +85,6 @@ namespace TGC.Group.Model
                 MeshTextures = new[]
                     {TgcTexture.createTexture(D3DDevice.Instance.Device, matAux.textureFileName, matAux.texturePath)};
             }
-            
             //Configurar Material y Textura para varios SubSet
             else
             {
@@ -101,49 +97,78 @@ namespace TGC.Group.Model
                         MeshTextures[MaterialsArray.IndexOf(objMaterial)] = TgcTexture.createTexture(D3DDevice.Instance.Device,
                             objMaterial.textureFileName,
                             objMaterial.texturePath);
-                            
                     });
             }
 
             return this;
         }
 
-        public void ChargeAttrbuteBuffer(int[] materialsIds)
+        /// <summary>
+        ///     Carga los indices de los materiales en el buffer del mesh de DirectX
+        /// </summary>
+        /// <param name="materialsIds">int[]</param>
+        /// <returns>MeshBuilder</returns>
+        public void ChargeAttributeBuffer(int[] materialsIds)
         {
             //Cargar attributeBuffer con los id de las texturas de cada triángulo
             var attributeBuffer = dxMesh.LockAttributeBufferArray(LockFlags.None);
-            Array.Copy(materialsIds , attributeBuffer, attributeBuffer.Length);  //aca tengo que ver que son todos los materials ID
+            Array.Copy(materialsIds , attributeBuffer, attributeBuffer.Length); 
             dxMesh.UnlockAttributeBuffer(attributeBuffer);
         }
 
+        /// <summary>
+        ///     Crea una instancia del mesh de DirectX
+        /// </summary>
+        /// <param name="cantFace">int</param>
+        /// <returns>MeshBuilder</returns>
         public MeshBuilder AddDxMesh(int cantFace)
         {
             this.dxMesh = new Mesh(cantFace, cantFace * 3, MeshFlags.Managed, VertexElementInstance, D3DDevice.Instance.Device);
             return this;
         }
 
-        public MeshBuilder SetAutotransform(bool flag)
+        /// <summary>
+        ///     Indica al builder si el mesh posee autotransformacion 
+        /// </summary>
+        /// <param name="flag">boolean</param>
+        /// <returns>MeshBuilder</returns>
+        public MeshBuilder AddAutotransform(bool flag)
         {
             this.autoTransform = flag;
             return this;
         }
 
+        /// <summary>
+        ///     Indica al builder si el mesh esta disponible para modificaciones 
+        /// </summary>
+        /// <param name="flag">boolean</param>
+        /// <returns>MeshBuilder</returns>
         public MeshBuilder SetEnable(bool flag)
         {
             this.enable = flag;
             return this;
         }
 
+        /// <summary>
+        ///     Indica al builder si se debe crear un bounding box
+        ///     en base a los parametros de objMesh, por defecto genera uno stardar 
+        /// </summary>
+        /// <param name="flag">boolean</param>
+        /// <returns>MeshBuilder</returns>
         public MeshBuilder SetHasBoundingBox(bool flag)
         {
             this.hasBoundingBox = flag;
             return this;
         }
 
-        
 
 
 
+        /// <summary>
+        ///    Carga el buffer del mesh de DirectX
+        /// </summary>
+        /// <param name="objMesh">ObjMesh</param>
+        /// <returns>MeshBuilder</returns>
         public MeshBuilder ChargeBuffer(ObjMesh objMesh)
         {
             //Cargar VertexBuffer
@@ -176,21 +201,18 @@ namespace TGC.Group.Model
                 });
                 vb.Unlock();
             }
-            //Cargar indexBuffer en forma plana
-            using (var ib = dxMesh.IndexBuffer)
-            {
-                var indices = new short[objMesh.FaceTrianglesList.Count * 3];
-                for (var i = 0; i < indices.Length; i++)
-                {
-                    indices[i] = (short)i;
-                }
-                ib.SetData(indices, 0, LockFlags.None);
-            }
+
+            ChargeIndexBuffer(objMesh);
 
             return this;
         }
 
-
+        /// <summary>
+        ///    crea el mesh con estructura de datos que posee solo color
+        /// </summary>
+        /// <param name="cantFace">int</param>
+        /// /// <param name="cantVertex">int</param>
+        /// <returns>MeshBuilder</returns>
         public MeshBuilder InstaceDxMeshColorSolo(int cantFace, int cantVertex)
         {
             this.dxMesh = new Mesh(cantFace, cantFace * 3,
@@ -198,7 +220,12 @@ namespace TGC.Group.Model
             return this;
         }
 
-        public MeshBuilder chargeBufferColorSolo(ObjMesh objMesh)
+        /// <summary>
+        ///    carga el mesh con estructura de datos que posee solo color
+        /// </summary>
+        /// <param name="objMesh">ObjMesh</param>
+        /// <returns>MeshBuilder</returns>
+        public MeshBuilder ChargeBufferColorSolo(ObjMesh objMesh)
         {
             //Cargar VertexBuffer
             using (var vb = this.dxMesh.VertexBuffer)
@@ -224,7 +251,18 @@ namespace TGC.Group.Model
                 });
                 vb.Unlock();
             }
-            //Cargar indexBuffer en forma plana
+
+            ChargeIndexBuffer(objMesh);
+
+            return this;
+        }
+
+        /// <summary>
+        ///   Cargar indexBuffer del mesh de DirectX en forma plana 
+        /// </summary>
+        /// <param name="objMesh">ObjMesh</param>
+        private void ChargeIndexBuffer(ObjMesh objMesh)
+        {
             using (var ib = dxMesh.IndexBuffer)
             {
                 var indices = new short[objMesh.FaceTrianglesList.Count * 3];
@@ -234,10 +272,13 @@ namespace TGC.Group.Model
                 }
                 ib.SetData(indices, 0, LockFlags.None);
             }
-
-            return this;
         }
-        
+
+        /// <summary>
+        ///   Cargar indexBuffer del mesh de DirectX en forma plana 
+        /// </summary>
+        /// <param name="objMesh">ObjMesh</param>
+        /// <returns>MeshBuilder</returns>
         public TgcMesh Build(ObjMesh objMesh)
         {
             TgcMesh unMesh =  MeshFactory.createNewMesh(dxMesh, objMesh.Name, TgcMesh.MeshRenderType.DIFFUSE_MAP);

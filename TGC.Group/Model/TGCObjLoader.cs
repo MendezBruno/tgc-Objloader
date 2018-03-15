@@ -119,7 +119,7 @@ namespace TGC.Group.Model
                         .ChargueMaterials()
                         .ChargeBuffer(objMesh)
                         .SetEnable(true)
-                        .SetAutotransform(true)
+                        .AddAutotransform(true)
                         .SetHasBoundingBox(false)
                         .Build(objMesh);
 
