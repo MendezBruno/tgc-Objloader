@@ -10,6 +10,14 @@ newmtl wire_153228153
 	Ka 0.6000 0.8941 0.6000
 	Kd 0.6000 0.8941 0.6000
 	Ks 0.3500 0.3500 0.3500
+	
+map_Kd Descargas/Telegram Desktop/cubotexturacaja (2)/HEAD diff MAP.jpg
+disp Net/tgc-Objloader/UnitTestProjectObj/DatosPrueba/HEAD diff MAP.jpg
+map_Bump Net/tgc-Objloader/UnitTestProjectObj/DatosPrueba/HEAD bump MAP.jpg
+map_Ka Descargas/Telegram Desktop/cubotexturacaja (2)/HEAD diff MAP.jpg
+map_Ks Net/tgc-Objloader/UnitTestProjectObj/DatosPrueba/HEAD diff MAP.jpg
+map_d Descargas/Telegram Desktop/cubotexturacaja (2)/HEAD diff MAP.jpg
+
 
 newmtl Material__61
 	Ns 10.0000
@@ -45,9 +53,9 @@ newmtl wire_028149177
 	Kd 0.1098 0.5843 0.6941
 	Ks 0.3500 0.3500 0.3500
 	
-map_Kd Descargas/Telegram Desktop/cubotexturacaja (2)/HEAD diff MAP.jpg
-disp Net/tgc-Objloader/UnitTestProjectObj/DatosPrueba/HEAD diff MAP.jpg
-map_Bump Net/tgc-Objloader/UnitTestProjectObj/DatosPrueba/HEAD diff MAP.jpg
-map_Ka Descargas/Telegram Desktop/cubotexturacaja (2)/HEAD diff MAP.jpg
-map_Ks Net/tgc-Objloader/UnitTestProjectObj/DatosPrueba/HEAD diff MAP.jpg
-map_d Descargas/Telegram Desktop/cubotexturacaja (2)/HEAD diff MAP.jpg
+map_Kd Descargas/Telegram Desktop/cubotexturacaja (2)/Body diff MAP.jpg
+disp Net/tgc-Objloader/UnitTestProjectObj/DatosPrueba/Body diff MAP.jpg
+map_Bump Net/tgc-Objloader/UnitTestProjectObj/DatosPrueba/BODY bump MAP.jpg
+map_Ka Descargas/Telegram Desktop/cubotexturacaja (2)/Body diff MAP.jpg
+map_Ks Net/tgc-Objloader/UnitTestProjectObj/DatosPrueba/Body diff MAP.jpg
+map_d Descargas/Telegram Desktop/cubotexturacaja (2)/Body diff MAP.jpg

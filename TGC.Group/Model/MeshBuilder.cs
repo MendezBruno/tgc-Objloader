@@ -75,11 +75,10 @@ namespace TGC.Group.Model
         ///     Agrega El/Los materiales y luego los hace el set de los atributos 
         ///      meshMaterials y meshTextures
         /// </summary>
-       
         /// <returns>MeshBuilder</returns>
         public MeshBuilder ChargueMaterials()
         {
-            if (MaterialsArray.Count <= 1)
+          /*  if (MaterialsArray.Count <= 1)
             {
                 var matAux = MaterialsArray.First();
                 MeshMaterials = new[] { matAux.materialId };
@@ -88,35 +87,55 @@ namespace TGC.Group.Model
             }
             //Configurar Material y Textura para varios SubSet
             else
-            {
-            
-                //Cargar array de Materials y Texturas
-                MeshMaterials = new Material[MaterialsArray.Count - 1];
-                MeshTextures = new TgcTexture[MaterialsArray.Count - 1];
+            {*/
+                   //Cargar array de Materials y Texturas  TODO separar la creacion del material de la textura
+                MeshMaterials = new Material[MaterialsArray.Count];
+                MeshTextures = new TgcTexture[GetTextureCount()];
+                var indexTexture = 0;
                 MaterialsArray.ForEach((objMaterial) =>
-                    {
+                {
                         MeshMaterials[MaterialsArray.IndexOf(objMaterial)] = objMaterial.materialId;
-                        MeshTextures[MaterialsArray.IndexOf(objMaterial)] = TgcTexture.createTexture(D3DDevice.Instance.Device,
+
+                        if (objMaterial.textureFileName != null)
+                        {
+                        MeshTextures[indexTexture] = TgcTexture.createTexture(
+                            D3DDevice.Instance.Device,
                             objMaterial.textureFileName,
                             objMaterial.texturePath);
-                            
-                    });
-            }
+                            indexTexture++;
+                        }
+                });
 
             return this;
         }
 
         /// <summary>
-        ///     Carga los indices de los materiales en el buffer del mesh de DirectX
+        ///     Obtiene la cantidad materiales que poseen textura
+        /// </summary>
+        /// <returns>int</returns>
+        private int GetTextureCount()
+        {
+            var count = 0;
+
+            MaterialsArray.ForEach((objMaterial) =>
+            {
+                if (objMaterial.textureFileName != null) count++;
+            });
+
+            return count;
+        }
+
+        /// <summary>
+        ///     Cargar attributeBuffer con los id de las texturas de cada triángulo
         /// </summary>
         /// <param name="materialsIds">int[]</param>
         /// <returns>MeshBuilder</returns>
-        public void ChargeAttributeBuffer(int[] materialsIds)
+        public MeshBuilder ChargeAttributeBuffer(int[] materialsIds)
         {
-            //Cargar attributeBuffer con los id de las texturas de cada triángulo
             var attributeBuffer = dxMesh.LockAttributeBufferArray(LockFlags.None);
             Array.Copy(materialsIds , attributeBuffer, attributeBuffer.Length); 
             dxMesh.UnlockAttributeBuffer(attributeBuffer);
+            return this;
         }
 
         /// <summary>
@@ -277,7 +296,6 @@ namespace TGC.Group.Model
                 ib.SetData(indices, 0, LockFlags.None);
             }
 
-            return this;
         }
 
         /// <summary>

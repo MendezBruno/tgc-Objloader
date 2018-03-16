@@ -18,6 +18,7 @@ namespace UnitTestProjectObj
     {
        // private TgcObjLoader _tgcObjLoader = new TgcObjLoader();
         private string _fullobjpath;
+        private string _fullobjpathmultimaterial;
         ObjMesh resObjMesh;
         private List<ObjMaterialMesh> listObjMaterialMesh;
         internal Mesh dxMesh;
@@ -54,6 +55,7 @@ namespace UnitTestProjectObj
                 dir = new DirectoryInfo(dir.Parent.FullName);
             }
             _fullobjpath = Path.Combine(dir.Parent.FullName, testDataCuboTextura);
+            _fullobjpathmultimaterial = Path.Combine(dir.Parent.FullName, testDatabb8Multimaterial);
         }
 
        
@@ -241,7 +243,25 @@ namespace UnitTestProjectObj
         [TestCase]
         public void AddMultiMaterialToBuilderOk()
         {
-            //TODO agregar mas de un material y chequear que se cargo correctamente
+            TgcObjLoader _tgcObjLoader = new TgcObjLoader();
+            _tgcObjLoader.LoadObjFromFile(_fullobjpathmultimaterial);
+            resObjMesh = _tgcObjLoader.ListObjMesh.First();
+            MeshBuilder meshBuilder = new MeshBuilder()
+                .AddMaterials(_tgcObjLoader.ObjMaterialsLoader).ChargueMaterials();
+            Assert.NotNull(meshBuilder.MeshMaterials);
+        }
+
+        [TestCase]
+        public void FirstMaterialMeshHaveIndexZero()
+        {
+            //TODO Chequear que el primer material en el array de materiales tenga indice 0
+            TgcObjLoader _tgcObjLoader = new TgcObjLoader();
+            _tgcObjLoader.LoadObjFromFile(_fullobjpathmultimaterial);
+            resObjMesh = _tgcObjLoader.ListObjMesh.First();
+            MeshBuilder meshBuilder = new MeshBuilder()
+                .AddMaterials(_tgcObjLoader.ObjMaterialsLoader)
+                .ChargueMaterials();
+            Assert.NotNull(meshBuilder.MeshMaterials[0]);
         }
 
         [TestCase]
@@ -254,6 +274,12 @@ namespace UnitTestProjectObj
         public void CreateMeshColorAndDifusseMap()
         {
             //TODO el test de cuando el mesh es color y difuse
+        }
+
+        [TestCase]
+        public void GetTextureCountOk()
+        {
+            //TODO el test de cuantos texturas tiene las lista de materiales
         }
 
 
