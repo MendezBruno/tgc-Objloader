@@ -279,7 +279,13 @@ namespace UnitTestProjectObj
         [TestCase]
         public void GetTextureCountOk()
         {
-            //TODO el test de cuantos texturas tiene las lista de materiales
+            TgcObjLoader _tgcObjLoader = new TgcObjLoader();
+            _tgcObjLoader.LoadObjFromFile(_fullobjpathmultimaterial);
+            resObjMesh = _tgcObjLoader.ListObjMesh.First();
+            MeshBuilder meshBuilder = new MeshBuilder()
+                .AddMaterials(_tgcObjLoader.ObjMaterialsLoader)
+                .ChargueMaterials();
+            Assert.True(meshBuilder.GetTextureCount() == 2);
         }
 
 

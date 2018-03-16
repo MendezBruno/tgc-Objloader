@@ -115,13 +115,13 @@ namespace TGC.Group.Model
             */
             //MeshDelObj = TgcObjLoader.LoadTgcMeshFromObj(@"I:\proyectos net\tgc-group\UnitTestProjectObj\DatosPrueba\cubotexturacaja.obj", 0);
             // MeshDelObj = TgcObjLoader.LoadTgcMeshFromObj(@"C:\Users\bmendez\Desktop\bb8.obj",0);
-            MeshDelObj = TgcObjLoader.LoadTgcMeshFromObj(@"C:\Users\bmendez\Desktop\bb8.obj", 0);
+            MeshDelObj = TgcObjLoader.LoadTgcMeshFromObj(@"C:\Users\CIDESO\Desktop\Mendez investigacion\tgc-Objloader\UnitTestProjectObj\DatosPrueba\bb8\bb8.obj", 0);
             //           MeshDelObj.AutoTransformEnable = true;
             //           MeshDelObj.Enabled = true;
-               //      MeshDelObj.Scale = new Vector3(8.0f, 8.5f, 8.5f);
-              //       MeshDelObj.Position = new Vector3(-25, 0, 0);
+                     MeshDelObj.Scale = new Vector3(0.5f, 0.5f, 0.5f);
+                     MeshDelObj.Position = new Vector3(-25, 0, 0);
              //        MeshDelObj.BoundingBox.move(new Vector3(25, 0, 0));
-
+                    // MeshDelObj.Rotation()
 
 
         }

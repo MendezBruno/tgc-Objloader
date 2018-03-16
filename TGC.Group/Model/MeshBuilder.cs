@@ -113,7 +113,7 @@ namespace TGC.Group.Model
         ///     Obtiene la cantidad materiales que poseen textura
         /// </summary>
         /// <returns>int</returns>
-        private int GetTextureCount()
+        public int GetTextureCount()
         {
             var count = 0;
 
