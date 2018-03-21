@@ -132,6 +132,15 @@ namespace UnitTestProjectObj
         }
 
         [TestCase]
+        public void GetListOfMaterialsWithWhiteSpaceOK()
+        {
+            var _tgcObjLoader = new TgcObjLoader();
+            var lines = File.ReadAllLines(_fullobjpathmeshcolorsolo);
+            _tgcObjLoader.GetListOfMaterials(lines, _fullobjpathmeshcolorsolo);
+            Assert.True(_tgcObjLoader.ListMtllib.First().Equals("Triangulado 2 materiales.mtl"));
+        }
+
+        [TestCase]
         public void FilterByKeyWordOk()
         {
             var _tgcObjLoader = new TgcObjLoader();

@@ -29,7 +29,7 @@ namespace TGC.Group.Model
         }
 
         internal const string MTLLIB = "mtllib";
-        private const int INDEXATTR = 2;
+        private const int INDEXATTR = 7;
         private const int ELEMENTOFMTLLIB = 2;
         private const int INICIO = 0;
         public List<ObjParseStrategy> Strategies { get; set; }
@@ -89,7 +89,7 @@ namespace TGC.Group.Model
         {
             string[] splitLine = line.Split(' ');
             if (splitLine.Length < ELEMENTOFMTLLIB) throw new ArgumentException("El atributo Mtllib tiene formato incorrecto");
-            var attribute = splitLine.Last(); //TODO ver que pasa con los nombres de textura que tienen espacio
+            var attribute = line.Substring(INDEXATTR) ;
             if (!Path.GetExtension(attribute).Equals(".mtl"))
             {
                 throw new ArgumentException("La extención de Mtllib es incorrecta, se esperaba: .mtl y se obtuvo: " + Path.GetExtension(attribute));
