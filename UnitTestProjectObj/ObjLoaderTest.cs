@@ -16,6 +16,7 @@ namespace UnitTestProjectObj
 
         private TgcObjLoader _tgcObjLoader = new TgcObjLoader();
         private string _fullobjpath;
+        private string _fullobjpathmeshcolorsolo;
         private System.Windows.Forms.Panel panel3D;
 
 
@@ -25,6 +26,7 @@ namespace UnitTestProjectObj
         {
             const string testDataFolder = "DatosPrueba\\cubo.obj";
             const string testDataCuboTextura = "DatosPrueba\\cubotexturacaja.obj";
+            const string testDataMeshColorSolo = "DatosPrueba\\tgcito\\Tgcito color solo.obj";
 
             var dir = new DirectoryInfo(Path.GetFullPath(TestContext.CurrentContext.TestDirectory));
             while (!dir.Parent.Name.Equals("UnitTestProjectObj"))
@@ -32,6 +34,7 @@ namespace UnitTestProjectObj
                 dir = new DirectoryInfo(dir.Parent.FullName);
             }
             _fullobjpath = Path.Combine(dir.Parent.FullName, testDataCuboTextura);
+            _fullobjpathmeshcolorsolo = Path.Combine(dir.Parent.FullName, testDataMeshColorSolo);
             //Instanciamos un panel para crear un divice
             panel3D = new System.Windows.Forms.Panel();
             //Crear Graphics Device
@@ -138,9 +141,11 @@ namespace UnitTestProjectObj
         }
 
         [TestCase]
-        public void GetListwithOutMaterialsOk()
+        public void LoadTgcMeshFromObjwithOutMaterialsOk()
         {
-
+            var _tgcObjLoader = new TgcObjLoader();
+            TgcMesh tgcMesh = _tgcObjLoader.LoadTgcMeshFromObj(_fullobjpathmeshcolorsolo, 0);
+            Assert.NotNull(tgcMesh);
         }
 
         [TestCase]
@@ -150,15 +155,6 @@ namespace UnitTestProjectObj
             TgcMesh tgcMesh = _tgcObjLoader.LoadTgcMeshFromObj(_fullobjpath, 0);
             Assert.NotNull(tgcMesh);
         }
-
-        [TestCase]
-        public void EnsureRightTypeRenderIsLoaded()
-        {
-            //TODO asegurar que si tiene material el tipo de render sea difuse map, o si tiene ligth map que sea difuse mas ligth map
-        }
-
-       
-
 
     }
 }

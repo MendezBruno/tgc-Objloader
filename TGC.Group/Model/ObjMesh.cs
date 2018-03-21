@@ -35,6 +35,7 @@ namespace TGC.Group.Model
                 if (!usemtl.Equals(face.Usemtl))
                 {
                     numMaterial++;
+                    usemtl = face.Usemtl;
                 }
                 materialsId[index] = numMaterial;
                 index++;

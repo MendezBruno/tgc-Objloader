@@ -18,14 +18,14 @@ namespace TGC.Group.Model.ParserStrategy
         {
            
             string attribute = CheckAttribute(line); // 
-            if (attribute.Equals("on") ) listObjMesh.Last().Shadow = true;
+            if (attribute.Equals("1") ) listObjMesh.Last().Shadow = true;
         }
 
         private string CheckAttribute(string line)
         {
             if(line.Split(' ').Length != 2) throw new ArgumentException("El atributo Shadow tiene formato incorrecto");
             var attribute = line.Split(' ')[INDEXATTR];
-            if(!attribute.Equals("on") && !attribute.Equals("off") ) throw new ArgumentException("Comando para el atributo shadow incorrecto. Se esperaba: \"on\" o \"off\" y se obtuvo:" + attribute);
+            if(!attribute.Equals("1") && !attribute.Equals("off") ) throw new ArgumentException("Comando para el atributo shadow incorrecto. Se esperaba: \"1\" u \"off\" y se obtuvo:" + attribute);
             return attribute;
         }
     }

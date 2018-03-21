@@ -13,6 +13,7 @@ using Microsoft.DirectX;
 using Microsoft.DirectX.PrivateImplementationDetails;
 using TGC.Core.BoundingVolumes;
 using TGC.Core.Textures;
+using TGC.Group.Model.CreateBufferStrategy;
 
 namespace TGC.Group.Model
 {
@@ -21,16 +22,14 @@ namespace TGC.Group.Model
         //Constante
         internal const string SEPARADOR = "\\";
         //Variables
-        private TgcMesh tgcMesh { get; set; }
         private Mesh dxMesh { get; set; }
         public IMeshFactory MeshFactory { get; set; }
-        private int[] materialsIds { get; set; }
+        public ChargueBufferStrategy ChargueBufferStrategy { get; set; }
         public Material[] MeshMaterials { get; set; }
         private TgcTexture[] MeshTextures { get; set; }
         private bool autoTransform { get; set; }
         private bool enable { get; set; }
         private bool hasBoundingBox { get; set; }
-        private VertexElement[] VertexElementInstance { get; set; }
         private List<TgcObjMaterialAux> MaterialsArray { get; set; }
        
         public Device Device { get; set; }
@@ -38,7 +37,7 @@ namespace TGC.Group.Model
         public MeshBuilder()
         {
             MeshFactory = new DefaultMeshFactory();
-            VertexElementInstance = VertexColorVertexElements; //por defecto solo color (?) 
+            ChargueBufferStrategy = new ChargueBufferColorSoloStrategy();
         }
 
         public Mesh GetInstaceDxMesh()
@@ -47,8 +46,7 @@ namespace TGC.Group.Model
         }
 
         /// <summary>
-        ///     Agrega El/Los materiales, cambia el tipo de VertexElement y luego los hace el set de los atributos 
-        ///     meshMaterials y meshTextures
+        ///     Agrega El/Los materiales, cambia el tipo de VertexElement
         /// </summary>
         /// <param name="objMaterialLoader">Clase ObjMaterialLader</param>
         /// <returns>MeshBuilder</returns>
@@ -64,10 +62,7 @@ namespace TGC.Group.Model
             ));
 
             //set nueva mesh strategy
-            VertexElementInstance = DiffuseMapVertexElements; // TODO ver que pasa caundo viene ligthmap
-            
-            //contruyo la textura y los materiales que envié
-           // ChargueMaterials(MaterialsArray);
+            ChargueBufferStrategy = new ChargueBufferDiffuseMapStrategy();  // TODO ver que pasa caundo viene ligthmap
             return this;
         }
 
@@ -78,20 +73,10 @@ namespace TGC.Group.Model
         /// <returns>MeshBuilder</returns>
         public MeshBuilder ChargueMaterials()
         {
-          /*  if (MaterialsArray.Count <= 1)
-            {
-                var matAux = MaterialsArray.First();
-                MeshMaterials = new[] { matAux.materialId };
-                MeshTextures = new[]
-                    {TgcTexture.createTexture(D3DDevice.Instance.Device, matAux.textureFileName, matAux.texturePath)};
-            }
-            //Configurar Material y Textura para varios SubSet
-            else
-            {*/
-                   //Cargar array de Materials y Texturas  TODO separar la creacion del material de la textura
+               //Cargar array de Materials y Texturas  TODO separar la creacion del material de la textura
                 MeshMaterials = new Material[MaterialsArray.Count];
-                MeshTextures = new TgcTexture[GetTextureCount()];
-                var indexTexture = 0;
+                MeshTextures = new TgcTexture[GetTextureCount()];     //GetTextureCount()
+            var indexTexture = 0;
                 MaterialsArray.ForEach((objMaterial) =>
                 {
                         MeshMaterials[MaterialsArray.IndexOf(objMaterial)] = objMaterial.materialId;
@@ -145,7 +130,7 @@ namespace TGC.Group.Model
         /// <returns>MeshBuilder</returns>
         public MeshBuilder AddDxMesh(int cantFace)
         {
-            this.dxMesh = new Mesh(cantFace, cantFace * 3, MeshFlags.Managed, VertexElementInstance, D3DDevice.Instance.Device);
+            this.dxMesh = new Mesh(cantFace, cantFace * 3, MeshFlags.Managed, ChargueBufferStrategy.VertexElementInstance, D3DDevice.Instance.Device);
             return this;
         }
 
@@ -182,130 +167,27 @@ namespace TGC.Group.Model
             this.hasBoundingBox = flag;
             return this;
         }
-
         
 
-
-
         /// <summary>
-        ///    Carga el buffer del mesh de DirectX
+        ///    Carga el buffer del mesh de DirectX usando la estrategia correcta para s estructura
         /// </summary>
         /// <param name="objMesh">ObjMesh</param>
         /// <returns>MeshBuilder</returns>
         public MeshBuilder ChargeBuffer(ObjMesh objMesh)
         {
-            //Cargar VertexBuffer
-            using (var vb = this.dxMesh.VertexBuffer)
-            {
-                var data = vb.Lock(0, 0, LockFlags.None);
-                var v = new VertexMesh();
-                objMesh.FaceTrianglesList.ForEach(face =>
-                {
-                    
-                    v.Position = objMesh.VertexListV[Convert.ToInt32(face.V1) -1];
-                    v.Normal = objMesh.VertexListVn[Convert.ToInt32(face.Vn1) -1];
-                    v.Tu0 = objMesh.VertexListVt[Convert.ToInt32(face.Vt1)-1].X;
-                    v.Tv0 = objMesh.VertexListVt[Convert.ToInt32(face.Vt1)-1].Y;
-                    v.Color = -1;  //TODO que corresponde poner aca con respecto obj Mesh
-                    data.Write(v);
-                    v.Position = objMesh.VertexListV[Convert.ToInt32(face.V2)-1];
-                    v.Normal = objMesh.VertexListVn[Convert.ToInt32(face.Vn2)-1];
-                    v.Tu0 = objMesh.VertexListVt[Convert.ToInt32(face.Vt2)-1].X;
-                    v.Tv0 = objMesh.VertexListVt[Convert.ToInt32(face.Vt2)-1].Y;
-                    v.Color = -1;  //TODO que corresponde poner aca con respecto obj Mesh
-                    data.Write(v);
-                    v.Position = objMesh.VertexListV[Convert.ToInt32(face.V3)-1];
-                    v.Normal = objMesh.VertexListVn[Convert.ToInt32(face.Vn3)-1];
-                    v.Tu0 = objMesh.VertexListVt[Convert.ToInt32(face.Vt3)-1].X;
-                    v.Tv0 = objMesh.VertexListVt[Convert.ToInt32(face.Vt3)-1].Y;
-                    v.Color = -1;  //TODO que corresponde poner aca con respecto obj Mesh
-                    data.Write(v);
-
-                });
-                vb.Unlock();
-            }
-
-            ChargeIndexBuffer(objMesh);
-
+            ChargueBufferStrategy.ChargeBuffer(objMesh, this.dxMesh);
             return this;
         }
-
+   
         /// <summary>
-        ///    crea el mesh con estructura de datos que posee solo color
-        /// </summary>
-        /// <param name="cantFace">int</param>
-        /// /// <param name="cantVertex">int</param>
-        /// <returns>MeshBuilder</returns>
-        public MeshBuilder InstaceDxMeshColorSolo(int cantFace, int cantVertex)
-        {
-            this.dxMesh = new Mesh(cantFace, cantFace * 3,
-                 MeshFlags.Managed, VertexColorVertexElements, D3DDevice.Instance.Device);
-            return this;
-        }
-
-        /// <summary>
-        ///    carga el mesh con estructura de datos que posee solo color
-        /// </summary>
-        /// <param name="objMesh">ObjMesh</param>
-        /// <returns>MeshBuilder</returns>
-        public MeshBuilder ChargeBufferColorSolo(ObjMesh objMesh)
-        {
-            //Cargar VertexBuffer
-            using (var vb = this.dxMesh.VertexBuffer)
-            {
-                var data = vb.Lock(0, 0, LockFlags.None);
-                var v = new VertexColorVertex();
-                objMesh.FaceTrianglesList.ForEach(face =>
-                {
-
-                    v.Position = objMesh.VertexListV[Convert.ToInt32(face.V1) - 1];
-                    v.Normal = objMesh.VertexListVn[Convert.ToInt32(face.Vn1) - 1];
-                    v.Color = -16777047;  //TODO que corresponde poner aca con respecto obj Mesh
-                    data.Write(v);
-                    v.Position = objMesh.VertexListV[Convert.ToInt32(face.V2) - 1];
-                    v.Normal = objMesh.VertexListVn[Convert.ToInt32(face.Vn2) - 1];
-                    v.Color = -16777047;  //TODO que corresponde poner aca con respecto obj Mesh
-                    data.Write(v);
-                    v.Position = objMesh.VertexListV[Convert.ToInt32(face.V3) - 1];
-                    v.Normal = objMesh.VertexListVn[Convert.ToInt32(face.Vn3) - 1];
-                    v.Color = -16777047;  //TODO que corresponde poner aca con respecto obj Mesh
-                    data.Write(v);
-
-                });
-                vb.Unlock();
-            }
-
-            ChargeIndexBuffer(objMesh);
-
-            return this;
-        }
-
-        /// <summary>
-        ///   Cargar indexBuffer del mesh de DirectX en forma plana 
-        /// </summary>
-        /// <param name="objMesh">ObjMesh</param>
-        private void ChargeIndexBuffer(ObjMesh objMesh)
-        {
-            using (var ib = dxMesh.IndexBuffer)
-            {
-                var indices = new short[objMesh.FaceTrianglesList.Count * 3];
-                for (var i = 0; i < indices.Length; i++)
-                {
-                    indices[i] = (short)i;
-                }
-                ib.SetData(indices, 0, LockFlags.None);
-            }
-
-        }
-
-        /// <summary>
-        ///   Cargar indexBuffer del mesh de DirectX en forma plana 
+        ///   Construye el mesh con los atributos que se le fueron agregando 
         /// </summary>
         /// <param name="objMesh">ObjMesh</param>
         /// <returns>MeshBuilder</returns>
         public TgcMesh Build(ObjMesh objMesh)
         {
-            TgcMesh unMesh =  MeshFactory.createNewMesh(dxMesh, objMesh.Name, TgcMesh.MeshRenderType.DIFFUSE_MAP);
+            TgcMesh unMesh =  MeshFactory.createNewMesh(dxMesh, objMesh.Name, ChargueBufferStrategy.RenderType);
             SetBoundingBox(unMesh);
             unMesh.AutoTransformEnable = autoTransform;
             unMesh.Enabled = enable;
@@ -314,6 +196,11 @@ namespace TGC.Group.Model
             return unMesh;
         }
 
+        /// <summary>
+        ///   Cargar indexBuffer del mesh de DirectX en forma plana 
+        /// </summary>
+        /// <param name="objMesh">ObjMesh</param>
+        /// <returns>MeshBuilder</returns>
         private void SetBoundingBox(TgcMesh unMesh)
         {
             //Crear BoundingBox, aprovechar lo que viene del OBJ o crear uno por nuestra cuenta
@@ -332,76 +219,12 @@ namespace TGC.Group.Model
             }
         }
 
-
-        /// <summary>
-        ///     Estructura de Vertice para formato de malla DIFFUSE_MAP
-        /// </summary>
-        public struct VertexMesh
-        {
-            public Vector3 Position;
-            public Vector3 Normal;
-            public int Color;
-            public float Tu0;
-            public float Tv0;
-        }
-
-
-        /// <summary>
-        ///     FVF para formato de malla  DIFFUSE_MAP
-        /// </summary>
-        public static readonly VertexElement[] DiffuseMapVertexElements =
-        {
-            new VertexElement(0, 0, DeclarationType.Float3,
-                DeclarationMethod.Default,
-                DeclarationUsage.Position, 0),
-            new VertexElement(0, 12, DeclarationType.Float3,
-                DeclarationMethod.Default,
-                DeclarationUsage.Normal, 0),
-            new VertexElement(0, 24, DeclarationType.Color,
-                DeclarationMethod.Default,
-                DeclarationUsage.Color, 0),
-            new VertexElement(0, 28, DeclarationType.Float2,
-                DeclarationMethod.Default,
-                DeclarationUsage.TextureCoordinate, 0),
-            VertexElement.VertexDeclarationEnd
-        };
-
-
-
-        /// <summary>
-        ///     FVF para formato de malla VERTEX_COLOR
-        /// </summary>
-        public static readonly VertexElement[] VertexColorVertexElements =
-        {
-            new VertexElement(0, 0, DeclarationType.Float3,
-                DeclarationMethod.Default,
-                DeclarationUsage.Position, 0),
-            new VertexElement(0, 12, DeclarationType.Float3,
-                DeclarationMethod.Default,
-                DeclarationUsage.Normal, 0),
-            new VertexElement(0, 24, DeclarationType.Color,
-                DeclarationMethod.Default,
-                DeclarationUsage.Color, 0),
-            VertexElement.VertexDeclarationEnd
-        };
-
-        /// <summary>
-        ///     Estructura de Vertice para formato de malla VERTEX_COLOR
-        /// </summary>
-        public struct VertexColorVertex
-        {
-            public Vector3 Position;
-            public Vector3 Normal;
-            public int Color;
-        }
-
         /// <summary>
         ///     Estructura auxiliar para cargar SubMaterials y Texturas
         /// </summary>
         internal class TgcObjMaterialAux
         {
             public Material materialId;
-           // public TgcSceneLoaderMaterialAux[] subMaterials; por el momento no lo voy a usar
             public string textureFileName;
             public string texturePath;
         }
@@ -429,5 +252,10 @@ namespace TGC.Group.Model
             
             return matAux;
         }
+
+
+
+
+
     }
 }

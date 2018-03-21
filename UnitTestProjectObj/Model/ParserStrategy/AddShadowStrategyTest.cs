@@ -27,7 +27,7 @@ namespace UnitTestProjectObj.Model.ParserStrategy
         [Test]
         public void AsignateAttributeShadowOk()
         {
-            var line = "s on";
+            var line = "s 1";
             _addShadowStrategy.ProccesLine(line, ListObjMesh);
             Assert.True(ListObjMesh.Last().Shadow);
         }

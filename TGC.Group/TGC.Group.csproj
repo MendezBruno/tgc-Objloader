@@ -92,7 +92,9 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Game.settings</DependentUpon>
     </Compile>
-    <Compile Include="Model\CreateBufferStrategy\CreateBufferStrategy.cs" />
+    <Compile Include="Model\CreateBufferStrategy\ChargueBufferColorSoloStrategy.cs" />
+    <Compile Include="Model\CreateBufferStrategy\ChargueBufferDiffuseMapStrategy.cs" />
+    <Compile Include="Model\CreateBufferStrategy\ChargueBufferStrategy.cs" />
     <Compile Include="Model\FaceTriangle.cs" />
     <Compile Include="Model\GameModel.cs" />
     <Compile Include="Model\MeshBuilder.cs" />

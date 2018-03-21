@@ -114,15 +114,27 @@ namespace TGC.Group.Model
         {
             LoadObjFromFile(fullobjpath);
             ObjMesh objMesh = ListObjMesh[index];
-            MeshBuilder.AddMaterials(ObjMaterialsLoader)
-                        .AddDxMesh(objMesh.FaceTrianglesList.Count)
-                        .ChargueMaterials()
-                        .ChargeBuffer(objMesh)
-                        .SetEnable(true)
-                        .AddAutotransform(true)
-                        .SetHasBoundingBox(false)
-                        .Build(objMesh);
+            if (objMesh.Usemtl.Count>0)
+            {
+                MeshBuilder.AddMaterials(ObjMaterialsLoader)
+                    .AddDxMesh(objMesh.FaceTrianglesList.Count)
+                    .ChargueMaterials()
+                    .ChargeBuffer(objMesh)
+                    .ChargeAttributeBuffer(objMesh.CreateMaterialIdsArray())
+                    .SetEnable(true)
+                    .AddAutotransform(true)
+                    .SetHasBoundingBox(false);
 
+            }
+            else
+            {
+                MeshBuilder.AddDxMesh(objMesh.FaceTrianglesList.Count)
+                    .ChargeBuffer(objMesh)
+                    .SetEnable(true)
+                    .AddAutotransform(true)
+                    .SetHasBoundingBox(false);
+
+            }
 
             return MeshBuilder.Build(ListObjMesh[index]); //TODO pasarle el name no mas
         }
