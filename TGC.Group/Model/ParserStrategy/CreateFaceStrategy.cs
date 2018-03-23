@@ -40,7 +40,17 @@ namespace TGC.Group.Model.ParserStrategy
                     face.SetTexturesValues(arrayVertex1[TEXTURE], arrayVertex2[TEXTURE], arrayVertex3[TEXTURE]);
                 face.SetNormalValues(arrayVertex1[NORMAL], arrayVertex2[NORMAL], arrayVertex3[NORMAL]);
             }
-            face.Usemtl = objMeshContainer.ListObjMesh.Last().Usemtl.Count>0 ? objMeshContainer.ListObjMesh.Last().Usemtl.Last() : null;
+            //face.Usemtl = objMeshContainer.ListObjMesh.Last().Usemtl.Count>0 ? objMeshContainer.ListObjMesh.Last().Usemtl.Last() : null;
+
+            if (objMeshContainer.ListObjMesh.Last().Usemtl.Count > 0)
+            {
+                face.Usemtl = objMeshContainer.ListObjMesh.Last().Usemtl.Last();
+            }
+            else
+            {
+                face.Usemtl = null;
+            }
+
             objMeshContainer.ListObjMesh.Last().FaceTrianglesList.Add(face);
         }
 
