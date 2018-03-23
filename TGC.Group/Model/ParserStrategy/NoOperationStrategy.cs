@@ -15,7 +15,7 @@ namespace TGC.Group.Model.ParserStrategy
            this._keyWords = new string[] { COMMENT,EMPTYLINE,WHITELINE,MTLLIB };
         }
 
-        public override void ProccesLine(string line, List<ObjMesh> listObjMesh)
+        public override void ProccesLine(string line, ObjMeshContainer objMeshContainer)
         {
             return;
         }

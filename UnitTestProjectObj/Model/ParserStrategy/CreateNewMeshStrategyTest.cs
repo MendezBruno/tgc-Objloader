@@ -12,19 +12,19 @@ namespace UnitTestProjectObj
         [SetUp]
         public void Init()
         {
-            ListObjMesh = new List<ObjMesh>();
+             ObjMeshContainer = new ObjMeshContainer();
         }
 
         private readonly CreateNewMeshStrategy _createNewMeshStrategy = new CreateNewMeshStrategy();
-        public List<ObjMesh> ListObjMesh { get; set; }
+        public ObjMeshContainer ObjMeshContainer;
 
 
         [Test]
         public void ProccesLineNewObjetOk()
         {
             var line = "o Cube";
-            _createNewMeshStrategy.ProccesLine(line, ListObjMesh);
-            Assert.True(ListObjMesh.First().Name.Equals("Cube"));
+            _createNewMeshStrategy.ProccesLine(line, ObjMeshContainer);
+            Assert.True(ObjMeshContainer.ListObjMesh.First().Name.Equals("Cube"));
         }
     }
 }

@@ -167,16 +167,18 @@ namespace TGC.Group.Model
             this.hasBoundingBox = flag;
             return this;
         }
-        
+
 
         /// <summary>
         ///    Carga el buffer del mesh de DirectX usando la estrategia correcta para s estructura
         /// </summary>
+        /// <param name="objMeshContainer"></param>
+        /// <param name="index"></param>
         /// <param name="objMesh">ObjMesh</param>
         /// <returns>MeshBuilder</returns>
-        public MeshBuilder ChargeBuffer(ObjMesh objMesh)
+        public MeshBuilder ChargeBuffer(ObjMeshContainer objMeshContainer, int index)
         {
-            ChargueBufferStrategy.ChargeBuffer(objMesh, this.dxMesh);
+            ChargueBufferStrategy.ChargeBuffer(objMeshContainer, this.dxMesh, index);
             return this;
         }
    

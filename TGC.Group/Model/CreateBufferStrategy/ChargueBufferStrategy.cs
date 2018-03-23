@@ -13,12 +13,15 @@ namespace TGC.Group.Model.CreateBufferStrategy
         public abstract VertexElement[] VertexElementInstance { get; set; }
 
         public TgcMesh.MeshRenderType RenderType;
+
         /// <summary>
         ///    Carga el buffer del mesh de DirectX
         /// </summary>
         /// <param name="objMesh">ObjMesh</param>
+        /// <param name="dxMesh"></param>
+        /// <param name="index"></param>
         /// <returns>MeshBuilder</returns>
-        public abstract void ChargeBuffer(ObjMesh objMesh, Mesh dxMesh);
+        public abstract void ChargeBuffer(ObjMeshContainer objMesh, Mesh dxMesh, int index);
 
         /// <summary>
         ///   Cargar indexBuffer del mesh de DirectX en forma plana 

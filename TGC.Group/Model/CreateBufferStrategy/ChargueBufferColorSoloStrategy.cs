@@ -19,8 +19,9 @@ namespace TGC.Group.Model.CreateBufferStrategy
             RenderType = TgcMesh.MeshRenderType.VERTEX_COLOR;
         }
 
-        public override void ChargeBuffer(ObjMesh objMesh, Mesh dxMesh)
+        public override void ChargeBuffer(ObjMeshContainer objMeshContainer, Mesh dxMesh, int index)
         {
+            var objMesh = objMeshContainer.ListObjMesh[index];
             //Cargar VertexBuffer
             using (var vb = dxMesh.VertexBuffer)
             {
@@ -29,16 +30,16 @@ namespace TGC.Group.Model.CreateBufferStrategy
                 objMesh.FaceTrianglesList.ForEach(face =>
                 {
 
-                    v.Position = objMesh.VertexListV[Convert.ToInt32(face.V1) - 1];
-                    v.Normal = objMesh.VertexListVn[Convert.ToInt32(face.Vn1) - 1];
+                    v.Position = objMeshContainer.VertexListV[Convert.ToInt32(face.V1) - 1];
+                    v.Normal = objMeshContainer.VertexListVn[Convert.ToInt32(face.Vn1) - 1];
                     v.Color = -16777047;  //TODO que corresponde poner aca con respecto obj Mesh
                     data.Write(v);
-                    v.Position = objMesh.VertexListV[Convert.ToInt32(face.V2) - 1];
-                    v.Normal = objMesh.VertexListVn[Convert.ToInt32(face.Vn2) - 1];
+                    v.Position = objMeshContainer.VertexListV[Convert.ToInt32(face.V2) - 1];
+                    v.Normal = objMeshContainer.VertexListVn[Convert.ToInt32(face.Vn2) - 1];
                     v.Color = -16777047;  //TODO que corresponde poner aca con respecto obj Mesh
                     data.Write(v);
-                    v.Position = objMesh.VertexListV[Convert.ToInt32(face.V3) - 1];
-                    v.Normal = objMesh.VertexListVn[Convert.ToInt32(face.Vn3) - 1];
+                    v.Position = objMeshContainer.VertexListV[Convert.ToInt32(face.V3) - 1];
+                    v.Normal = objMeshContainer.VertexListVn[Convert.ToInt32(face.Vn3) - 1];
                     v.Color = -16777047;  //TODO que corresponde poner aca con respecto obj Mesh
                     data.Write(v);
 

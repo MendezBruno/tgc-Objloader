@@ -12,21 +12,21 @@ namespace UnitTestProjectObj
         [SetUp]
         public void Init()
         {
-            ListObjMesh = new List<ObjMesh>();
+            ObjMeshContainer = new ObjMeshContainer();
             var line = "o Cube";
-            _createNewMeshStrategy.ProccesLine(line, ListObjMesh);
+            _createNewMeshStrategy.ProccesLine(line, ObjMeshContainer);
         }
 
         private readonly CreateNormalStrategy _createNormalStrategy = new CreateNormalStrategy();
         private readonly CreateNewMeshStrategy _createNewMeshStrategy = new CreateNewMeshStrategy();
-        public List<ObjMesh> ListObjMesh { get; set; }
+        public ObjMeshContainer ObjMeshContainer;
 
         [Test]
         public void ProccesLinewithNormalOk()
         {
             var line = "v 1.000000 -1.000000 -1.000000";
-            _createNormalStrategy.ProccesLine(line, ListObjMesh);
-            Assert.True(ListObjMesh.Last().VertexListVn.Count > 0);
+            _createNormalStrategy.ProccesLine(line, ObjMeshContainer);
+            Assert.True(ObjMeshContainer.VertexListVn.Count > 0);
         }
     }
 }

@@ -19,35 +19,37 @@ namespace TGC.Group.Model.CreateBufferStrategy
             RenderType = TgcMesh.MeshRenderType.DIFFUSE_MAP;
         }
 
-        public override void ChargeBuffer(ObjMesh objMesh, Mesh dxMesh)
+        public override void ChargeBuffer(ObjMeshContainer objMeshContainer, Mesh dxMesh, int index)
         {
+            var objMesh = objMeshContainer.ListObjMesh[index];
             //Cargar VertexBuffer
             using (var vb = dxMesh.VertexBuffer)
             {
                 var data = vb.Lock(0, 0, LockFlags.None);
                 var v = new VertexMesh();
+                var indice = 0;
                 objMesh.FaceTrianglesList.ForEach(face =>
                 {
-
-                    v.Position = objMesh.VertexListV[Convert.ToInt32(face.V1) - 1];
-                    v.Normal = objMesh.VertexListVn[Convert.ToInt32(face.Vn1) - 1];
-                    v.Tu0 = objMesh.VertexListVt[Convert.ToInt32(face.Vt1) - 1].X;
-                    v.Tv0 = objMesh.VertexListVt[Convert.ToInt32(face.Vt1) - 1].Y;
+               
+                    v.Position = objMeshContainer.VertexListV[Convert.ToInt32(face.V1) - 1];
+                    v.Normal = objMeshContainer.VertexListVn[Convert.ToInt32(face.Vn1) - 1];
+                    v.Tu0 = objMeshContainer.VertexListVt[Convert.ToInt32(face.Vt1) - 1].X;
+                    v.Tv0 = objMeshContainer.VertexListVt[Convert.ToInt32(face.Vt1) - 1].Y;
                     v.Color = -1;  //TODO que corresponde poner aca con respecto obj Mesh
                     data.Write(v);
-                    v.Position = objMesh.VertexListV[Convert.ToInt32(face.V2) - 1];
-                    v.Normal = objMesh.VertexListVn[Convert.ToInt32(face.Vn2) - 1];
-                    v.Tu0 = objMesh.VertexListVt[Convert.ToInt32(face.Vt2) - 1].X;
-                    v.Tv0 = objMesh.VertexListVt[Convert.ToInt32(face.Vt2) - 1].Y;
+                    v.Position = objMeshContainer.VertexListV[Convert.ToInt32(face.V2) - 1];
+                    v.Normal = objMeshContainer.VertexListVn[Convert.ToInt32(face.Vn2) - 1];
+                    v.Tu0 = objMeshContainer.VertexListVt[Convert.ToInt32(face.Vt2) - 1].X;
+                    v.Tv0 = objMeshContainer.VertexListVt[Convert.ToInt32(face.Vt2) - 1].Y;
                     v.Color = -1;  //TODO que corresponde poner aca con respecto obj Mesh
                     data.Write(v);
-                    v.Position = objMesh.VertexListV[Convert.ToInt32(face.V3) - 1];
-                    v.Normal = objMesh.VertexListVn[Convert.ToInt32(face.Vn3) - 1];
-                    v.Tu0 = objMesh.VertexListVt[Convert.ToInt32(face.Vt3) - 1].X;
-                    v.Tv0 = objMesh.VertexListVt[Convert.ToInt32(face.Vt3) - 1].Y;
+                    v.Position = objMeshContainer.VertexListV[Convert.ToInt32(face.V3) - 1];
+                    v.Normal = objMeshContainer.VertexListVn[Convert.ToInt32(face.Vn3) - 1];
+                    v.Tu0 = objMeshContainer.VertexListVt[Convert.ToInt32(face.Vt3) - 1].X;
+                    v.Tv0 = objMeshContainer.VertexListVt[Convert.ToInt32(face.Vt3) - 1].Y;
                     v.Color = -1;  //TODO que corresponde poner aca con respecto obj Mesh
                     data.Write(v);
-
+                    indice++;
                 });
                 vb.Unlock();
             }

@@ -17,6 +17,7 @@ namespace UnitTestProjectObj
         private TgcObjLoader _tgcObjLoader = new TgcObjLoader();
         private string _fullobjpath;
         private string _fullobjpathmeshcolorsolo;
+        private string _fullobjpathmeshcontextura;
         private System.Windows.Forms.Panel panel3D;
 
 
@@ -24,9 +25,9 @@ namespace UnitTestProjectObj
         [SetUp]
         public void Init()
         {
-            const string testDataFolder = "DatosPrueba\\cubo.obj";
             const string testDataCuboTextura = "DatosPrueba\\cubotexturacaja.obj";
             const string testDataMeshColorSolo = "DatosPrueba\\tgcito\\Tgcito color solo.obj";
+            const string testDataMeshConTextura = "DatosPrueba\\tgcito\\tgcito con textura.obj";
 
             var dir = new DirectoryInfo(Path.GetFullPath(TestContext.CurrentContext.TestDirectory));
             while (!dir.Parent.Name.Equals("UnitTestProjectObj"))
@@ -35,6 +36,7 @@ namespace UnitTestProjectObj
             }
             _fullobjpath = Path.Combine(dir.Parent.FullName, testDataCuboTextura);
             _fullobjpathmeshcolorsolo = Path.Combine(dir.Parent.FullName, testDataMeshColorSolo);
+            _fullobjpathmeshcontextura = Path.Combine(dir.Parent.FullName, testDataMeshConTextura);
             //Instanciamos un panel para crear un divice
             panel3D = new System.Windows.Forms.Panel();
             //Crear Graphics Device
@@ -56,9 +58,8 @@ namespace UnitTestProjectObj
         {
             var _tgcObjLoader = new TgcObjLoader();
             _tgcObjLoader.LoadObjFromFile(_fullobjpath);
-            Assert.True(_tgcObjLoader.ListObjMesh.Count > 0);
-            ObjMesh resObjMesh = _tgcObjLoader.ListObjMesh.First();
-            Assert.True(resObjMesh.VertexListV.Count == 8);
+            Assert.True(_tgcObjLoader.ObjMeshContainer.ListObjMesh.Count > 0);
+            Assert.True(_tgcObjLoader.ObjMeshContainer.VertexListV.Count == 8);
         }
 
 
@@ -76,7 +77,7 @@ namespace UnitTestProjectObj
             var _tgcObjLoader = new TgcObjLoader();
             var line = "";
             _tgcObjLoader.ProccesLine(line);
-            Assert.IsTrue(_tgcObjLoader.ListObjMesh.Count == 0);
+            Assert.IsTrue(_tgcObjLoader.ObjMeshContainer.ListObjMesh.Count == 0);
         }
 
         [TestCase]
@@ -85,7 +86,7 @@ namespace UnitTestProjectObj
             var _tgcObjLoader = new TgcObjLoader();
             var line = "        ";
             _tgcObjLoader.ProccesLine(line);
-            Assert.IsTrue(_tgcObjLoader.ListObjMesh.Count == 0);
+            Assert.IsTrue(_tgcObjLoader.ObjMeshContainer.ListObjMesh.Count == 0);
         }
 
         [TestCase]
@@ -94,7 +95,7 @@ namespace UnitTestProjectObj
             var _tgcObjLoader = new TgcObjLoader();
             var line = "# Blender v2.79 (sub 0) OBJ File: ''";
             _tgcObjLoader.ProccesLine(line);
-            Assert.IsTrue(_tgcObjLoader.ListObjMesh.Count == 0);
+            Assert.IsTrue(_tgcObjLoader.ObjMeshContainer.ListObjMesh.Count == 0);
         }
 
         [TestCase]
@@ -111,7 +112,7 @@ namespace UnitTestProjectObj
             var _tgcObjLoader = new TgcObjLoader();
             var line = "o Cube";
             _tgcObjLoader.ProccesLine(line);
-            Assert.True(_tgcObjLoader.ListObjMesh.First().Name.Equals("Cube"));
+            Assert.True(_tgcObjLoader.ObjMeshContainer.ListObjMesh.First().Name.Equals("Cube"));
         }
 
         [TestCase]
@@ -135,9 +136,9 @@ namespace UnitTestProjectObj
         public void GetListOfMaterialsWithWhiteSpaceOK()
         {
             var _tgcObjLoader = new TgcObjLoader();
-            var lines = File.ReadAllLines(_fullobjpathmeshcolorsolo);
-            _tgcObjLoader.GetListOfMaterials(lines, _fullobjpathmeshcolorsolo);
-            Assert.True(_tgcObjLoader.ListMtllib.First().Equals("Triangulado 2 materiales.mtl"));
+            var lines = File.ReadAllLines(_fullobjpathmeshcontextura);
+            _tgcObjLoader.GetListOfMaterials(lines, _fullobjpathmeshcontextura);
+            Assert.True(_tgcObjLoader.ListMtllib.First().Equals("tgcito con textura.mtl"));
         }
 
         [TestCase]

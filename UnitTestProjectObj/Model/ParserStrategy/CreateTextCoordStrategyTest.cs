@@ -12,28 +12,28 @@ namespace UnitTestProjectObj
         [SetUp]
         public void Init()
         {
-            ListObjMesh = new List<ObjMesh>();
+            ObjMeshContainer = new ObjMeshContainer();
             var line = "o Cube";
-            _createNewMeshStrategy.ProccesLine(line, ListObjMesh);
+            _createNewMeshStrategy.ProccesLine(line, ObjMeshContainer);
         }
 
         private readonly CreateTextCoordStrategy _createTextCoordStrategy = new CreateTextCoordStrategy();
         private readonly CreateNewMeshStrategy _createNewMeshStrategy = new CreateNewMeshStrategy();
-        public List<ObjMesh> ListObjMesh { get; set; }
+        public ObjMeshContainer ObjMeshContainer;
 
         [Test]
         public void ProccesLinewithTextureOk()
         {
             var line = "vt 0.666628 0.167070";
-            _createTextCoordStrategy.ProccesLine(line, ListObjMesh);
-            Assert.True(ListObjMesh.Last().VertexListVt.Count > 0);
+            _createTextCoordStrategy.ProccesLine(line, ObjMeshContainer);
+            Assert.True(ObjMeshContainer.VertexListVt.Count > 0);
         }
 
         [TestCase]
         public void ProccesLineWithTextureFailsWhenCountParametersUp()
         {
             var line = "vt 0.666628 0.167070 0.167070 ";
-            Assert.That(() => { _createTextCoordStrategy.ProccesLine(line, ListObjMesh); }, Throws.ArgumentException);
+            Assert.That(() => { _createTextCoordStrategy.ProccesLine(line, ObjMeshContainer); }, Throws.ArgumentException);
         }
     }
 }

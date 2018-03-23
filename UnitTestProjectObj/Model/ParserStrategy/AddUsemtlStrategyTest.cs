@@ -14,46 +14,46 @@ namespace UnitTestProjectObj.Model.ParserStrategy
     {
         private readonly AddUsemtlStrategy _addUsemtlStrategy = new AddUsemtlStrategy();
         private readonly CreateNewMeshStrategy _createNewMeshStrategy = new CreateNewMeshStrategy();
-        public List<ObjMesh> ListObjMesh { get; set; }
+        public ObjMeshContainer ObjMeshContainer;
 
         [SetUp]
         public void Init()
         {
-            ListObjMesh = new List<ObjMesh>();
+            ObjMeshContainer = new ObjMeshContainer();
             var line = "o Cube";
-            _createNewMeshStrategy.ProccesLine(line, ListObjMesh);
+            _createNewMeshStrategy.ProccesLine(line, ObjMeshContainer);
         }
 
         [Test]
         public void HaveAttributeUsemtlinitialized()
         {
-            Assert.True(ListObjMesh.Last().Usemtl.Count == 0);
-            Assert.True(ListObjMesh.Last().Usemtl != null);
+            Assert.True(ObjMeshContainer.ListObjMesh.Last().Usemtl.Count == 0);
+            Assert.True(ObjMeshContainer.ListObjMesh.Last().Usemtl != null);
         }
 
         [Test]
         public void AsignateAttributeUsemtlOk()
         {
             var line = "usemtl Material.001";
-            _addUsemtlStrategy.ProccesLine(line, ListObjMesh);
-            Assert.True(ListObjMesh.Last().Usemtl.Count > 0);
+            _addUsemtlStrategy.ProccesLine(line, ObjMeshContainer);
+            Assert.True(ObjMeshContainer.ListObjMesh.Last().Usemtl.Count > 0);
         }
 
         [Test]
         public void AsignateAttributeUsemtlWhenIsNoneOK()
         {
             var line = "usemtl Material.001";
-            _addUsemtlStrategy.ProccesLine(line, ListObjMesh);
+            _addUsemtlStrategy.ProccesLine(line, ObjMeshContainer);
             line = "usemtl None";
-            _addUsemtlStrategy.ProccesLine(line, ListObjMesh);
-            Assert.True(ListObjMesh.Last().Usemtl.Last().Equals("None"));
+            _addUsemtlStrategy.ProccesLine(line, ObjMeshContainer);
+            Assert.True(ObjMeshContainer.ListObjMesh.Last().Usemtl.Last().Equals("None"));
         }
 
         [Test]
         public void AsignateAttributeUsemtlFalisByNumberOfParameters()
         {
             var line = "s bad Parameter";
-            Assert.That(() => { _addUsemtlStrategy.ProccesLine(line, ListObjMesh); }, Throws.ArgumentException);
+            Assert.That(() => { _addUsemtlStrategy.ProccesLine(line, ObjMeshContainer); }, Throws.ArgumentException);
 
         }
 

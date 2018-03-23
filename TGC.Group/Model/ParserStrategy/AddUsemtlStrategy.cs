@@ -16,10 +16,10 @@ namespace TGC.Group.Model.ParserStrategy
             Keyword = USEMTL;
         }
 
-        public override void ProccesLine(string line, List<ObjMesh> listObjMesh)
+        public override void ProccesLine(string line, ObjMeshContainer objMeshContainer)
         {           
             var attribute = CheckAttribute(line);
-            listObjMesh.Last().Usemtl.Add(attribute);
+            objMeshContainer.ListObjMesh.Last().Usemtl.Add(attribute);
         }
 
         private string CheckAttribute(string line)

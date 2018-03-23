@@ -23,7 +23,7 @@ namespace TGC.Group.Model.ParserStrategy
         private NumberStyles Style { get; } = NumberStyles.Any;
         private CultureInfo Info { get; } = CultureInfo.InvariantCulture;
 
-        public abstract void ProccesLine(string line, List<ObjMesh> listObjMesh);
+        public abstract void ProccesLine(string line, ObjMeshContainer objMeshContainer);
 
         public virtual bool ResponseTo(string action)
         {

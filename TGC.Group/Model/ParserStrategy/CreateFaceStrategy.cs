@@ -19,7 +19,7 @@ namespace TGC.Group.Model.ParserStrategy
             Keyword = FACE;
         }
 
-        public override void ProccesLine(string line, List<ObjMesh> listObjMesh)
+        public override void ProccesLine(string line, ObjMeshContainer objMeshContainer)
         {
 
 
@@ -40,8 +40,8 @@ namespace TGC.Group.Model.ParserStrategy
                     face.SetTexturesValues(arrayVertex1[TEXTURE], arrayVertex2[TEXTURE], arrayVertex3[TEXTURE]);
                 face.SetNormalValues(arrayVertex1[NORMAL], arrayVertex2[NORMAL], arrayVertex3[NORMAL]);
             }
-            face.Usemtl = listObjMesh.Last().Usemtl.Count>0 ? listObjMesh.Last().Usemtl.Last() : null;
-            listObjMesh.Last().FaceTrianglesList.Add(face);
+            face.Usemtl = objMeshContainer.ListObjMesh.Last().Usemtl.Count>0 ? objMeshContainer.ListObjMesh.Last().Usemtl.Last() : null;
+            objMeshContainer.ListObjMesh.Last().FaceTrianglesList.Add(face);
         }
 
         private string[] CheckTriangleFormatCorrect(string f)

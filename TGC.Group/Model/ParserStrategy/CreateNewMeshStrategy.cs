@@ -11,10 +11,10 @@ namespace TGC.Group.Model.ParserStrategy
             Keyword = OBJECT;
         }
 
-        public override void ProccesLine(string line, List<ObjMesh> listObjMesh)
+        public override void ProccesLine(string line, ObjMeshContainer objMeshContainer)
         {
             var split = line.Split(' ');
-            listObjMesh.Add(new ObjMesh(split[nameObject]));
+            objMeshContainer.ListObjMesh.Add(new ObjMesh(split[nameObject]));
         }
     }
 }

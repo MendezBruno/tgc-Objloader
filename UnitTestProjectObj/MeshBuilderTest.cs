@@ -68,7 +68,7 @@ namespace UnitTestProjectObj
         {
             TgcObjLoader _tgcObjLoader = new TgcObjLoader();
             _tgcObjLoader.LoadObjFromFile(_fullobjpath);
-            resObjMesh = _tgcObjLoader.ListObjMesh.First();
+            resObjMesh = _tgcObjLoader.ObjMeshContainer.ListObjMesh.First();
             MeshBuilder auxMeshBuilder = new MeshBuilder()
                 .AddDxMesh(resObjMesh.FaceTrianglesList.Count);
             Assert.True(auxMeshBuilder.GetInstaceDxMesh().NumberVertices == resObjMesh.FaceTrianglesList.Count * 3);
@@ -82,7 +82,7 @@ namespace UnitTestProjectObj
         {
             TgcObjLoader _tgcObjLoader = new TgcObjLoader();
             _tgcObjLoader.LoadObjFromFile(_fullobjpath);
-            resObjMesh = _tgcObjLoader.ListObjMesh.First();
+            resObjMesh = _tgcObjLoader.ObjMeshContainer.ListObjMesh.First();
             MeshBuilder auxMeshBuilder = new MeshBuilder()
                .AddDxMesh(resObjMesh.FaceTrianglesList.Count);
             Assert.True(auxMeshBuilder.GetInstaceDxMesh().NumberVertices == resObjMesh.FaceTrianglesList.Count * 3);
@@ -94,7 +94,7 @@ namespace UnitTestProjectObj
         {
             TgcObjLoader _tgcObjLoader = new TgcObjLoader();
             _tgcObjLoader.LoadObjFromFile(_fullobjpath);
-            resObjMesh = _tgcObjLoader.ListObjMesh.First();
+            resObjMesh = _tgcObjLoader.ObjMeshContainer.ListObjMesh.First();
             MeshBuilder auxMeshBuilder = new MeshBuilder()
                .AddDxMesh(resObjMesh.FaceTrianglesList.Count);
             Assert.True(auxMeshBuilder.GetInstaceDxMesh().NumberFaces == resObjMesh.FaceTrianglesList.Count);
@@ -107,11 +107,11 @@ namespace UnitTestProjectObj
         {
             TgcObjLoader _tgcObjLoader = new TgcObjLoader();
             _tgcObjLoader.LoadObjFromFile(_fullobjpath);
-            resObjMesh = _tgcObjLoader.ListObjMesh.First();
+            resObjMesh = _tgcObjLoader.ObjMeshContainer.ListObjMesh.First();
             TgcMesh tgcMesh = new MeshBuilder()
                 .AddMaterials(_tgcObjLoader.ObjMaterialsLoader)
                 .AddDxMesh(resObjMesh.FaceTrianglesList.Count)
-                .ChargeBuffer(resObjMesh)
+                .ChargeBuffer(_tgcObjLoader.ObjMeshContainer,0)
                 .AddAutotransform(true)
                 .Build(resObjMesh);
             Assert.True(tgcMesh.AutoTransformEnable);
@@ -123,11 +123,11 @@ namespace UnitTestProjectObj
         {
             TgcObjLoader _tgcObjLoader = new TgcObjLoader();
             _tgcObjLoader.LoadObjFromFile(_fullobjpath);
-            resObjMesh = _tgcObjLoader.ListObjMesh.First();
+            resObjMesh = _tgcObjLoader.ObjMeshContainer.ListObjMesh.First();
             TgcMesh tgcMesh = new MeshBuilder()
                 .AddMaterials(_tgcObjLoader.ObjMaterialsLoader)
                 .AddDxMesh(resObjMesh.FaceTrianglesList.Count)
-                .ChargeBuffer(resObjMesh)
+                .ChargeBuffer(_tgcObjLoader.ObjMeshContainer, 0)
                 .SetEnable(true)
                 .Build(resObjMesh);
             Assert.True(tgcMesh.Enabled);
@@ -140,11 +140,11 @@ namespace UnitTestProjectObj
         {
             TgcObjLoader _tgcObjLoader = new TgcObjLoader();
             _tgcObjLoader.LoadObjFromFile(_fullobjpath);
-            resObjMesh = _tgcObjLoader.ListObjMesh.First();
+            resObjMesh = _tgcObjLoader.ObjMeshContainer.ListObjMesh.First();
             TgcMesh tgcMesh = new MeshBuilder()
                 .AddMaterials(_tgcObjLoader.ObjMaterialsLoader)
                 .AddDxMesh(resObjMesh.FaceTrianglesList.Count)
-                .ChargeBuffer(resObjMesh)
+                .ChargeBuffer(_tgcObjLoader.ObjMeshContainer, 0)
                 .AddAutotransform(true)
                 .SetEnable(true)
                 .SetHasBoundingBox(false)
@@ -158,11 +158,11 @@ namespace UnitTestProjectObj
         {
             TgcObjLoader _tgcObjLoader = new TgcObjLoader();
             _tgcObjLoader.LoadObjFromFile(_fullobjpath);
-            resObjMesh = _tgcObjLoader.ListObjMesh.First();
+            resObjMesh = _tgcObjLoader.ObjMeshContainer.ListObjMesh.First();
             TgcMesh tgcMesh = new MeshBuilder()
                 .AddMaterials(_tgcObjLoader.ObjMaterialsLoader)
                 .AddDxMesh(resObjMesh.FaceTrianglesList.Count)
-                .ChargeBuffer(resObjMesh)
+                .ChargeBuffer(_tgcObjLoader.ObjMeshContainer, 0)
                 .AddAutotransform(true)
                 .SetEnable(true)
                 .SetHasBoundingBox(false)
@@ -176,11 +176,11 @@ namespace UnitTestProjectObj
         {
             TgcObjLoader _tgcObjLoader = new TgcObjLoader();
             _tgcObjLoader.LoadObjFromFile(_fullobjpath);
-            resObjMesh = _tgcObjLoader.ListObjMesh.First();
+            resObjMesh = _tgcObjLoader.ObjMeshContainer.ListObjMesh.First();
             TgcMesh tgcMesh = new MeshBuilder()
                 .AddMaterials(_tgcObjLoader.ObjMaterialsLoader)
                 .AddDxMesh(resObjMesh.FaceTrianglesList.Count)
-                .ChargeBuffer(resObjMesh)
+                .ChargeBuffer(_tgcObjLoader.ObjMeshContainer, 0)
                 .AddAutotransform(true)
                 .SetEnable(true)
                 .SetHasBoundingBox(false)
@@ -195,12 +195,12 @@ namespace UnitTestProjectObj
 
             TgcObjLoader _tgcObjLoader = new TgcObjLoader();
             _tgcObjLoader.LoadObjFromFile(_fullobjpath);
-            resObjMesh = _tgcObjLoader.ListObjMesh.First();
+            resObjMesh = _tgcObjLoader.ObjMeshContainer.ListObjMesh.First();
             TgcMesh tgcMesh = new MeshBuilder()
                 .AddMaterials(_tgcObjLoader.ObjMaterialsLoader)
                 .ChargueMaterials()
                 .AddDxMesh(resObjMesh.FaceTrianglesList.Count)
-                .ChargeBuffer(resObjMesh)
+                .ChargeBuffer(_tgcObjLoader.ObjMeshContainer, 0)
                 .AddAutotransform(true)
                 .SetEnable(true)
                 .SetHasBoundingBox(true)
@@ -214,11 +214,11 @@ namespace UnitTestProjectObj
         {
             TgcObjLoader _tgcObjLoader = new TgcObjLoader();
             _tgcObjLoader.LoadObjFromFile(_fullobjpath);
-            resObjMesh = _tgcObjLoader.ListObjMesh.First();
+            resObjMesh = _tgcObjLoader.ObjMeshContainer.ListObjMesh.First();
             TgcMesh tgcMesh = new MeshBuilder()
                 .AddMaterials(_tgcObjLoader.ObjMaterialsLoader)
                 .AddDxMesh(resObjMesh.FaceTrianglesList.Count)
-                .ChargeBuffer(resObjMesh)
+                .ChargeBuffer(_tgcObjLoader.ObjMeshContainer, 0)
                 .SetEnable(true)
                 .AddAutotransform(true)
                 .SetHasBoundingBox(false)
@@ -237,7 +237,7 @@ namespace UnitTestProjectObj
         {
             TgcObjLoader _tgcObjLoader = new TgcObjLoader();
             _tgcObjLoader.LoadObjFromFile(_fullobjpath);
-            resObjMesh = _tgcObjLoader.ListObjMesh.First();
+            resObjMesh = _tgcObjLoader.ObjMeshContainer.ListObjMesh.First();
             MeshBuilder meshBuilder = new MeshBuilder()
                 .AddMaterials(_tgcObjLoader.ObjMaterialsLoader).ChargueMaterials();
             Assert.NotNull(meshBuilder.MeshMaterials);
@@ -248,7 +248,7 @@ namespace UnitTestProjectObj
         {
             TgcObjLoader _tgcObjLoader = new TgcObjLoader();
             _tgcObjLoader.LoadObjFromFile(_fullobjpathmultimaterial);
-            resObjMesh = _tgcObjLoader.ListObjMesh.First();
+            resObjMesh = _tgcObjLoader.ObjMeshContainer.ListObjMesh.First();
             MeshBuilder meshBuilder = new MeshBuilder()
                 .AddMaterials(_tgcObjLoader.ObjMaterialsLoader).ChargueMaterials();
             Assert.NotNull(meshBuilder.MeshMaterials);
@@ -259,7 +259,7 @@ namespace UnitTestProjectObj
         {
             TgcObjLoader _tgcObjLoader = new TgcObjLoader();
             _tgcObjLoader.LoadObjFromFile(_fullobjpathmultimaterial);
-            resObjMesh = _tgcObjLoader.ListObjMesh.First();
+            resObjMesh = _tgcObjLoader.ObjMeshContainer.ListObjMesh.First();
             MeshBuilder meshBuilder = new MeshBuilder()
                 .AddMaterials(_tgcObjLoader.ObjMaterialsLoader)
                 .ChargueMaterials();
@@ -272,8 +272,8 @@ namespace UnitTestProjectObj
             //TODO el test de cuando el mesh es solo color
             TgcObjLoader _tgcObjLoader = new TgcObjLoader();
             _tgcObjLoader.LoadObjFromFile(_fullobjpathmeshcolorsolo);
-            resObjMesh = _tgcObjLoader.ListObjMesh.First();
-            MeshBuilder meshBuilder = new MeshBuilder().AddDxMesh(resObjMesh.FaceTrianglesList.Count).ChargeBuffer(resObjMesh);
+            resObjMesh = _tgcObjLoader.ObjMeshContainer.ListObjMesh.First();
+            MeshBuilder meshBuilder = new MeshBuilder().AddDxMesh(resObjMesh.FaceTrianglesList.Count).ChargeBuffer(_tgcObjLoader.ObjMeshContainer, 0);
             Assert.NotNull(meshBuilder.GetInstaceDxMesh());
         }
 
@@ -283,12 +283,12 @@ namespace UnitTestProjectObj
             //TODO el test de cuando el mesh es color y difuse
             TgcObjLoader _tgcObjLoader = new TgcObjLoader();
             _tgcObjLoader.LoadObjFromFile(_fullobjpathmultimaterial);
-            resObjMesh = _tgcObjLoader.ListObjMesh.First();
+            resObjMesh = _tgcObjLoader.ObjMeshContainer.ListObjMesh.First();
             MeshBuilder meshBuilder = new MeshBuilder()
                 .AddMaterials(_tgcObjLoader.ObjMaterialsLoader)
                 .ChargueMaterials()
                 .AddDxMesh(resObjMesh.FaceTrianglesList.Count)
-                .ChargeBuffer(resObjMesh);
+                .ChargeBuffer(_tgcObjLoader.ObjMeshContainer, 0);
             Assert.NotNull(meshBuilder.GetInstaceDxMesh());
         }
 
@@ -297,7 +297,7 @@ namespace UnitTestProjectObj
         {
             TgcObjLoader _tgcObjLoader = new TgcObjLoader();
             _tgcObjLoader.LoadObjFromFile(_fullobjpathmultimaterial);
-            resObjMesh = _tgcObjLoader.ListObjMesh.First();
+            resObjMesh = _tgcObjLoader.ObjMeshContainer.ListObjMesh.First();
             MeshBuilder meshBuilder = new MeshBuilder()
                 .AddMaterials(_tgcObjLoader.ObjMaterialsLoader)
                 .ChargueMaterials();
@@ -310,7 +310,7 @@ namespace UnitTestProjectObj
             //TODO asegurar que si tiene material el tipo de render sea difuse map, o si tiene ligth map que sea difuse mas ligth map
             TgcObjLoader _tgcObjLoader = new TgcObjLoader();
             _tgcObjLoader.LoadObjFromFile(_fullobjpathmultimaterial);
-            resObjMesh = _tgcObjLoader.ListObjMesh.First();
+            resObjMesh = _tgcObjLoader.ObjMeshContainer.ListObjMesh.First();
             MeshBuilder meshBuilder = new MeshBuilder()
                 .AddMaterials(_tgcObjLoader.ObjMaterialsLoader)
                 .ChargueMaterials();
@@ -323,7 +323,7 @@ namespace UnitTestProjectObj
             //TODO asegurar que si tiene material el tipo de render sea difuse map, o si tiene ligth map que sea difuse mas ligth map
             TgcObjLoader _tgcObjLoader = new TgcObjLoader();
             _tgcObjLoader.LoadObjFromFile(_fullobjpathmeshcolorsolo);
-            resObjMesh = _tgcObjLoader.ListObjMesh.First();
+            resObjMesh = _tgcObjLoader.ObjMeshContainer.ListObjMesh.First();
             MeshBuilder meshBuilder = new MeshBuilder()
                 .AddDxMesh(resObjMesh.FaceTrianglesList.Count);
             Assert.True(meshBuilder.ChargueBufferStrategy.RenderType == TgcMesh.MeshRenderType.VERTEX_COLOR);
@@ -335,12 +335,12 @@ namespace UnitTestProjectObj
             //TODO verificar que el idexbuffer se cargo .
             TgcObjLoader _tgcObjLoader = new TgcObjLoader();
             _tgcObjLoader.LoadObjFromFile(_fullobjpathmultimaterial);
-            resObjMesh = _tgcObjLoader.ListObjMesh.First();
+            resObjMesh = _tgcObjLoader.ObjMeshContainer.ListObjMesh.First();
             MeshBuilder meshBuilder = new MeshBuilder()
                 .AddMaterials(_tgcObjLoader.ObjMaterialsLoader)
                 .ChargueMaterials()
                 .AddDxMesh(resObjMesh.FaceTrianglesList.Count)
-                .ChargeBuffer(resObjMesh);
+                .ChargeBuffer(_tgcObjLoader.ObjMeshContainer, 0);
             Assert.True(meshBuilder.GetInstaceDxMesh().IndexBuffer.SizeInBytes > 0);
         }
 

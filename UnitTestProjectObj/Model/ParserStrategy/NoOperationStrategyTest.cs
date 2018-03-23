@@ -12,14 +12,14 @@ namespace UnitTestProjectObj.Model.ParserStrategy
     [TestFixture]
     class NoOperationStrategyTest
     {
-        public List<ObjMesh> ListObjMesh { get; set; }
+        public ObjMeshContainer ObjMeshContainer;
         private readonly NoOperationStrategy _noOperationStrategy = new NoOperationStrategy();
 
 
     [SetUp]
         public void Init()
         {
-            List<ObjMesh> ListObjMesh = new List<ObjMesh>();
+            ObjMeshContainer = new ObjMeshContainer();
         }
 
     [Test]
@@ -27,7 +27,7 @@ namespace UnitTestProjectObj.Model.ParserStrategy
     {
         List<ObjMesh> ListObjMesh = new List<ObjMesh>();
         var line = "# o Cube";
-        _noOperationStrategy.ProccesLine(line, ListObjMesh);
+        _noOperationStrategy.ProccesLine(line, ObjMeshContainer);
         Assert.True(ListObjMesh.Count == 0);
     }
 

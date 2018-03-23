@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
+using Microsoft.DirectX;
 using TGC.Core.SceneLoader;
 using TGC.Group.Model.ParserStrategy;
 
@@ -21,10 +22,10 @@ namespace TGC.Group.Model
             Strategies.Add(new CreateTextCoordStrategy());
             Strategies.Add(new CreateVertexStrategy());
             Strategies.Add(new NoOperationStrategy());
-            ListObjMesh = new List<ObjMesh>();
             ListMtllib = new List<string>();
             MeshBuilder = new MeshBuilder();
             ObjMaterialsLoader = new ObjMaterialsLoader();
+            ObjMeshContainer = new ObjMeshContainer();
 
         }
 
@@ -33,11 +34,11 @@ namespace TGC.Group.Model
         private const int ELEMENTOFMTLLIB = 2;
         private const int INICIO = 0;
         public List<ObjParseStrategy> Strategies { get; set; }
-
-        public ObjMaterialsLoader ObjMaterialsLoader;
-        public List<ObjMesh> ListObjMesh { get; set; }
+        public ObjMeshContainer ObjMeshContainer { get; set; }
+        public ObjMaterialsLoader ObjMaterialsLoader { get; set; }
         public List<string> ListMtllib { get; set; }
         public MeshBuilder MeshBuilder { get; set; }
+       
 
         public string GetPathObjforCurrentDirectory()
         {
@@ -63,7 +64,7 @@ namespace TGC.Group.Model
             foreach (var strategy in Strategies)
                 if (strategy.ResponseTo(action))
                 {
-                    strategy.ProccesLine(line, ListObjMesh);
+                    strategy.ProccesLine(line, ObjMeshContainer);
                     return;
                 }
             throw new InvalidOperationException($"Cannot find a correct parsing process for line {line}");
@@ -113,13 +114,13 @@ namespace TGC.Group.Model
         public TgcMesh LoadTgcMeshFromObj(string fullobjpath, int index)
         {
             LoadObjFromFile(fullobjpath);
-            ObjMesh objMesh = ListObjMesh[index];
+            ObjMesh objMesh = ObjMeshContainer.ListObjMesh[index];
             if (objMesh.Usemtl.Count>0)
             {
                 MeshBuilder.AddMaterials(ObjMaterialsLoader)
                     .AddDxMesh(objMesh.FaceTrianglesList.Count)
                     .ChargueMaterials()
-                    .ChargeBuffer(objMesh)
+                    .ChargeBuffer(ObjMeshContainer, index)
                     .ChargeAttributeBuffer(objMesh.CreateMaterialIdsArray())
                     .SetEnable(true)
                     .AddAutotransform(true)
@@ -129,14 +130,14 @@ namespace TGC.Group.Model
             else
             {
                 MeshBuilder.AddDxMesh(objMesh.FaceTrianglesList.Count)
-                    .ChargeBuffer(objMesh)
+                    .ChargeBuffer(ObjMeshContainer,index)
                     .SetEnable(true)
                     .AddAutotransform(true)
                     .SetHasBoundingBox(false);
 
             }
 
-            return MeshBuilder.Build(ListObjMesh[index]); //TODO pasarle el name no mas
+            return MeshBuilder.Build(ObjMeshContainer.ListObjMesh[index]); //TODO pasarle el name no mas
         }
     }
 }

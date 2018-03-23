@@ -12,12 +12,12 @@ namespace TGC.Group.Model.ParserStrategy
             Keyword = TEXTURE;
         }
 
-        public override void ProccesLine(string line, List<ObjMesh> listObjMesh)
+        public override void ProccesLine(string line, ObjMeshContainer objMeshContainer)
         {
             var indices = line.Split(' ');
             if (indices.Length != 3) throw new ArgumentException("El Archivo .obj no fue exportado de forma triangular");
             var vertex = CreateVector3(line);
-            listObjMesh.Last().VertexListVt.Add((Vector2)vertex);
+            objMeshContainer.VertexListVt.Add((Vector2)vertex);
         }
     }
 }

@@ -62,7 +62,7 @@ namespace UnitTestProjectObj
         {
             TgcObjLoader _tgcObjLoader = new TgcObjLoader();
             _tgcObjLoader.LoadObjFromFile(_fullobjpathmultimaterial);
-            resObjMesh = _tgcObjLoader.ListObjMesh.First();
+            resObjMesh = _tgcObjLoader.ObjMeshContainer.ListObjMesh.First();
             Assert.True(resObjMesh.FaceTrianglesList.Count == resObjMesh.CreateMaterialIdsArray().Length);
         }
 
@@ -71,7 +71,7 @@ namespace UnitTestProjectObj
         {
             TgcObjLoader _tgcObjLoader = new TgcObjLoader();
             _tgcObjLoader.LoadObjFromFile(_fullobjpathmultimaterial);
-            resObjMesh = _tgcObjLoader.ListObjMesh.First();
+            resObjMesh = _tgcObjLoader.ObjMeshContainer.ListObjMesh.First();
             int[] materialIds = resObjMesh.CreateMaterialIdsArray();
             Assert.True(materialIds[15810] == 0);
             Assert.True(materialIds[17010] == 1);

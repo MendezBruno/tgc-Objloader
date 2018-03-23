@@ -14,11 +14,11 @@ namespace TGC.Group.Model.ParserStrategy
             Keyword = SHADOW;
         }
 
-        public override void ProccesLine(string line, List<ObjMesh> listObjMesh)
+        public override void ProccesLine(string line, ObjMeshContainer objMeshContainer)
         {
            
             string attribute = CheckAttribute(line); // 
-            if (attribute.Equals("1") ) listObjMesh.Last().Shadow = true;
+            if (attribute.Equals("1") ) objMeshContainer.ListObjMesh.Last().Shadow = true;
         }
 
         private string CheckAttribute(string line)
