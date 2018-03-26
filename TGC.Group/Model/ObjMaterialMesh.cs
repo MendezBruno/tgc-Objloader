@@ -1,15 +1,16 @@
-﻿using System.IO;
-using Microsoft.DirectX;
-using Microsoft.DirectX.Direct3D;
+﻿using Microsoft.DirectX.Direct3D;
+using System.IO;
 
 namespace TGC.Group.Model
 {
     public class ObjMaterialMesh
     {
-        //Material Name 
+        //Material Name
         public string Name { get; set; }
+
         //Material color & ilumination
         public ColorValue Ka { get; set; }
+
         public ColorValue Kd { get; set; }
         public ColorValue Ks { get; set; }
         public ColorValue Ke { get; set; }
@@ -40,10 +41,10 @@ namespace TGC.Group.Model
         public float Ni { get; set; }
         public float Tr { get; set; }
 
-
-        //Texture mas statament 
+        //Texture mas statament
         //TODO prodia ser una estructura de dato que represente la sentencia de textura
         public string map_Kd { get; set; }
+
         public string disp { get; set; }
         public string map_Bump { get; set; }
         public string map_Ka { get; set; }
@@ -52,17 +53,16 @@ namespace TGC.Group.Model
 
         //Reflection map statament
 
-
-        public ObjMaterialMesh(string name) {
+        public ObjMaterialMesh(string name)
+        {
             this.Name = name;
         }
 
         //TODO solucionar el problema cuando el nombre del archivo viene con espacios
         public string getTextura()
         {
-            return File.Exists(map_d)? Path.GetFullPath(map_d) :null; // prodia ser cualquiera, TODO indentificar bien cual usar
+            return File.Exists(map_d) ? Path.GetFullPath(map_d) : null; // prodia ser cualquiera, TODO indentificar bien cual usar
         }
-
 
         public string getTexturaFileName()
         {

@@ -1,18 +1,14 @@
 ﻿using NUnit.Framework;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using TGC.Group.Model;
 using TGC.Group.Model.ParseMaterialsStrategy;
 
 namespace UnitTestProjectObj.Model.ParseMaterialStrategy
 {
     [TestFixture]
-    class CreateNewMaterialStrategyTest
+    internal class CreateNewMaterialStrategyTest
     {
-
         [SetUp]
         public void Init()
         {
@@ -21,7 +17,6 @@ namespace UnitTestProjectObj.Model.ParseMaterialStrategy
 
         private readonly CreateNewMaterialStrategy _createNewMeshMaterialStrategy = new CreateNewMaterialStrategy();
         public List<ObjMaterialMesh> ListObjMaterialMesh { get; set; }
-
 
         [TestCase]
         public void ProccesLineNewObjetOk()

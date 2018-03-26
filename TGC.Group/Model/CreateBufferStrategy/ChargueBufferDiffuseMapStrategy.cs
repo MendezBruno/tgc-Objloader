@@ -1,15 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.DirectX;
+﻿using Microsoft.DirectX;
 using Microsoft.DirectX.Direct3D;
+using System;
 using TGC.Core.SceneLoader;
 
 namespace TGC.Group.Model.CreateBufferStrategy
 {
-    class ChargueBufferDiffuseMapStrategy:ChargueBufferStrategy
+    internal class ChargueBufferDiffuseMapStrategy : ChargueBufferStrategy
     {
         public override VertexElement[] VertexElementInstance { get; set; }
 
@@ -30,7 +26,6 @@ namespace TGC.Group.Model.CreateBufferStrategy
                 var indice = 0;
                 objMesh.FaceTrianglesList.ForEach(face =>
                 {
-               
                     v.Position = objMeshContainer.VertexListV[Convert.ToInt32(face.V1) - 1];
                     v.Normal = objMeshContainer.VertexListVn[Convert.ToInt32(face.Vn1) - 1];
                     v.Tu0 = objMeshContainer.VertexListVt[Convert.ToInt32(face.Vt1) - 1].X;
@@ -56,7 +51,7 @@ namespace TGC.Group.Model.CreateBufferStrategy
             ChargeIndexBuffer(objMesh, dxMesh);
         }
 
-
+        //TODO tratar de reutilizar las estructuras de SceneLoader
         /// <summary>
         ///     Estructura de Vertice para formato de malla DIFFUSE_MAP
         /// </summary>
@@ -68,7 +63,6 @@ namespace TGC.Group.Model.CreateBufferStrategy
             public float Tu0;
             public float Tv0;
         }
-
 
         /// <summary>
         ///     FVF para formato de malla  DIFFUSE_MAP

@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace TGC.Group.Model.ParseMaterialsStrategy
 {
-    class NoOperationStrategyForMaterial:ObjMaterialsParseStrategy
+    internal class NoOperationStrategyForMaterial : ObjMaterialsParseStrategy
     {
         private readonly string[] _keyWords;
 
@@ -19,7 +16,6 @@ namespace TGC.Group.Model.ParseMaterialsStrategy
         {
             return;
         }
-
 
         public override bool ResponseTo(string action)
         {

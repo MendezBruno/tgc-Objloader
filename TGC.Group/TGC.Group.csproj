@@ -98,8 +98,6 @@
     <Compile Include="Model\FaceTriangle.cs" />
     <Compile Include="Model\GameModel.cs" />
     <Compile Include="Model\MeshBuilder.cs" />
-    <Compile Include="Model\MeshFactory\DefaultMeshFactory.cs" />
-    <Compile Include="Model\MeshFactory\MeshFactory.cs" />
     <Compile Include="Model\ObjMaterialMesh.cs" />
     <Compile Include="Model\ObjMaterialsLoader.cs" />
     <Compile Include="Model\ObjMesh.cs" />

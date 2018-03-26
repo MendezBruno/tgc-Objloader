@@ -1,6 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using NUnit.Framework;
 using System.Linq;
-using NUnit.Framework;
 using TGC.Group.Model;
 using TGC.Group.Model.ParserStrategy;
 
@@ -13,7 +12,7 @@ namespace UnitTestProjectObj
         private readonly AddUsemtlStrategy _addUsemtlStrategy = new AddUsemtlStrategy();
         private readonly CreateNewMeshStrategy _createNewMeshStrategy = new CreateNewMeshStrategy();
         public ObjMeshContainer ObjMeshContainer;
-        
+
         [SetUp]
         public void Init()
         {
@@ -23,7 +22,7 @@ namespace UnitTestProjectObj
             line = "usemtl Material.001";
             _addUsemtlStrategy.ProccesLine(line, ObjMeshContainer);
         }
-        
+
         [Test]
         public void CreateFaceOk()
         {

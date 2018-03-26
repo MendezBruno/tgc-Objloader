@@ -22,7 +22,6 @@ namespace TGC.Group.Model
         internal NumberStyles Style { get; } = NumberStyles.Any;
         internal CultureInfo Info { get; } = CultureInfo.InvariantCulture;
 
-
         public uint V1 { get; set; }
         public uint Vt1 { get; set; }
         public uint Vn1 { get; set; }

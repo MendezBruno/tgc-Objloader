@@ -1,6 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using NUnit.Framework;
 using System.Linq;
-using NUnit.Framework;
 using TGC.Group.Model;
 using TGC.Group.Model.ParserStrategy;
 
@@ -12,12 +11,11 @@ namespace UnitTestProjectObj
         [SetUp]
         public void Init()
         {
-             ObjMeshContainer = new ObjMeshContainer();
+            ObjMeshContainer = new ObjMeshContainer();
         }
 
         private readonly CreateNewMeshStrategy _createNewMeshStrategy = new CreateNewMeshStrategy();
         public ObjMeshContainer ObjMeshContainer;
-
 
         [Test]
         public void ProccesLineNewObjetOk()

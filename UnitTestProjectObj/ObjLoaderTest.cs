@@ -1,9 +1,6 @@
-﻿using System;
+﻿using NUnit.Framework;
 using System.IO;
 using System.Linq;
-using System.Net.Mime;
-using System.Reflection;
-using NUnit.Framework;
 using TGC.Core.Direct3D;
 using TGC.Core.SceneLoader;
 using TGC.Group.Model;
@@ -13,14 +10,11 @@ namespace UnitTestProjectObj
     [TestFixture]
     internal class ObjLoaderTest
     {
-
         private TgcObjLoader _tgcObjLoader = new TgcObjLoader();
         private string _fullobjpath;
         private string _fullobjpathmeshcolorsolo;
         private string _fullobjpathmeshcontextura;
         private System.Windows.Forms.Panel panel3D;
-
-
 
         [SetUp]
         public void Init()
@@ -40,9 +34,9 @@ namespace UnitTestProjectObj
             //Instanciamos un panel para crear un divice
             panel3D = new System.Windows.Forms.Panel();
             //Crear Graphics Device
-            // 
+            //
             // panel3D
-            // 
+            //
             this.panel3D.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel3D.Location = new System.Drawing.Point(0, 0);
             this.panel3D.Name = "panel3D";
@@ -50,7 +44,6 @@ namespace UnitTestProjectObj
             this.panel3D.TabIndex = 0;
 
             D3DDevice.Instance.InitializeD3DDevice(panel3D);
-
         }
 
         [TestCase]
@@ -62,14 +55,12 @@ namespace UnitTestProjectObj
             Assert.True(_tgcObjLoader.ObjMeshContainer.VertexListV.Count == 8);
         }
 
-
         [TestCase]
         public void GetArrayLinesOk()
         {
             var lines = File.ReadAllLines(_fullobjpath);
             Assert.True(lines.Length > 0);
         }
-
 
         [TestCase]
         public void ProcessLineReturnWithLineBlanck()
@@ -165,6 +156,5 @@ namespace UnitTestProjectObj
             TgcMesh tgcMesh = _tgcObjLoader.LoadTgcMeshFromObj(_fullobjpath, 0);
             Assert.NotNull(tgcMesh);
         }
-
     }
 }

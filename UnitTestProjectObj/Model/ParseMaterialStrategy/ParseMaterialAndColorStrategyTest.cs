@@ -1,16 +1,13 @@
-﻿using System;
+﻿using NUnit.Framework;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using NUnit.Framework;
 using TGC.Group.Model;
 using TGC.Group.Model.ParseMaterialsStrategy;
 
 namespace UnitTestProjectObj.Model.ParseMaterialStrategy
 {
     [TestFixture]
-    class ParseMaterialAndColorStrategyTest
+    internal class ParseMaterialAndColorStrategyTest
     {
         [SetUp]
         public void Init()
@@ -23,7 +20,6 @@ namespace UnitTestProjectObj.Model.ParseMaterialStrategy
         private readonly ParseMaterialAndColorStrategy _parseMaterialAndColorStrategy = new ParseMaterialAndColorStrategy();
         private readonly CreateNewMaterialStrategy _createNewMeshMaterialStrategy = new CreateNewMaterialStrategy();
         public List<ObjMaterialMesh> ListObjMaterialMesh { get; set; }
-
 
         [TestCase]
         public void ProccesLineWithAmbientValueOk()
@@ -88,6 +84,5 @@ namespace UnitTestProjectObj.Model.ParseMaterialStrategy
             _parseMaterialAndColorStrategy.ProccesLine(line, ListObjMaterialMesh);
             Assert.NotNull(ListObjMaterialMesh.First().Ns);
         }
-
     }
 }

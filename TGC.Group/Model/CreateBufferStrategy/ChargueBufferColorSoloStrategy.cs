@@ -1,15 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.DirectX;
+﻿using Microsoft.DirectX;
 using Microsoft.DirectX.Direct3D;
+using System;
 using TGC.Core.SceneLoader;
 
 namespace TGC.Group.Model.CreateBufferStrategy
 {
-    class ChargueBufferColorSoloStrategy: ChargueBufferStrategy
+    internal class ChargueBufferColorSoloStrategy : ChargueBufferStrategy
     {
         public override VertexElement[] VertexElementInstance { get; set; }
 
@@ -29,7 +25,6 @@ namespace TGC.Group.Model.CreateBufferStrategy
                 var v = new VertexColorVertex();
                 objMesh.FaceTrianglesList.ForEach(face =>
                 {
-
                     v.Position = objMeshContainer.VertexListV[Convert.ToInt32(face.V1) - 1];
                     v.Normal = objMeshContainer.VertexListVn[Convert.ToInt32(face.Vn1) - 1];
                     v.Color = -16777047;  //TODO que corresponde poner aca con respecto obj Mesh
@@ -42,14 +37,12 @@ namespace TGC.Group.Model.CreateBufferStrategy
                     v.Normal = objMeshContainer.VertexListVn[Convert.ToInt32(face.Vn3) - 1];
                     v.Color = -16777047;  //TODO que corresponde poner aca con respecto obj Mesh
                     data.Write(v);
-
                 });
                 vb.Unlock();
             }
 
             ChargeIndexBuffer(objMesh, dxMesh);
         }
-
 
         /// <summary>
         ///     FVF para formato de malla VERTEX_COLOR
@@ -77,6 +70,5 @@ namespace TGC.Group.Model.CreateBufferStrategy
             public Vector3 Normal;
             public int Color;
         }
-
     }
 }

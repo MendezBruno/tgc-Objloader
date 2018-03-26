@@ -1,19 +1,14 @@
-﻿using System;
-using System.Collections;
+﻿using Microsoft.DirectX;
+using Microsoft.DirectX.Direct3D;
+using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.DirectX.Direct3D;
+using TGC.Core.BoundingVolumes;
 using TGC.Core.Direct3D;
 using TGC.Core.SceneLoader;
-using static TGC.Core.SceneLoader.TgcSceneLoader;
-using Microsoft.DirectX;
-using Microsoft.DirectX.PrivateImplementationDetails;
-using TGC.Core.BoundingVolumes;
 using TGC.Core.Textures;
 using TGC.Group.Model.CreateBufferStrategy;
+using static TGC.Core.SceneLoader.TgcSceneLoader;
 
 namespace TGC.Group.Model
 {
@@ -21,8 +16,10 @@ namespace TGC.Group.Model
     {
         //Constante
         internal const string SEPARADOR = "\\";
+
         //Variables
         private Mesh dxMesh { get; set; }
+
         public IMeshFactory MeshFactory { get; set; }
         public ChargueBufferStrategy ChargueBufferStrategy { get; set; }
         public Material[] MeshMaterials { get; set; }
@@ -31,7 +28,7 @@ namespace TGC.Group.Model
         private bool enable { get; set; }
         private bool hasBoundingBox { get; set; }
         private List<TgcObjMaterialAux> MaterialsArray { get; set; }
-       
+
         public Device Device { get; set; }
 
         public MeshBuilder()
@@ -67,29 +64,29 @@ namespace TGC.Group.Model
         }
 
         /// <summary>
-        ///     Agrega El/Los materiales y luego los hace el set de los atributos 
+        ///     Agrega El/Los materiales y luego los hace el set de los atributos
         ///      meshMaterials y meshTextures
         /// </summary>
         /// <returns>MeshBuilder</returns>
         public MeshBuilder ChargueMaterials()
         {
-               //Cargar array de Materials y Texturas  TODO separar la creacion del material de la textura
-                MeshMaterials = new Material[MaterialsArray.Count];
-                MeshTextures = new TgcTexture[GetTextureCount()];     //GetTextureCount()
+            //Cargar array de Materials y Texturas  TODO separar la creacion del material de la textura
+            MeshMaterials = new Material[MaterialsArray.Count];
+            MeshTextures = new TgcTexture[GetTextureCount()];     //GetTextureCount()
             var indexTexture = 0;
-                MaterialsArray.ForEach((objMaterial) =>
-                {
-                        MeshMaterials[MaterialsArray.IndexOf(objMaterial)] = objMaterial.materialId;
+            MaterialsArray.ForEach((objMaterial) =>
+            {
+                MeshMaterials[MaterialsArray.IndexOf(objMaterial)] = objMaterial.materialId;
 
-                        if (objMaterial.textureFileName != null)
-                        {
-                        MeshTextures[indexTexture] = TgcTexture.createTexture(
-                            D3DDevice.Instance.Device,
-                            objMaterial.textureFileName,
-                            objMaterial.texturePath);
-                            indexTexture++;
-                        }
-                });
+                if (objMaterial.textureFileName != null)
+                {
+                    MeshTextures[indexTexture] = TgcTexture.createTexture(
+                        D3DDevice.Instance.Device,
+                        objMaterial.textureFileName,
+                        objMaterial.texturePath);
+                    indexTexture++;
+                }
+            });
 
             return this;
         }
@@ -118,7 +115,7 @@ namespace TGC.Group.Model
         public MeshBuilder ChargeAttributeBuffer(int[] materialsIds)
         {
             var attributeBuffer = dxMesh.LockAttributeBufferArray(LockFlags.None);
-            Array.Copy(materialsIds , attributeBuffer, attributeBuffer.Length); 
+            Array.Copy(materialsIds, attributeBuffer, attributeBuffer.Length);
             dxMesh.UnlockAttributeBuffer(attributeBuffer);
             return this;
         }
@@ -135,7 +132,7 @@ namespace TGC.Group.Model
         }
 
         /// <summary>
-        ///     Indica al builder si el mesh posee autotransformacion 
+        ///     Indica al builder si el mesh posee autotransformacion
         /// </summary>
         /// <param name="flag">boolean</param>
         /// <returns>MeshBuilder</returns>
@@ -146,7 +143,7 @@ namespace TGC.Group.Model
         }
 
         /// <summary>
-        ///     Indica al builder si el mesh esta disponible para modificaciones 
+        ///     Indica al builder si el mesh esta disponible para modificaciones
         /// </summary>
         /// <param name="flag">boolean</param>
         /// <returns>MeshBuilder</returns>
@@ -158,7 +155,7 @@ namespace TGC.Group.Model
 
         /// <summary>
         ///     Indica al builder si se debe crear un bounding box
-        ///     en base a los parametros de objMesh, por defecto genera uno stardar 
+        ///     en base a los parametros de objMesh, por defecto genera uno stardar
         /// </summary>
         /// <param name="flag">boolean</param>
         /// <returns>MeshBuilder</returns>
@@ -167,7 +164,6 @@ namespace TGC.Group.Model
             this.hasBoundingBox = flag;
             return this;
         }
-
 
         /// <summary>
         ///    Carga el buffer del mesh de DirectX usando la estrategia correcta para s estructura
@@ -181,15 +177,15 @@ namespace TGC.Group.Model
             ChargueBufferStrategy.ChargeBuffer(objMeshContainer, this.dxMesh, index);
             return this;
         }
-   
+
         /// <summary>
-        ///   Construye el mesh con los atributos que se le fueron agregando 
+        ///   Construye el mesh con los atributos que se le fueron agregando
         /// </summary>
         /// <param name="objMesh">ObjMesh</param>
         /// <returns>MeshBuilder</returns>
         public TgcMesh Build(ObjMesh objMesh)
         {
-            TgcMesh unMesh =  MeshFactory.createNewMesh(dxMesh, objMesh.Name, ChargueBufferStrategy.RenderType);
+            TgcMesh unMesh = MeshFactory.createNewMesh(dxMesh, objMesh.Name, ChargueBufferStrategy.RenderType);
             SetBoundingBox(unMesh);
             unMesh.AutoTransformEnable = autoTransform;
             unMesh.Enabled = enable;
@@ -199,7 +195,7 @@ namespace TGC.Group.Model
         }
 
         /// <summary>
-        ///   Cargar indexBuffer del mesh de DirectX en forma plana 
+        ///   Cargar indexBuffer del mesh de DirectX en forma plana
         /// </summary>
         /// <param name="objMesh">ObjMesh</param>
         /// <returns>MeshBuilder</returns>
@@ -209,7 +205,7 @@ namespace TGC.Group.Model
             if (hasBoundingBox)
             {
                 unMesh.BoundingBox = new TgcBoundingAxisAlignBox(
-                    new Vector3(1,1,1),   //Esto es re saraza TODO hay que ver si la info del obj puede calcular los puntos minimos y maximos. o si se pueden agregar al archivo.
+                    new Vector3(1, 1, 1),   //Esto es re saraza TODO hay que ver si la info del obj puede calcular los puntos minimos y maximos. o si se pueden agregar al archivo.
                     new Vector3(1, 1, 1),
                     unMesh.Position,
                     unMesh.Scale
@@ -234,7 +230,6 @@ namespace TGC.Group.Model
         /// <summary>
         ///     Crea Material y Textura
         /// </summary>
-
         private TgcObjMaterialAux createTextureAndMaterial(ObjMaterialMesh objMaterialMesh, string currentDirectory)
         {
             var matAux = new TgcObjMaterialAux();
@@ -251,13 +246,8 @@ namespace TGC.Group.Model
             //guardar datos de textura
             matAux.texturePath = objMaterialMesh.getTextura() ?? Path.GetFullPath(currentDirectory + SEPARADOR + objMaterialMesh.getTexturaFileName());
             matAux.textureFileName = objMaterialMesh.getTexturaFileName();
-            
+
             return matAux;
         }
-
-
-
-
-
     }
 }

@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Windows.Forms;
-using Microsoft.DirectX;
 using TGC.Core.SceneLoader;
 using TGC.Group.Model.ParserStrategy;
 
@@ -26,7 +24,6 @@ namespace TGC.Group.Model
             MeshBuilder = new MeshBuilder();
             ObjMaterialsLoader = new ObjMaterialsLoader();
             ObjMeshContainer = new ObjMeshContainer();
-
         }
 
         internal const string MTLLIB = "mtllib";
@@ -38,7 +35,6 @@ namespace TGC.Group.Model
         public ObjMaterialsLoader ObjMaterialsLoader { get; set; }
         public List<string> ListMtllib { get; set; }
         public MeshBuilder MeshBuilder { get; set; }
-       
 
         public string GetPathObjforCurrentDirectory()
         {
@@ -51,7 +47,7 @@ namespace TGC.Group.Model
             var lines = File.ReadAllLines(path);
             //Se recolectan los materiales
             GetListOfMaterials(lines, path);
-             //Se Parsea de los objetos
+            //Se Parsea de los objetos
             foreach (var line in lines)
                 ProccesLine(line);
         }
@@ -83,14 +79,14 @@ namespace TGC.Group.Model
                 SetMtllib(line);
             //Se hace parse de los materiales
             ObjMaterialsLoader.LoadMaterialsFromFiles(path, ListMtllib);  //TODO ver si devuelve una lista de materiales o le pasamos el objmesh como parametro
-           // MeshBuilder.AddMaterials(ObjMaterialsLoader);
+                                                                          // MeshBuilder.AddMaterials(ObjMaterialsLoader);
         }
 
         private void SetMtllib(string line)
         {
             string[] splitLine = line.Split(' ');
             if (splitLine.Length < ELEMENTOFMTLLIB) throw new ArgumentException("El atributo Mtllib tiene formato incorrecto");
-            var attribute = line.Substring(INDEXATTR) ;
+            var attribute = line.Substring(INDEXATTR);
             if (!Path.GetExtension(attribute).Equals(".mtl"))
             {
                 throw new ArgumentException("La extención de Mtllib es incorrecta, se esperaba: .mtl y se obtuvo: " + Path.GetExtension(attribute));
@@ -115,7 +111,7 @@ namespace TGC.Group.Model
         {
             LoadObjFromFile(fullobjpath);
             ObjMesh objMesh = ObjMeshContainer.ListObjMesh[index];
-            if (objMesh.Usemtl.Count>0)
+            if (objMesh.Usemtl.Count > 0)
             {
                 MeshBuilder.AddMaterials(ObjMaterialsLoader)
                     .AddDxMesh(objMesh.FaceTrianglesList.Count)
@@ -125,16 +121,14 @@ namespace TGC.Group.Model
                     .SetEnable(true)
                     .AddAutotransform(true)
                     .SetHasBoundingBox(false);
-
             }
             else
             {
                 MeshBuilder.AddDxMesh(objMesh.FaceTrianglesList.Count)
-                    .ChargeBuffer(ObjMeshContainer,index)
+                    .ChargeBuffer(ObjMeshContainer, index)
                     .SetEnable(true)
                     .AddAutotransform(true)
                     .SetHasBoundingBox(false);
-
             }
 
             return MeshBuilder.Build(ObjMeshContainer.ListObjMesh[index]); //TODO pasarle el name no mas

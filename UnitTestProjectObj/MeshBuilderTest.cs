@@ -1,12 +1,9 @@
-﻿using System;
+﻿using Microsoft.DirectX;
+using Microsoft.DirectX.Direct3D;
+using NUnit.Framework;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.DirectX;
-using Microsoft.DirectX.Direct3D;
-using NUnit.Framework;
 using TGC.Core.Direct3D;
 using TGC.Core.SceneLoader;
 using TGC.Group.Model;
@@ -14,19 +11,17 @@ using TGC.Group.Model;
 namespace UnitTestProjectObj
 {
     [TestFixture]
-    class MeshBuilderTest
+    internal class MeshBuilderTest
     {
-       // private TgcObjLoader _tgcObjLoader = new TgcObjLoader();
+        // private TgcObjLoader _tgcObjLoader = new TgcObjLoader();
         private string _fullobjpath;
+
         private string _fullobjpathmultimaterial;
         private string _fullobjpathmeshcolorsolo;
-        ObjMesh resObjMesh;
+        private ObjMesh resObjMesh;
         private List<ObjMaterialMesh> listObjMaterialMesh;
         internal Mesh dxMesh;
         private System.Windows.Forms.Panel panel3D;
-       
-
-
 
         [SetUp]
         public void Init()
@@ -39,9 +34,9 @@ namespace UnitTestProjectObj
             //Instanciamos un panel para crear un divice
             panel3D = new System.Windows.Forms.Panel();
             //Crear Graphics Device
-            // 
+            //
             // panel3D
-            // 
+            //
             this.panel3D.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel3D.Location = new System.Drawing.Point(0, 0);
             this.panel3D.Name = "panel3D";
@@ -61,8 +56,6 @@ namespace UnitTestProjectObj
             _fullobjpathmeshcolorsolo = Path.Combine(dir.Parent.FullName, testDataMeshColorSolo);
         }
 
-       
-
         [TestCase]
         public void CreateInstaceDxMeshOk()
         {
@@ -74,7 +67,6 @@ namespace UnitTestProjectObj
             Assert.True(auxMeshBuilder.GetInstaceDxMesh().NumberVertices == resObjMesh.FaceTrianglesList.Count * 3);
             Assert.True(auxMeshBuilder.GetInstaceDxMesh().NumberFaces == resObjMesh.FaceTrianglesList.Count);
             Assert.NotNull(auxMeshBuilder.GetInstaceDxMesh());
-
         }
 
         [TestCase]
@@ -86,7 +78,6 @@ namespace UnitTestProjectObj
             MeshBuilder auxMeshBuilder = new MeshBuilder()
                .AddDxMesh(resObjMesh.FaceTrianglesList.Count);
             Assert.True(auxMeshBuilder.GetInstaceDxMesh().NumberVertices == resObjMesh.FaceTrianglesList.Count * 3);
-         
         }
 
         [TestCase]
@@ -98,10 +89,8 @@ namespace UnitTestProjectObj
             MeshBuilder auxMeshBuilder = new MeshBuilder()
                .AddDxMesh(resObjMesh.FaceTrianglesList.Count);
             Assert.True(auxMeshBuilder.GetInstaceDxMesh().NumberFaces == resObjMesh.FaceTrianglesList.Count);
-            
         }
 
-        
         [TestCase]
         public void BuildTgcMeshWithAutotransformTrueOk()
         {
@@ -111,12 +100,11 @@ namespace UnitTestProjectObj
             TgcMesh tgcMesh = new MeshBuilder()
                 .AddMaterials(_tgcObjLoader.ObjMaterialsLoader)
                 .AddDxMesh(resObjMesh.FaceTrianglesList.Count)
-                .ChargeBuffer(_tgcObjLoader.ObjMeshContainer,0)
+                .ChargeBuffer(_tgcObjLoader.ObjMeshContainer, 0)
                 .AddAutotransform(true)
                 .Build(resObjMesh);
             Assert.True(tgcMesh.AutoTransformEnable);
         }
-        
 
         [TestCase]
         public void BuildTgcMeshWithEnableTrueOk()
@@ -132,8 +120,6 @@ namespace UnitTestProjectObj
                 .Build(resObjMesh);
             Assert.True(tgcMesh.Enabled);
         }
-
-        
 
         [TestCase]
         public void TgcMeshBuildedCanSetPosition()
@@ -192,7 +178,6 @@ namespace UnitTestProjectObj
         [TestCase]
         public void TgcMeshBuildWithTextureOk()
         {
-
             TgcObjLoader _tgcObjLoader = new TgcObjLoader();
             _tgcObjLoader.LoadObjFromFile(_fullobjpath);
             resObjMesh = _tgcObjLoader.ObjMeshContainer.ListObjMesh.First();
@@ -205,10 +190,9 @@ namespace UnitTestProjectObj
                 .SetEnable(true)
                 .SetHasBoundingBox(true)
                 .Build(resObjMesh);
-            Assert.True(tgcMesh.Materials.Length > 0); 
+            Assert.True(tgcMesh.Materials.Length > 0);
         }
 
-        
         [TestCase]
         public void BuildTgcMeshWithBoundingBoxOk()  //TODO el boundingbox no deberia estar acoplado al mesh
         {
@@ -346,7 +330,5 @@ namespace UnitTestProjectObj
 
         //Estos test se van hacer despues pensando en que puede haber un refactor de tipo estrategia para la creacion del mesh
         //TODO el test de cuando el mesh es color difuse y ligth map
-
-
     }
 }

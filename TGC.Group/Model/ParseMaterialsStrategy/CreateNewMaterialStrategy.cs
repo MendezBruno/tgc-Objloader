@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace TGC.Group.Model.ParseMaterialsStrategy
 {
-    public class CreateNewMaterialStrategy: ObjMaterialsParseStrategy
+    public class CreateNewMaterialStrategy : ObjMaterialsParseStrategy
     {
         private const int NameMaterial = 1;
 
@@ -20,7 +16,5 @@ namespace TGC.Group.Model.ParseMaterialsStrategy
             var split = line.Split(' ');
             listObjMaterialMesh.Add(new ObjMaterialMesh(split[NameMaterial]));
         }
-
-       
     }
 }

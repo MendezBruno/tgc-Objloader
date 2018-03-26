@@ -8,7 +8,7 @@ namespace TGC.Group.Model
 {
     public class ObjMaterialsLoader
     {
-        const string Separador = "\\";
+        private const string Separador = "\\";
 
         public ObjMaterialsLoader()
         {
@@ -27,8 +27,8 @@ namespace TGC.Group.Model
         {
             foreach (string mtllib in listMtllib)
             {
-                string pathMaterial = Path.GetDirectoryName(pathMtllib) +Separador+ mtllib;
-                if (File.Exists(pathMaterial))  
+                string pathMaterial = Path.GetDirectoryName(pathMtllib) + Separador + mtllib;
+                if (File.Exists(pathMaterial))
                 {
                     ParseMtlLib(pathMaterial);
                 }
@@ -36,7 +36,6 @@ namespace TGC.Group.Model
                 {
                     throw new InvalidOperationException($"Cannot find file: {mtllib}");
                 }
-              
             }
         }
 
@@ -66,7 +65,7 @@ namespace TGC.Group.Model
                     strategy.ProccesLine(line, ListObjMaterialMesh);
                     return;
                 }
-            throw new InvalidOperationException($"Cannot find a correct parsing process for line {line}"); 
+            throw new InvalidOperationException($"Cannot find a correct parsing process for line {line}");
         }
 
         public void SetDirectoryPathMaterial(string path)

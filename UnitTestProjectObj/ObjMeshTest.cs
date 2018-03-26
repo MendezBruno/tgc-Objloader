@@ -1,29 +1,22 @@
-﻿using System;
+﻿using Microsoft.DirectX.Direct3D;
+using NUnit.Framework;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.DirectX.Direct3D;
-using NUnit.Framework;
 using TGC.Core.Direct3D;
 using TGC.Group.Model;
 
 namespace UnitTestProjectObj
 {
     [TestFixture]
-    class ObjMeshTest
+    internal class ObjMeshTest
     {
-
         private string _fullobjpath;
         private string _fullobjpathmultimaterial;
-        ObjMesh resObjMesh;
+        private ObjMesh resObjMesh;
         private List<ObjMaterialMesh> listObjMaterialMesh;
         internal Mesh dxMesh;
         private System.Windows.Forms.Panel panel3D;
-
-
-
 
         [SetUp]
         public void Init()
@@ -35,9 +28,9 @@ namespace UnitTestProjectObj
             //Instanciamos un panel para crear un divice
             panel3D = new System.Windows.Forms.Panel();
             //Crear Graphics Device
-            // 
+            //
             // panel3D
-            // 
+            //
             this.panel3D.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel3D.Location = new System.Drawing.Point(0, 0);
             this.panel3D.Name = "panel3D";
@@ -55,7 +48,6 @@ namespace UnitTestProjectObj
             _fullobjpath = Path.Combine(dir.Parent.FullName, testDataCuboTextura);
             _fullobjpathmultimaterial = Path.Combine(dir.Parent.FullName, testDatabb8Multimaterial);
         }
-
 
         [TestCase]
         public void CreateMaterialIdsArrayOk()
@@ -75,7 +67,6 @@ namespace UnitTestProjectObj
             int[] materialIds = resObjMesh.CreateMaterialIdsArray();
             Assert.True(materialIds[15810] == 0);
             Assert.True(materialIds[17010] == 1);
-            
         }
     }
 }

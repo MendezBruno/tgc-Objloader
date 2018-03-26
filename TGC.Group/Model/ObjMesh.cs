@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Microsoft.DirectX;
 
 namespace TGC.Group.Model
 {
@@ -16,8 +15,10 @@ namespace TGC.Group.Model
         }
 
         public string Name { get; set; }
-       // public string Mtllib { get; set; }
+
+        // public string Mtllib { get; set; }
         public bool Shadow { get; set; } = false;
+
         public new List<string> Usemtl = new List<string>();
         public List<FaceTriangle> FaceTrianglesList { get; set; } = new List<FaceTriangle>();
 
@@ -40,7 +41,4 @@ namespace TGC.Group.Model
             return materialsId;
         }
     }
-
-
-   
 }

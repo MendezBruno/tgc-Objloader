@@ -1,16 +1,12 @@
 ﻿using NUnit.Framework;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using TGC.Group.Model;
 using TGC.Group.Model.ParserStrategy;
 
 namespace UnitTestProjectObj.Model.ParserStrategy
 {
     [TestFixture]
-    class AddUsemtlStrategyTest
+    internal class AddUsemtlStrategyTest
     {
         private readonly AddUsemtlStrategy _addUsemtlStrategy = new AddUsemtlStrategy();
         private readonly CreateNewMeshStrategy _createNewMeshStrategy = new CreateNewMeshStrategy();
@@ -54,9 +50,6 @@ namespace UnitTestProjectObj.Model.ParserStrategy
         {
             var line = "s bad Parameter";
             Assert.That(() => { _addUsemtlStrategy.ProccesLine(line, ObjMeshContainer); }, Throws.ArgumentException);
-
         }
-
-
     }
 }

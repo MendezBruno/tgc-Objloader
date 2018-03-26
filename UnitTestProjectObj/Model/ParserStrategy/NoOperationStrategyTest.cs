@@ -1,36 +1,29 @@
-﻿using System;
+﻿using NUnit.Framework;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using NUnit.Framework;
 using TGC.Group.Model;
 using TGC.Group.Model.ParserStrategy;
 
 namespace UnitTestProjectObj.Model.ParserStrategy
 {
     [TestFixture]
-    class NoOperationStrategyTest
+    internal class NoOperationStrategyTest
     {
         public ObjMeshContainer ObjMeshContainer;
         private readonly NoOperationStrategy _noOperationStrategy = new NoOperationStrategy();
 
-
-    [SetUp]
+        [SetUp]
         public void Init()
         {
             ObjMeshContainer = new ObjMeshContainer();
         }
 
-    [Test]
-    public void ProccesLineNoOperationHashtagOk()
-    {
-        List<ObjMesh> ListObjMesh = new List<ObjMesh>();
-        var line = "# o Cube";
-        _noOperationStrategy.ProccesLine(line, ObjMeshContainer);
-        Assert.True(ListObjMesh.Count == 0);
-    }
-
-
+        [Test]
+        public void ProccesLineNoOperationHashtagOk()
+        {
+            List<ObjMesh> ListObjMesh = new List<ObjMesh>();
+            var line = "# o Cube";
+            _noOperationStrategy.ProccesLine(line, ObjMeshContainer);
+            Assert.True(ListObjMesh.Count == 0);
+        }
     }
 }

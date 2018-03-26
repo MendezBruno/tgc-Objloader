@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using NUnit.Framework;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using NUnit.Framework;
 using TGC.Group.Model;
 using TGC.Group.Model.ParserStrategy;
 

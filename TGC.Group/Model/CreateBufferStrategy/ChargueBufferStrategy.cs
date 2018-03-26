@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.DirectX.Direct3D;
+﻿using Microsoft.DirectX.Direct3D;
 using TGC.Core.SceneLoader;
 
 namespace TGC.Group.Model.CreateBufferStrategy
@@ -24,7 +19,7 @@ namespace TGC.Group.Model.CreateBufferStrategy
         public abstract void ChargeBuffer(ObjMeshContainer objMesh, Mesh dxMesh, int index);
 
         /// <summary>
-        ///   Cargar indexBuffer del mesh de DirectX en forma plana 
+        ///   Cargar indexBuffer del mesh de DirectX en forma plana
         /// </summary>
         /// <param name="objMesh">ObjMesh</param>
         public void ChargeIndexBuffer(ObjMesh objMesh, Mesh dxMesh)
@@ -38,9 +33,6 @@ namespace TGC.Group.Model.CreateBufferStrategy
                 }
                 ib.SetData(indices, 0, LockFlags.None);
             }
-
         }
-
-
     }
 }

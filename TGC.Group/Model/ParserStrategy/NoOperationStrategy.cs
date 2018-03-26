@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Linq;
 
 namespace TGC.Group.Model.ParserStrategy
 {
@@ -12,7 +8,7 @@ namespace TGC.Group.Model.ParserStrategy
 
         public NoOperationStrategy()
         {
-           this._keyWords = new string[] { COMMENT,EMPTYLINE,WHITELINE,MTLLIB };
+            this._keyWords = new string[] { COMMENT, EMPTYLINE, WHITELINE, MTLLIB };
         }
 
         public override void ProccesLine(string line, ObjMeshContainer objMeshContainer)
@@ -20,10 +16,9 @@ namespace TGC.Group.Model.ParserStrategy
             return;
         }
 
-
         public override bool ResponseTo(string action)
         {
-            return  this._keyWords.Contains(action) ;
+            return this._keyWords.Contains(action);
         }
     }
 }

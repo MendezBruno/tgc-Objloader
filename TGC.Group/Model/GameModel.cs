@@ -1,9 +1,6 @@
-using System.Drawing;
-using System.IO;
-using System.Linq;
 using Microsoft.DirectX;
 using Microsoft.DirectX.DirectInput;
-using NUnit.Framework;
+using System.Drawing;
 using TGC.Core.Direct3D;
 using TGC.Core.Example;
 using TGC.Core.Geometry;
@@ -34,8 +31,6 @@ namespace TGC.Group.Model
             Description = Game.Default.Description;
         }
 
-
-
         //Caja que se muestra en el ejemplo.
         private TgcBox Box { get; set; }
 
@@ -55,7 +50,7 @@ namespace TGC.Group.Model
         private bool BoundingBox { get; set; }
 
         //Importardor de mesh por obj
-        private TgcObjLoader TgcObjLoader  = new TgcObjLoader();
+        private TgcObjLoader TgcObjLoader = new TgcObjLoader();
 
         /// <summary>
         ///     Se llama una sola vez, al principio cuando se ejecuta el ejemplo.
@@ -89,7 +84,7 @@ namespace TGC.Group.Model
             Mesh = new TgcSceneLoader().loadSceneFromFile(MediaDir + "LogoTGC-TgcScene.xml").Meshes[0];
             //Defino una escala en el modelo logico del mesh que es muy grande.
             Mesh.Scale = new Vector3(0.5f, 0.5f, 0.5f);
-            
+
             myBox = new TgcSceneLoader().loadSceneFromFile(MediaDir + "cubo-TgcScene.xml").Meshes[0];
 
             //Suelen utilizarse objetos que manejan el comportamiento de la camara.
@@ -120,21 +115,18 @@ namespace TGC.Group.Model
             // MeshDelObj = TgcObjLoader.LoadTgcMeshFromObj(@"C:\workspace\Proyectos Net\tgc-Objloader\UnitTestProjectObj\DatosPrueba\tgcito\Tgcito color solo.obj", 0);
             // MeshDelObj = TgcObjLoader.LoadTgcMeshFromObj(@"C:\workspace\Proyectos Net\tgc-Objloader\UnitTestProjectObj\DatosPrueba\cubotexturacaja.obj", 0);
 
-            //MeshDelObj = TgcObjLoader.LoadTgcMeshFromObj(@"C:\Users\CIDESO\Desktop\Mendez investigacion\tgc-Objloader\UnitTestProjectObj\DatosPrueba\bb8\bb8.obj", 0);
+            MeshDelObj = TgcObjLoader.LoadTgcMeshFromObj(@"C:\Users\CIDESO\Desktop\Mendez investigacion\tgc-Objloader\UnitTestProjectObj\DatosPrueba\bb8\bb8.obj", 0);
             //    MeshDelObj = TgcObjLoader.LoadTgcMeshFromObj(@"C:\Users\CIDESO\Desktop\Mendez investigacion\tgc-Objloader\UnitTestProjectObj\DatosPrueba\tgcito\Tgcito color solo.obj", 0);
             //     MeshDelObj = TgcObjLoader.LoadTgcMeshFromObj(@"C:\Users\CIDESO\Desktop\Mendez investigacion\tgc-Objloader\UnitTestProjectObj\DatosPrueba\cubotexturacaja.obj", 0);
             //  MeshDelObj = TgcObjLoader.LoadTgcMeshFromObj(@"C:\Users\CIDESO\Desktop\Mendez investigacion\tgc-Objloader\UnitTestProjectObj\DatosPrueba\tgcito\tgcito con textura.obj", 0);
-            MeshDelObj = TgcObjLoader.LoadTgcMeshFromObj(@"C:\Users\CIDESO\Desktop\wolf.obj", 1);
-
+            // MeshDelObj = TgcObjLoader.LoadTgcMeshFromObj(@"C:\Users\CIDESO\Desktop\wolf.obj", 1);
 
             //           MeshDelObj.AutoTransformEnable = true;
             //           MeshDelObj.Enabled = true;
-            MeshDelObj.Scale = new Vector3(50f, 50f, 50f);
-                       MeshDelObj.Position = new Vector3(-25, 0, 0);
-                       MeshDelObj.BoundingBox.move(new Vector3(25, 0, 0));
+            MeshDelObj.Scale = new Vector3(5f, 5f, 5f);
+            MeshDelObj.Position = new Vector3(-25, 0, 0);
+            MeshDelObj.BoundingBox.move(new Vector3(25, 0, 0));
             // MeshDelObj.Rotation()
-
-
         }
 
         /// <summary>
@@ -199,12 +191,10 @@ namespace TGC.Group.Model
 
             //   myBoxTgcMesh.render();
 
-           
-
-        /*    MeshDelObj.Transform = Matrix.Scaling(MeshDelObj.Scale) *
-                                Matrix.RotationYawPitchRoll(MeshDelObj.Rotation.Y, MeshDelObj.Rotation.X, MeshDelObj.Rotation.Z) *
-                                Matrix.Translation(MeshDelObj.Position);
-            MeshDelObj.UpdateMeshTransform();  */
+            /*    MeshDelObj.Transform = Matrix.Scaling(MeshDelObj.Scale) *
+                                    Matrix.RotationYawPitchRoll(MeshDelObj.Rotation.Y, MeshDelObj.Rotation.X, MeshDelObj.Rotation.Z) *
+                                    Matrix.Translation(MeshDelObj.Position);
+                MeshDelObj.UpdateMeshTransform();  */
             MeshDelObj.render();
 
             //Render de BoundingBox, muy útil para debug de colisiones.

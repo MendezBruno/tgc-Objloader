@@ -1,7 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Microsoft.DirectX;
+using System;
 using System.Globalization;
-using Microsoft.DirectX;
 
 namespace TGC.Group.Model.ParserStrategy
 {
@@ -36,7 +35,7 @@ namespace TGC.Group.Model.ParserStrategy
             var indices = line.Split(' ');
             if (indices.Length != 4 && indices.Length != 3) throw new ArgumentException("El Archivo .obj no fue exportado de forma triangular");
             if (indices.Length == 4)
-            { 
+            {
                 vertex = new Vector3
                 {
                     X = float.Parse(indices[1], Style, Info),
