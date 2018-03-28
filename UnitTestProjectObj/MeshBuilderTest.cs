@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using TGC.Core.Direct3D;
+using TGC.Core.Mathematica;
 using TGC.Core.SceneLoader;
 using TGC.Group.Model;
 
@@ -103,7 +104,7 @@ namespace UnitTestProjectObj
                 .ChargeBuffer(_tgcObjLoader.ObjMeshContainer, 0)
                 .AddAutotransform(true)
                 .Build(resObjMesh);
-            Assert.True(tgcMesh.AutoTransformEnable);
+            Assert.True(tgcMesh.AutoTransform);
         }
 
         [TestCase]
@@ -135,8 +136,8 @@ namespace UnitTestProjectObj
                 .SetEnable(true)
                 .SetHasBoundingBox(false)
                 .Build(resObjMesh);
-            tgcMesh.Position = new Vector3(25, 0, 0);
-            Assert.True(tgcMesh.Position.Equals(new Vector3(25, 0, 0)));
+            tgcMesh.Position = new TGCVector3(25, 0, 0);
+            Assert.True(tgcMesh.Position.Equals(new TGCVector3(25, 0, 0)));
         }
 
         [TestCase]
@@ -153,8 +154,8 @@ namespace UnitTestProjectObj
                 .SetEnable(true)
                 .SetHasBoundingBox(false)
                 .Build(resObjMesh);
-            tgcMesh.Scale = new Vector3(8.0f, 8.5f, 8.5f);
-            Assert.True(tgcMesh.Scale.Equals(new Vector3(8.0f, 8.5f, 8.5f)));
+            tgcMesh.Scale = new TGCVector3(8.0f, 8.5f, 8.5f);
+            Assert.True(tgcMesh.Scale.Equals(new TGCVector3(8.0f, 8.5f, 8.5f)));
         }
 
         [TestCase]
@@ -171,8 +172,8 @@ namespace UnitTestProjectObj
                 .SetEnable(true)
                 .SetHasBoundingBox(false)
                 .Build(resObjMesh);
-            tgcMesh.Rotation = new Vector3(8.0f, 8.5f, 8.5f);
-            Assert.True(tgcMesh.Rotation.Equals(new Vector3(8.0f, 8.5f, 8.5f)));
+            tgcMesh.Rotation = new TGCVector3(8.0f, 8.5f, 8.5f);
+            Assert.True(tgcMesh.Rotation.Equals(new TGCVector3(8.0f, 8.5f, 8.5f)));
         }
 
         [TestCase]

@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.IO;
 using TGC.Core.BoundingVolumes;
 using TGC.Core.Direct3D;
+using TGC.Core.Mathematica;
 using TGC.Core.SceneLoader;
 using TGC.Core.Textures;
 using TGC.Group.Model.CreateBufferStrategy;
@@ -187,7 +188,7 @@ namespace TGC.Group.Model
         {
             TgcMesh unMesh = MeshFactory.createNewMesh(dxMesh, objMesh.Name, ChargueBufferStrategy.RenderType);
             SetBoundingBox(unMesh);
-            unMesh.AutoTransformEnable = autoTransform;
+            unMesh.AutoTransform = autoTransform;
             unMesh.Enabled = enable;
             unMesh.Materials = MeshMaterials;
             unMesh.DiffuseMaps = MeshTextures;
@@ -205,8 +206,8 @@ namespace TGC.Group.Model
             if (hasBoundingBox)
             {
                 unMesh.BoundingBox = new TgcBoundingAxisAlignBox(
-                    new Vector3(1, 1, 1),   //Esto es re saraza TODO hay que ver si la info del obj puede calcular los puntos minimos y maximos. o si se pueden agregar al archivo.
-                    new Vector3(1, 1, 1),
+                    new TGCVector3(1, 1, 1),   //Esto es re saraza TODO hay que ver si la info del obj puede calcular los puntos minimos y maximos. o si se pueden agregar al archivo.
+                    new TGCVector3(1, 1, 1),
                     unMesh.Position,
                     unMesh.Scale
                 );
