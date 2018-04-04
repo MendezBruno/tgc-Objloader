@@ -250,5 +250,43 @@ namespace TGC.Group.Model
 
             return matAux;
         }
+
+
+        /// <summary>
+        ///     FVF para formato de malla  DIFFUSE_MAP
+        /// </summary>
+        public static readonly VertexElement[] DiffuseMapVertexElements =
+        {
+            new VertexElement(0, 0, DeclarationType.Float3,
+                DeclarationMethod.Default,
+                DeclarationUsage.Position, 0),
+            new VertexElement(0, 12, DeclarationType.Float3,
+                DeclarationMethod.Default,
+                DeclarationUsage.Normal, 0),
+            new VertexElement(0, 24, DeclarationType.Color,
+                DeclarationMethod.Default,
+                DeclarationUsage.Color, 0),
+            new VertexElement(0, 28, DeclarationType.Float2,
+                DeclarationMethod.Default,
+                DeclarationUsage.TextureCoordinate, 0),
+            VertexElement.VertexDeclarationEnd
+        };
+
+        /// <summary>
+        ///     FVF para formato de malla VERTEX_COLOR
+        /// </summary>
+        public static readonly VertexElement[] VertexColorVertexElements =
+        {
+            new VertexElement(0, 0, DeclarationType.Float3,
+                DeclarationMethod.Default,
+                DeclarationUsage.Position, 0),
+            new VertexElement(0, 12, DeclarationType.Float3,
+                DeclarationMethod.Default,
+                DeclarationUsage.Normal, 0),
+            new VertexElement(0, 24, DeclarationType.Color,
+                DeclarationMethod.Default,
+                DeclarationUsage.Color, 0),
+            VertexElement.VertexDeclarationEnd
+        };
     }
 }

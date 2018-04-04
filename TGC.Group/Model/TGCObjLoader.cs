@@ -29,6 +29,7 @@ namespace TGC.Group.Model
         internal const string MTLLIB = "mtllib";
         private const int INDEXATTR = 7;
         private const int ELEMENTOFMTLLIB = 2;
+        public int LIMITVERTEX = 21844;
         private const int INICIO = 0;
         public List<ObjParseStrategy> Strategies { get; set; }
         public ObjMeshContainer ObjMeshContainer { get; set; }
@@ -50,7 +51,27 @@ namespace TGC.Group.Model
             //Se Parsea de los objetos
             foreach (var line in lines)
                 ProccesLine(line);
+            //se chekea que el objeto parseado funcione en el frmawork
+            CheckParsedObj();
         }
+
+        private void CheckParsedObj()
+        {
+            ObjMeshContainer.ListObjMesh.ForEach(
+                (mesh) =>
+                {
+                    CheckMeshLimitVertex(mesh);
+                    //TODO chequear material con textura
+                });
+        }
+
+        private void CheckMeshLimitVertex(ObjMesh mesh)
+        {
+           if (mesh.FaceTrianglesList.Count > LIMITVERTEX)
+               throw new ArgumentOutOfRangeException($"FaceTrianglesList.Count, El límite actual para la creación de mesh es de: {LIMITVERTEX} y un objeto de su archivo posee: {mesh.FaceTrianglesList.Count}");
+        }
+
+        
 
         public void ProccesLine(string line)
         {
@@ -113,9 +134,10 @@ namespace TGC.Group.Model
             ObjMesh objMesh = ObjMeshContainer.ListObjMesh[index];
             if (objMesh.Usemtl.Count > 0)
             {
-                MeshBuilder.AddMaterials(ObjMaterialsLoader)
-                    .AddDxMesh(objMesh.FaceTrianglesList.Count)
+                MeshBuilder
+                    .AddMaterials(ObjMaterialsLoader)
                     .ChargueMaterials()
+                    .AddDxMesh(objMesh.FaceTrianglesList.Count)
                     .ChargeBuffer(ObjMeshContainer, index)
                     .ChargeAttributeBuffer(objMesh.CreateMaterialIdsArray())
                     .SetEnable(true)

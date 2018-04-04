@@ -254,7 +254,6 @@ namespace UnitTestProjectObj
         [TestCase]
         public void CreateMeshOnlyColor()
         {
-            //TODO el test de cuando el mesh es solo color
             TgcObjLoader _tgcObjLoader = new TgcObjLoader();
             _tgcObjLoader.LoadObjFromFile(_fullobjpathmeshcolorsolo);
             resObjMesh = _tgcObjLoader.ObjMeshContainer.ListObjMesh.First();
@@ -327,6 +326,20 @@ namespace UnitTestProjectObj
                 .AddDxMesh(resObjMesh.FaceTrianglesList.Count)
                 .ChargeBuffer(_tgcObjLoader.ObjMeshContainer, 0);
             Assert.True(meshBuilder.GetInstaceDxMesh().IndexBuffer.SizeInBytes > 0);
+        }
+
+        [TestCase]
+        public void CreateDxMeshWithVertexLimit()
+        {
+            // 21845 * 3 = 65535
+            // Int range 0 to 65535
+
+            TgcObjLoader _tgcObjLoader = new TgcObjLoader();
+            _tgcObjLoader.LoadObjFromFile(_fullobjpathmeshcolorsolo);
+            resObjMesh = _tgcObjLoader.ObjMeshContainer.ListObjMesh.First();
+            MeshBuilder meshBuilder = new MeshBuilder().AddDxMesh(21844);
+            Assert.NotNull(meshBuilder.GetInstaceDxMesh());
+
         }
 
         //Estos test se van hacer despues pensando en que puede haber un refactor de tipo estrategia para la creacion del mesh
