@@ -60,9 +60,17 @@ namespace TGC.Group.Model
             ObjMeshContainer.ListObjMesh.ForEach(
                 (mesh) =>
                 {
+                    
                     CheckMeshLimitVertex(mesh);
-                    //TODO chequear material con textura
+                    ChekMaterialsHaveTexture(ObjMaterialsLoader.ListObjMaterialMesh);
+
                 });
+        }
+
+        private void ChekMaterialsHaveTexture(List<ObjMaterialMesh> listObjMaterialMesh)
+        {
+           if( listObjMaterialMesh.Any((objMaterialMesh) => objMaterialMesh.map_d == null) )
+                throw new ArgumentException( "Algunos de los materiales no posee textura. TGC todavía no soporta materiales sin textura. " );
         }
 
         private void CheckMeshLimitVertex(ObjMesh mesh)
