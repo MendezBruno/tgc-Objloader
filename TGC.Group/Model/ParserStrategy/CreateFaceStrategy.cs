@@ -49,7 +49,7 @@ namespace TGC.Group.Model.ParserStrategy
             }
             face.Usemtl = objMeshContainer.ListObjMesh.Last().Usemtl.Count > 0 ? objMeshContainer.ListObjMesh.Last().Usemtl.Last() : null;
 
-            objMeshContainer.ListObjMesh.Last().FaceTrianglesList.Add(face);
+            objMeshContainer.ListObjMesh.Last().FaceTriangles.Add(face);
         }
 
         /// <summary>

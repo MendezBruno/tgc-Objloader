@@ -28,10 +28,10 @@ namespace UnitTestProjectObj
         {
             var line = "f 2/2/1 4/1/1 1/1/1";
             _createFaceStrategy.ProccesLine(line, ObjMeshContainer);
-            Assert.True(ObjMeshContainer.ListObjMesh.Last().FaceTrianglesList.Count > 0);
-            Assert.True(ObjMeshContainer.ListObjMesh.Last().FaceTrianglesList.Last().V1 == 2);
-            Assert.True(ObjMeshContainer.ListObjMesh.Last().FaceTrianglesList.Last().Vt1 == 2);
-            Assert.True(ObjMeshContainer.ListObjMesh.Last().FaceTrianglesList.Last().Vn1 == 1);
+            Assert.True(ObjMeshContainer.ListObjMesh.Last().FaceTriangles.Count > 0);
+            Assert.True(ObjMeshContainer.ListObjMesh.Last().FaceTriangles.Last().V1 == 2);
+            Assert.True(ObjMeshContainer.ListObjMesh.Last().FaceTriangles.Last().Vt1 == 2);
+            Assert.True(ObjMeshContainer.ListObjMesh.Last().FaceTriangles.Last().Vn1 == 1);
         }
 
         [Test]
@@ -39,7 +39,7 @@ namespace UnitTestProjectObj
         {
             var line = "f 2/2 4/2 1/2";
             _createFaceStrategy.ProccesLine(line, ObjMeshContainer);
-            Assert.True(ObjMeshContainer.ListObjMesh.Last().FaceTrianglesList.Last().Vn2 == 0);
+            Assert.True(ObjMeshContainer.ListObjMesh.Last().FaceTriangles.Last().Vn2 == 0);
         }
 
         [Test]
@@ -47,7 +47,7 @@ namespace UnitTestProjectObj
         {
             var line = "f 2//1 4//1 1//1";
             _createFaceStrategy.ProccesLine(line, ObjMeshContainer);
-            Assert.True(ObjMeshContainer.ListObjMesh.Last().FaceTrianglesList.Last().Vt2 == 0);
+            Assert.True(ObjMeshContainer.ListObjMesh.Last().FaceTriangles.Last().Vt2 == 0);
         }
 
         [Test]
@@ -57,7 +57,7 @@ namespace UnitTestProjectObj
             _createFaceStrategy.ProccesLine(line, ObjMeshContainer);
             line = "usemtl Material.001";
             _addUsemtlStrategy.ProccesLine(line, ObjMeshContainer);
-            Assert.True(ObjMeshContainer.ListObjMesh.Last().FaceTrianglesList.Last().Usemtl.Equals("Material.001"));
+            Assert.True(ObjMeshContainer.ListObjMesh.Last().FaceTriangles.Last().Usemtl.Equals("Material.001"));
         }
 
         [TestCase]

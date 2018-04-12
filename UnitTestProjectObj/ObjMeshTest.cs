@@ -52,16 +52,16 @@ namespace UnitTestProjectObj
         [TestCase]
         public void CreateMaterialIdsArrayOk()
         {
-            TgcObjLoader _tgcObjLoader = new TgcObjLoader();
+            TGCObjLoader _tgcObjLoader = new TGCObjLoader();
             _tgcObjLoader.LoadObjFromFile(_fullobjpathmultimaterial);
             resObjMesh = _tgcObjLoader.ObjMeshContainer.ListObjMesh.First();
-            Assert.True(resObjMesh.FaceTrianglesList.Count == resObjMesh.CreateMaterialIdsArray().Length);
+            Assert.True(resObjMesh.FaceTriangles.Count == resObjMesh.CreateMaterialIdsArray().Length);
         }
 
         [TestCase]
         public void IndexMaterialIdsArrayOk()
         {
-            TgcObjLoader _tgcObjLoader = new TgcObjLoader();
+            TGCObjLoader _tgcObjLoader = new TGCObjLoader();
             _tgcObjLoader.LoadObjFromFile(_fullobjpathmultimaterial);
             resObjMesh = _tgcObjLoader.ObjMeshContainer.ListObjMesh.First();
             int[] materialIds = resObjMesh.CreateMaterialIdsArray();

@@ -7,9 +7,9 @@ using TGC.Group.Model.ParserStrategy;
 
 namespace TGC.Group.Model
 {
-    public class TgcObjLoader
+    public class TGCObjLoader
     {
-        public TgcObjLoader()
+        public TGCObjLoader()
         {
             Strategies = new List<ObjParseStrategy>();
             Strategies.Add(new AddShadowStrategy());
@@ -75,8 +75,8 @@ namespace TGC.Group.Model
 
         private void CheckMeshLimitVertex(ObjMesh mesh)
         {
-           if (mesh.FaceTrianglesList.Count > LIMITVERTEX)
-               throw new ArgumentOutOfRangeException($"FaceTrianglesList.Count, El límite actual para la creación de mesh es de: {LIMITVERTEX} y un objeto de su archivo posee: {mesh.FaceTrianglesList.Count}");
+           if (mesh.FaceTriangles.Count > LIMITVERTEX)
+               throw new ArgumentOutOfRangeException($"FaceTriangles.Count, El límite actual para la creación de mesh es de: {LIMITVERTEX} y un objeto de su archivo posee: {mesh.FaceTriangles.Count}");
         }
 
         
@@ -145,7 +145,7 @@ namespace TGC.Group.Model
                 MeshBuilder
                     .AddMaterials(ObjMaterialsLoader)
                     .ChargueMaterials()
-                    .AddDxMesh(objMesh.FaceTrianglesList.Count)
+                    .AddDxMesh(objMesh.FaceTriangles.Count)
                     .ChargeBuffer(ObjMeshContainer, index)
                     .ChargeAttributeBuffer(objMesh.CreateMaterialIdsArray())
                     .SetEnable(true)
@@ -154,7 +154,7 @@ namespace TGC.Group.Model
             }
             else
             {
-                MeshBuilder.AddDxMesh(objMesh.FaceTrianglesList.Count)
+                MeshBuilder.AddDxMesh(objMesh.FaceTriangles.Count)
                     .ChargeBuffer(ObjMeshContainer, index)
                     .SetEnable(true)
                     .AddAutotransform(true)

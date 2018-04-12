@@ -26,7 +26,7 @@ namespace TGC.Group.Model.CreateBufferStrategy
         {
             using (var ib = dxMesh.IndexBuffer)
             {
-                var indices = new short[objMesh.FaceTrianglesList.Count * 3];
+                var indices = new short[objMesh.FaceTriangles.Count * 3];
                 for (var i = 0; i < indices.Length; i++)
                 {
                     indices[i] = (short)i;

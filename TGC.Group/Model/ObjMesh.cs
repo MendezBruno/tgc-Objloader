@@ -5,30 +5,23 @@ namespace TGC.Group.Model
 {
     public class ObjMesh
     {
-        public ObjMesh()
-        {
-        }
-
         public ObjMesh(string name)
         {
             Name = name;
         }
 
         public string Name { get; set; }
-
-        // public string Mtllib { get; set; }
         public bool Shadow { get; set; } = false;
-
-        public new List<string> Usemtl = new List<string>();
-        public List<FaceTriangle> FaceTrianglesList { get; set; } = new List<FaceTriangle>();
+        public List<string> Usemtl { get; set; } = new List<string>();
+        public List<FaceTriangle> FaceTriangles { get; set; } = new List<FaceTriangle>();
 
         public int[] CreateMaterialIdsArray()
         {
-            int[] materialsId = new int[FaceTrianglesList.Count];
+            int[] materialsId = new int[FaceTriangles.Count];
             var numMaterial = 0;
             var index = 0;
             var usemtl = Usemtl.First();
-            FaceTrianglesList.ForEach((face) =>
+            FaceTriangles.ForEach((face) =>
             {
                 if (!usemtl.Equals(face.Usemtl))
                 {

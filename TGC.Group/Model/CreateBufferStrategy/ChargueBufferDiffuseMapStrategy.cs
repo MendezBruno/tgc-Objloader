@@ -24,7 +24,7 @@ namespace TGC.Group.Model.CreateBufferStrategy
                 var data = vb.Lock(0, 0, LockFlags.None);
                 var v = new VertexMesh();
                 var indice = 0;
-                objMesh.FaceTrianglesList.ForEach(face =>
+                objMesh.FaceTriangles.ForEach(face =>
                 {
                     v.Position = objMeshContainer.VertexListV[Convert.ToInt32(face.V1) - 1];
                     v.Normal = objMeshContainer.VertexListVn[Convert.ToInt32(face.Vn1) - 1];

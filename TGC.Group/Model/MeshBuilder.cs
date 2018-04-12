@@ -19,29 +19,16 @@ namespace TGC.Group.Model
         internal const string SEPARADOR = "\\";
 
         //Variables
-        private Mesh dxMesh { get; set; }
-
-        public IMeshFactory MeshFactory { get; set; }
-        public ChargueBufferStrategy ChargueBufferStrategy { get; set; }
+        public Mesh DXMesh { get; set; }
+        public IMeshFactory MeshFactory { get; set; } = new DefaultMeshFactory();
+        public ChargueBufferStrategy ChargueBufferStrategy { get; set; } = new ChargueBufferColorSoloStrategy();
         public Material[] MeshMaterials { get; set; }
         private TgcTexture[] MeshTextures { get; set; }
-        private bool autoTransform { get; set; }
-        private bool enable { get; set; }
-        private bool hasBoundingBox { get; set; }
+        private bool AutoTransform { get; set; }
+        private bool Enable { get; set; }
+        private bool HasBoundingBox { get; set; }
         private List<TgcObjMaterialAux> MaterialsArray { get; set; }
-
         public Device Device { get; set; }
-
-        public MeshBuilder()
-        {
-            MeshFactory = new DefaultMeshFactory();
-            ChargueBufferStrategy = new ChargueBufferColorSoloStrategy();
-        }
-
-        public Mesh GetInstaceDxMesh()
-        {
-            return dxMesh;
-        }
 
         /// <summary>
         ///     Agrega El/Los materiales, cambia el tipo de VertexElement
@@ -53,11 +40,11 @@ namespace TGC.Group.Model
             //create material
             // TODO
             MaterialsArray = new List<TgcObjMaterialAux>();
-            objMaterialLoader.ListObjMaterialMesh.ForEach((objMaterialMesh =>
+            objMaterialLoader.ListObjMaterialMesh.ForEach(objMaterialMesh =>
                     {
-                        MaterialsArray.Add(createTextureAndMaterial(objMaterialMesh, objMaterialLoader.currentDirectory));
+                        MaterialsArray.Add(createTextureAndMaterial(objMaterialMesh, objMaterialLoader.CurrentDirectory));
                     }
-            ));
+            );
 
             //set nueva mesh strategy
             ChargueBufferStrategy = new ChargueBufferDiffuseMapStrategy();  // TODO ver que pasa caundo viene ligthmap
@@ -115,9 +102,9 @@ namespace TGC.Group.Model
         /// <returns>MeshBuilder</returns>
         public MeshBuilder ChargeAttributeBuffer(int[] materialsIds)
         {
-            var attributeBuffer = dxMesh.LockAttributeBufferArray(LockFlags.None);
+            var attributeBuffer = DXMesh.LockAttributeBufferArray(LockFlags.None);
             Array.Copy(materialsIds, attributeBuffer, attributeBuffer.Length);
-            dxMesh.UnlockAttributeBuffer(attributeBuffer);
+            DXMesh.UnlockAttributeBuffer(attributeBuffer);
             return this;
         }
 
@@ -128,7 +115,7 @@ namespace TGC.Group.Model
         /// <returns>MeshBuilder</returns>
         public MeshBuilder AddDxMesh(int cantFace)
         {
-            this.dxMesh = new Mesh(cantFace, cantFace * 3, MeshFlags.Managed, ChargueBufferStrategy.VertexElementInstance, D3DDevice.Instance.Device);
+            this.DXMesh = new Mesh(cantFace, cantFace * 3, MeshFlags.Managed, ChargueBufferStrategy.VertexElementInstance, D3DDevice.Instance.Device);
             return this;
         }
 
@@ -139,7 +126,7 @@ namespace TGC.Group.Model
         /// <returns>MeshBuilder</returns>
         public MeshBuilder AddAutotransform(bool flag)
         {
-            this.autoTransform = flag;
+            this.AutoTransform = flag;
             return this;
         }
 
@@ -150,7 +137,7 @@ namespace TGC.Group.Model
         /// <returns>MeshBuilder</returns>
         public MeshBuilder SetEnable(bool flag)
         {
-            this.enable = flag;
+            this.Enable = flag;
             return this;
         }
 
@@ -162,7 +149,7 @@ namespace TGC.Group.Model
         /// <returns>MeshBuilder</returns>
         public MeshBuilder SetHasBoundingBox(bool flag)
         {
-            this.hasBoundingBox = flag;
+            this.HasBoundingBox = flag;
             return this;
         }
 
@@ -175,7 +162,7 @@ namespace TGC.Group.Model
         /// <returns>MeshBuilder</returns>
         public MeshBuilder ChargeBuffer(ObjMeshContainer objMeshContainer, int index)
         {
-            ChargueBufferStrategy.ChargeBuffer(objMeshContainer, this.dxMesh, index);
+            ChargueBufferStrategy.ChargeBuffer(objMeshContainer, this.DXMesh, index);
             return this;
         }
 
@@ -186,10 +173,10 @@ namespace TGC.Group.Model
         /// <returns>MeshBuilder</returns>
         public TgcMesh Build(ObjMesh objMesh)
         {
-            TgcMesh unMesh = MeshFactory.createNewMesh(dxMesh, objMesh.Name, ChargueBufferStrategy.RenderType);
+            TgcMesh unMesh = MeshFactory.createNewMesh(DXMesh, objMesh.Name, ChargueBufferStrategy.RenderType);
             SetBoundingBox(unMesh);
-            unMesh.AutoTransform = autoTransform;
-            unMesh.Enabled = enable;
+            unMesh.AutoTransform = AutoTransform;
+            unMesh.Enabled = Enable;
             unMesh.Materials = MeshMaterials;
             unMesh.DiffuseMaps = MeshTextures;
             return unMesh;
@@ -203,7 +190,7 @@ namespace TGC.Group.Model
         private void SetBoundingBox(TgcMesh unMesh)
         {
             //Crear BoundingBox, aprovechar lo que viene del OBJ o crear uno por nuestra cuenta
-            if (hasBoundingBox)
+            if (HasBoundingBox)
             {
                 unMesh.BoundingBox = new TgcBoundingAxisAlignBox(
                     new TGCVector3(1, 1, 1),   //Esto es re saraza TODO hay que ver si la info del obj puede calcular los puntos minimos y maximos. o si se pueden agregar al archivo.

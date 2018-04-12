@@ -12,16 +12,14 @@ namespace TGC.Group.Model
 
         public ObjMaterialsLoader()
         {
-            Strategies = new List<ObjMaterialsParseStrategy>();
             Strategies.Add(new CreateNewMaterialStrategy());
             Strategies.Add(new ParseMaterialAndColorStrategy());
             Strategies.Add(new NoOperationStrategyForMaterial());
-            ListObjMaterialMesh = new List<ObjMaterialMesh>();
         }
 
-        public List<ObjMaterialsParseStrategy> Strategies { get; set; }
-        public List<ObjMaterialMesh> ListObjMaterialMesh { get; set; }
-        public string currentDirectory { get; set; }
+        public List<ObjMaterialsParseStrategy> Strategies { get; set; } = new List<ObjMaterialsParseStrategy>();
+        public List<ObjMaterialMesh> ListObjMaterialMesh { get; set; } = new List<ObjMaterialMesh>();
+        public string CurrentDirectory { get; set; }
 
         public void LoadMaterialsFromFiles(string pathMtllib, List<string> listMtllib)
         {
@@ -39,9 +37,9 @@ namespace TGC.Group.Model
             }
         }
 
-        public string GetPathMaterial(string pathMtllib, string mtllib)
+        public string MaterialPath(string mtllib)
         {
-            return currentDirectory + Separador + mtllib;
+            return CurrentDirectory + Separador + mtllib;
         }
 
         private void ParseMtlLib(string path)
@@ -56,8 +54,15 @@ namespace TGC.Group.Model
 
         private void ProccesLine(string line)
         {
-            var action = line.Split(' ').FirstOrDefault().Trim();
-            if (action == null && !String.IsNullOrWhiteSpace(line)) throw new InvalidOperationException($"Cannot find action for this line {line}");
+            if (string.IsNullOrWhiteSpace(line))
+                throw new InvalidOperationException($"The line is incorrect {line}");
+
+            var action = line.Split(' ').FirstOrDefault();
+
+            if (string.IsNullOrEmpty(action))
+                throw new InvalidOperationException($"Cannot find action for this line {line}");
+
+            action = action.Trim();
 
             foreach (var strategy in Strategies)
                 if (strategy.ResponseTo(action))
@@ -70,7 +75,7 @@ namespace TGC.Group.Model
 
         public void SetDirectoryPathMaterial(string path)
         {
-            currentDirectory = Path.GetDirectoryName(path);
+            CurrentDirectory = Path.GetDirectoryName(path);
         }
     }
 }

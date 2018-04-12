@@ -43,7 +43,7 @@ namespace UnitTestProjectObj
         [TestCase]
         public void LoadObjMaterialFromFileOk()
         {
-            TgcObjLoader _tgcObjLoader = new TgcObjLoader();
+            TGCObjLoader _tgcObjLoader = new TGCObjLoader();
             var lines = File.ReadAllLines(_fullMaterialPath);
             _tgcObjLoader.GetListOfMaterials(lines, _fullMaterialPath);
             ObjMaterialsLoader _objMaterialLoader = new ObjMaterialsLoader();
@@ -63,7 +63,7 @@ namespace UnitTestProjectObj
         {
             ObjMaterialsLoader _objMaterialLoader = new ObjMaterialsLoader();
             _objMaterialLoader.SetDirectoryPathMaterial(_fullMaterialPath);
-            string pathMaterial = _objMaterialLoader.GetPathMaterial(_fullMaterialPath, "\\cubotexturacaja.mtl");
+            string pathMaterial = _objMaterialLoader.MaterialPath(_fullMaterialPath, "\\cubotexturacaja.mtl");
             Assert.True(File.Exists(pathMaterial));
         }
     }

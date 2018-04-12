@@ -10,7 +10,7 @@ namespace UnitTestProjectObj
     [TestFixture]
     internal class ObjLoaderTest
     {
-        private TgcObjLoader _tgcObjLoader = new TgcObjLoader();
+        private TGCObjLoader _tgcObjLoader = new TGCObjLoader();
         private string _fullobjpath;
         private string _fullobjpathmeshcolorsolo;
         private string _fullobjpathmeshcontextura;
@@ -49,7 +49,7 @@ namespace UnitTestProjectObj
         [TestCase]
         public void LoadObjFromFileOk()
         {
-            var _tgcObjLoader = new TgcObjLoader();
+            var _tgcObjLoader = new TGCObjLoader();
             _tgcObjLoader.LoadObjFromFile(_fullobjpath);
             Assert.True(_tgcObjLoader.ObjMeshContainer.ListObjMesh.Count > 0);
             Assert.True(_tgcObjLoader.ObjMeshContainer.VertexListV.Count == 8);
@@ -65,7 +65,7 @@ namespace UnitTestProjectObj
         [TestCase]
         public void ProcessLineReturnWithLineBlanck()
         {
-            var _tgcObjLoader = new TgcObjLoader();
+            var _tgcObjLoader = new TGCObjLoader();
             var line = "";
             _tgcObjLoader.ProccesLine(line);
             Assert.IsTrue(_tgcObjLoader.ObjMeshContainer.ListObjMesh.Count == 0);
@@ -74,7 +74,7 @@ namespace UnitTestProjectObj
         [TestCase]
         public void ProcessLineReturnWithSpaceBlanck()
         {
-            var _tgcObjLoader = new TgcObjLoader();
+            var _tgcObjLoader = new TGCObjLoader();
             var line = "        ";
             _tgcObjLoader.ProccesLine(line);
             Assert.IsTrue(_tgcObjLoader.ObjMeshContainer.ListObjMesh.Count == 0);
@@ -83,7 +83,7 @@ namespace UnitTestProjectObj
         [TestCase]
         public void ProcessLineReturnWithFirstCaracterHastag()
         {
-            var _tgcObjLoader = new TgcObjLoader();
+            var _tgcObjLoader = new TGCObjLoader();
             var line = "# Blender v2.79 (sub 0) OBJ File: ''";
             _tgcObjLoader.ProccesLine(line);
             Assert.IsTrue(_tgcObjLoader.ObjMeshContainer.ListObjMesh.Count == 0);
@@ -92,7 +92,7 @@ namespace UnitTestProjectObj
         [TestCase]
         public void ProcessLineThrowWithBadAction()
         {
-            var _tgcObjLoader = new TgcObjLoader();
+            var _tgcObjLoader = new TGCObjLoader();
             var line = "badAction Blender v2.79 (sub 0) OBJ File: ''";
             Assert.That(() => { _tgcObjLoader.ProccesLine(line); }, Throws.InvalidOperationException);
         }
@@ -100,7 +100,7 @@ namespace UnitTestProjectObj
         [TestCase]
         public void ProccesLineNewObjet()
         {
-            var _tgcObjLoader = new TgcObjLoader();
+            var _tgcObjLoader = new TGCObjLoader();
             var line = "o Cube";
             _tgcObjLoader.ProccesLine(line);
             Assert.True(_tgcObjLoader.ObjMeshContainer.ListObjMesh.First().Name.Equals("Cube"));
@@ -117,7 +117,7 @@ namespace UnitTestProjectObj
         [TestCase]
         public void GetListOfMaterialsWithNameOK()
         {
-            var _tgcObjLoader = new TgcObjLoader();
+            var _tgcObjLoader = new TGCObjLoader();
             var lines = File.ReadAllLines(_fullobjpath);
             _tgcObjLoader.GetListOfMaterials(lines, _fullobjpath);
             Assert.True(_tgcObjLoader.ListMtllib.First().Equals("cubotexturacaja.mtl"));
@@ -126,7 +126,7 @@ namespace UnitTestProjectObj
         [TestCase]
         public void GetListOfMaterialsWithWhiteSpaceOK()
         {
-            var _tgcObjLoader = new TgcObjLoader();
+            var _tgcObjLoader = new TGCObjLoader();
             var lines = File.ReadAllLines(_fullobjpathmeshcontextura);
             _tgcObjLoader.GetListOfMaterials(lines, _fullobjpathmeshcontextura);
             Assert.True(_tgcObjLoader.ListMtllib.First().Equals("tgcito con textura.mtl"));
@@ -135,7 +135,7 @@ namespace UnitTestProjectObj
         [TestCase]
         public void FilterByKeyWordOk()
         {
-            var _tgcObjLoader = new TgcObjLoader();
+            var _tgcObjLoader = new TGCObjLoader();
             var lines = File.ReadAllLines(_fullobjpath);
             string mtllib = _tgcObjLoader.FilterByKeyword(lines, "mtllib")[0];
             Assert.True(mtllib.Equals("mtllib cubotexturacaja.mtl"));
@@ -144,7 +144,7 @@ namespace UnitTestProjectObj
         [TestCase]
         public void LoadTgcMeshFromObjwithOutMaterialsOk()
         {
-            var _tgcObjLoader = new TgcObjLoader();
+            var _tgcObjLoader = new TGCObjLoader();
             TgcMesh tgcMesh = _tgcObjLoader.LoadTgcMeshFromObj(_fullobjpathmeshcolorsolo, 0);
             Assert.NotNull(tgcMesh);
         }
@@ -152,7 +152,7 @@ namespace UnitTestProjectObj
         [TestCase]
         public void LoadTgcMeshFromObjOk()
         {
-            var _tgcObjLoader = new TgcObjLoader();
+            var _tgcObjLoader = new TGCObjLoader();
             TgcMesh tgcMesh = _tgcObjLoader.LoadTgcMeshFromObj(_fullobjpath, 0);
             Assert.NotNull(tgcMesh);
         }
