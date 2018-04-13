@@ -9,9 +9,14 @@ namespace TGC.Group.Model
 {
     public class TGCObjLoader
     {
+        private const string MTLLIB = "mtllib";
+        private const int INDEXATTR = 7;
+        private const int ELEMENTOFMTLLIB = 2;
+        private const int LIMITVERTEX = 21844;
+        private const int INICIO = 0;
+
         public TGCObjLoader()
         {
-            Strategies = new List<ObjParseStrategy>();
             Strategies.Add(new AddShadowStrategy());
             Strategies.Add(new AddUsemtlStrategy());
             Strategies.Add(new CreateNewMeshStrategy());
@@ -20,26 +25,17 @@ namespace TGC.Group.Model
             Strategies.Add(new CreateTextCoordStrategy());
             Strategies.Add(new CreateVertexStrategy());
             Strategies.Add(new NoOperationStrategy());
-            ListMtllib = new List<string>();
-            MeshBuilder = new MeshBuilder();
-            ObjMaterialsLoader = new ObjMaterialsLoader();
-            ObjMeshContainer = new ObjMeshContainer();
         }
 
-        internal const string MTLLIB = "mtllib";
-        private const int INDEXATTR = 7;
-        private const int ELEMENTOFMTLLIB = 2;
-        public int LIMITVERTEX = 21844;
-        private const int INICIO = 0;
-        public List<ObjParseStrategy> Strategies { get; set; }
-        public ObjMeshContainer ObjMeshContainer { get; set; }
-        public ObjMaterialsLoader ObjMaterialsLoader { get; set; }
-        public List<string> ListMtllib { get; set; }
-        public MeshBuilder MeshBuilder { get; set; }
+        public List<ObjParseStrategy> Strategies { get; set; } = new List<ObjParseStrategy>();
+        public ObjMeshContainer ObjMeshContainer { get; set; } = new ObjMeshContainer();
+        public ObjMaterialsLoader ObjMaterialsLoader { get; set; } = new ObjMaterialsLoader();
+        public List<string> ListMtllib { get; set; } = new List<string>();
+        public MeshBuilder MeshBuilder { get; set; } = new MeshBuilder();
 
         public string GetPathObjforCurrentDirectory()
         {
-            return Path.Combine(Directory.GetCurrentDirectory(), @"UnitTestProjectObj\DatosPrueba\cubo.obj");
+            return Path.Combine(Directory.GetCurrentDirectory(), @"UnitTestProjectObj\Resources\cubo.obj");
         }
 
         public void LoadObjFromFile(string path)
@@ -60,7 +56,7 @@ namespace TGC.Group.Model
             ObjMeshContainer.ListObjMesh.ForEach(
                 (mesh) =>
                 {
-                    
+
                     CheckMeshLimitVertex(mesh);
                     ChekMaterialsHaveTexture(ObjMaterialsLoader.ListObjMaterialMesh);
 
@@ -69,17 +65,17 @@ namespace TGC.Group.Model
 
         private void ChekMaterialsHaveTexture(List<ObjMaterialMesh> listObjMaterialMesh)
         {
-           if( listObjMaterialMesh.Any((objMaterialMesh) => objMaterialMesh.map_d == null) )
-                throw new ArgumentException( "Algunos de los materiales no posee textura. TGC todavía no soporta materiales sin textura. " );
+            if (listObjMaterialMesh.Any((objMaterialMesh) => objMaterialMesh.map_d == null))
+                throw new ArgumentException("Algunos de los materiales no posee textura. TGC todavía no soporta materiales sin textura. ");
         }
 
         private void CheckMeshLimitVertex(ObjMesh mesh)
         {
-           if (mesh.FaceTriangles.Count > LIMITVERTEX)
-               throw new ArgumentOutOfRangeException($"FaceTriangles.Count, El límite actual para la creación de mesh es de: {LIMITVERTEX} y un objeto de su archivo posee: {mesh.FaceTriangles.Count}");
+            if (mesh.FaceTriangles.Count > LIMITVERTEX)
+                throw new ArgumentOutOfRangeException($"FaceTriangles.Count, El límite actual para la creación de mesh es de: {LIMITVERTEX} y un objeto de su archivo posee: {mesh.FaceTriangles.Count}");
         }
 
-        
+
 
         public void ProccesLine(string line)
         {

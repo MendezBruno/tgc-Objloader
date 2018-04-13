@@ -76,16 +76,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-    <None Include="TestData\cubo.obj" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\TGC.Group\TGC.Group.csproj">
       <Project>{6cb42457-a2b1-4472-846e-1ab760b3226b}</Project>
       <Name>TGC.Group</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="DatosPrueba\cubo.obj" />
   </ItemGroup>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -3,6 +3,7 @@ using NUnit.Framework;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Windows.Forms;
 using TGC.Core.Direct3D;
 using TGC.Group.Model;
 
@@ -11,27 +12,26 @@ namespace UnitTestProjectObj
     [TestFixture]
     internal class ObjMeshTest
     {
-        private string _fullobjpath;
         private string _fullobjpathmultimaterial;
         private ObjMesh resObjMesh;
         private List<ObjMaterialMesh> listObjMaterialMesh;
         internal Mesh dxMesh;
-        private System.Windows.Forms.Panel panel3D;
+        private Panel panel3D;
 
         [SetUp]
         public void Init()
         {
             //constantes
-            const string testDatabb8Multimaterial = "DatosPrueba\\bb8\\bb8.obj";
-            const string testDataCuboTextura = "DatosPrueba\\cubotexturacaja.obj";
+            const string testDatabb8Multimaterial = "Resources\\bb8\\bb8.obj";
+            const string testDataCuboTextura = "Resources\\cubotexturacaja.obj";
 
             //Instanciamos un panel para crear un divice
-            panel3D = new System.Windows.Forms.Panel();
+            panel3D = new Panel();
             //Crear Graphics Device
             //
             // panel3D
             //
-            this.panel3D.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel3D.Dock = DockStyle.Fill;
             this.panel3D.Location = new System.Drawing.Point(0, 0);
             this.panel3D.Name = "panel3D";
             this.panel3D.Size = new System.Drawing.Size(784, 561);
@@ -45,25 +45,25 @@ namespace UnitTestProjectObj
             {
                 dir = new DirectoryInfo(dir.Parent.FullName);
             }
-            _fullobjpath = Path.Combine(dir.Parent.FullName, testDataCuboTextura);
+
             _fullobjpathmultimaterial = Path.Combine(dir.Parent.FullName, testDatabb8Multimaterial);
         }
 
         [TestCase]
         public void CreateMaterialIdsArrayOk()
         {
-            TGCObjLoader _tgcObjLoader = new TGCObjLoader();
-            _tgcObjLoader.LoadObjFromFile(_fullobjpathmultimaterial);
-            resObjMesh = _tgcObjLoader.ObjMeshContainer.ListObjMesh.First();
+            TGCObjLoader tgcObjLoader = new TGCObjLoader();
+            tgcObjLoader.LoadObjFromFile(_fullobjpathmultimaterial);
+            resObjMesh = tgcObjLoader.ObjMeshContainer.ListObjMesh.First();
             Assert.True(resObjMesh.FaceTriangles.Count == resObjMesh.CreateMaterialIdsArray().Length);
         }
 
         [TestCase]
         public void IndexMaterialIdsArrayOk()
         {
-            TGCObjLoader _tgcObjLoader = new TGCObjLoader();
-            _tgcObjLoader.LoadObjFromFile(_fullobjpathmultimaterial);
-            resObjMesh = _tgcObjLoader.ObjMeshContainer.ListObjMesh.First();
+            TGCObjLoader tgcObjLoader = new TGCObjLoader();
+            tgcObjLoader.LoadObjFromFile(_fullobjpathmultimaterial);
+            resObjMesh = tgcObjLoader.ObjMeshContainer.ListObjMesh.First();
             int[] materialIds = resObjMesh.CreateMaterialIdsArray();
             Assert.True(materialIds[15810] == 0);
             Assert.True(materialIds[17010] == 1);

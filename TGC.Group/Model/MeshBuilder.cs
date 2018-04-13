@@ -16,7 +16,7 @@ namespace TGC.Group.Model
     public class MeshBuilder
     {
         //Constante
-        internal const string SEPARADOR = "\\";
+        private const string SEPARADOR = "\\";
 
         //Variables
         public Mesh DXMesh { get; set; }

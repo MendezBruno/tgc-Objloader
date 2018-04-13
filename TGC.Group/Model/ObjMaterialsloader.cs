@@ -54,12 +54,12 @@ namespace TGC.Group.Model
 
         private void ProccesLine(string line)
         {
-            if (string.IsNullOrWhiteSpace(line))
-                throw new InvalidOperationException($"The line is incorrect {line}");
+            if (line == null)
+                throw new InvalidOperationException($"The line is null.");
 
             var action = line.Split(' ').FirstOrDefault();
 
-            if (string.IsNullOrEmpty(action))
+            if (action == null)
                 throw new InvalidOperationException($"Cannot find action for this line {line}");
 
             action = action.Trim();

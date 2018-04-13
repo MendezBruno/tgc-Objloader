@@ -1,6 +1,7 @@
 ﻿using NUnit.Framework;
 using System.IO;
 using System.Linq;
+using System.Windows.Forms;
 using TGC.Core.Direct3D;
 using TGC.Group.Model;
 
@@ -10,13 +11,13 @@ namespace UnitTestProjectObj
     internal class ObjMaterialLoaderTest
     {
         private string _fullMaterialPath;
-        private System.Windows.Forms.Panel panel3D;
+        private Panel _panel3D;
 
         [SetUp]
         public void Init()
         {
-            const string testDataArchivoBle = "DatosPrueba\\cubo.obj";  //TODO agregar el archivo para testear
-            const string testDataArchivoBla = "DatosPrueba\\cubotexturacaja.obj";  //TODO agregar el archivo para testear
+            const string testDataArchivoBle = "Resources\\cubo.obj";  //TODO agregar el archivo para testear
+            const string testDataArchivoBla = "Resources\\cubotexturacaja.obj";  //TODO agregar el archivo para testear
 
             var dir = new DirectoryInfo(Path.GetFullPath(TestContext.CurrentContext.TestDirectory));
             while (!dir.Parent.Name.Equals("UnitTestProjectObj"))
@@ -26,29 +27,29 @@ namespace UnitTestProjectObj
             _fullMaterialPath = Path.Combine(dir.Parent.FullName, testDataArchivoBla);
 
             //Instanciamos un panel para crear un divice
-            panel3D = new System.Windows.Forms.Panel();
+            _panel3D = new Panel();
             //Crear Graphics Device
             //
             // panel3D
             //
-            this.panel3D.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel3D.Location = new System.Drawing.Point(0, 0);
-            this.panel3D.Name = "panel3D";
-            this.panel3D.Size = new System.Drawing.Size(784, 561);
-            this.panel3D.TabIndex = 0;
+            this._panel3D.Dock = DockStyle.Fill;
+            this._panel3D.Location = new System.Drawing.Point(0, 0);
+            this._panel3D.Name = "panel3D";
+            this._panel3D.Size = new System.Drawing.Size(784, 561);
+            this._panel3D.TabIndex = 0;
 
-            D3DDevice.Instance.InitializeD3DDevice(panel3D);
+            D3DDevice.Instance.InitializeD3DDevice(_panel3D);
         }
 
         [TestCase]
         public void LoadObjMaterialFromFileOk()
         {
-            TGCObjLoader _tgcObjLoader = new TGCObjLoader();
+            TGCObjLoader tgcObjLoader = new TGCObjLoader();
             var lines = File.ReadAllLines(_fullMaterialPath);
-            _tgcObjLoader.GetListOfMaterials(lines, _fullMaterialPath);
-            ObjMaterialsLoader _objMaterialLoader = new ObjMaterialsLoader();
-            _objMaterialLoader.LoadMaterialsFromFiles(_fullMaterialPath, _tgcObjLoader.ListMtllib);
-            Assert.NotNull(_objMaterialLoader.ListObjMaterialMesh.First());
+            tgcObjLoader.GetListOfMaterials(lines, _fullMaterialPath);
+            ObjMaterialsLoader objMaterialLoader = new ObjMaterialsLoader();
+            objMaterialLoader.LoadMaterialsFromFiles(_fullMaterialPath, tgcObjLoader.ListMtllib);
+            Assert.NotNull(objMaterialLoader.ListObjMaterialMesh.First());
         }
 
         [TestCase]
@@ -61,9 +62,9 @@ namespace UnitTestProjectObj
         [TestCase]
         public void GetPathMaterialOk()
         {
-            ObjMaterialsLoader _objMaterialLoader = new ObjMaterialsLoader();
-            _objMaterialLoader.SetDirectoryPathMaterial(_fullMaterialPath);
-            string pathMaterial = _objMaterialLoader.MaterialPath(_fullMaterialPath, "\\cubotexturacaja.mtl");
+            ObjMaterialsLoader objMaterialLoader = new ObjMaterialsLoader();
+            objMaterialLoader.SetDirectoryPathMaterial(_fullMaterialPath);
+            string pathMaterial = objMaterialLoader.MaterialPath("\\cubotexturacaja.mtl");
             Assert.True(File.Exists(pathMaterial));
         }
     }

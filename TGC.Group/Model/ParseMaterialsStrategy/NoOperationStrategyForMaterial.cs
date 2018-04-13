@@ -9,12 +9,12 @@ namespace TGC.Group.Model.ParseMaterialsStrategy
 
         public NoOperationStrategyForMaterial()
         {
-            this._keyWords = new string[] { COMMENT, EMPTYLINE, WHITELINE };
+            this._keyWords = new[] { COMMENT, EMPTYLINE, WHITELINE };
         }
 
         public override void ProccesLine(string line, List<ObjMaterialMesh> listObjMaterialMesh)
         {
-            return;
+            //There is no need to perform any operation.
         }
 
         public override bool ResponseTo(string action)

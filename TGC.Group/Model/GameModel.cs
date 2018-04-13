@@ -107,20 +107,20 @@ namespace TGC.Group.Model
                  .SetHasBoundingBox(false)
                  .build(resObjMesh);
             */
-            // MeshDelObj = TGCObjLoader.LoadTgcMeshFromObj(@"I:\proyectos net\tgc-group\UnitTestProjectObj\DatosPrueba\cubotexturacaja.obj", 0);
+            // MeshDelObj = TGCObjLoader.LoadTgcMeshFromObj(@"I:\proyectos net\tgc-group\UnitTestProjectObj\Resources\cubotexturacaja.obj", 0);
             // MeshDelObj = TGCObjLoader.LoadTgcMeshFromObj(@"C:\Users\bmendez\Desktop\bb8.obj",0);
-            // MeshDelObj = TGCObjLoader.LoadTgcMeshFromObj(@"C:\Users\CIDESO\Desktop\Mendez investigacion\tgc-Objloader\UnitTestProjectObj\DatosPrueba\bb8\bb8.obj", 0);
-          //   MeshDelObj = TGCObjLoader.LoadTgcMeshFromObj(@"C:\workspace\Proyectos Net\tgc-Objloader\UnitTestProjectObj\DatosPrueba\bb8\bb8.obj", 0);
-            // MeshDelObj = TGCObjLoader.LoadTgcMeshFromObj(@"C:\workspace\Proyectos Net\tgc-Objloader\UnitTestProjectObj\DatosPrueba\tgcito\Tgcito color solo.obj", 0);
-            // MeshDelObj = TGCObjLoader.LoadTgcMeshFromObj(@"C:\workspace\Proyectos Net\tgc-Objloader\UnitTestProjectObj\DatosPrueba\cubotexturacaja.obj", 0);
+            // MeshDelObj = TGCObjLoader.LoadTgcMeshFromObj(@"C:\Users\CIDESO\Desktop\Mendez investigacion\tgc-Objloader\UnitTestProjectObj\Resources\bb8\bb8.obj", 0);
+          //   MeshDelObj = TGCObjLoader.LoadTgcMeshFromObj(@"C:\workspace\Proyectos Net\tgc-Objloader\UnitTestProjectObj\Resources\bb8\bb8.obj", 0);
+            // MeshDelObj = TGCObjLoader.LoadTgcMeshFromObj(@"C:\workspace\Proyectos Net\tgc-Objloader\UnitTestProjectObj\Resources\tgcito\Tgcito color solo.obj", 0);
+            // MeshDelObj = TGCObjLoader.LoadTgcMeshFromObj(@"C:\workspace\Proyectos Net\tgc-Objloader\UnitTestProjectObj\Resources\cubotexturacaja.obj", 0);
 
-            //MeshDelObj = TGCObjLoader.LoadTgcMeshFromObj(@"C:\Users\CIDESO\Desktop\Mendez investigacion\tgc-Objloader\UnitTestProjectObj\DatosPrueba\bb8\bb8.obj", 0);
+            //MeshDelObj = TGCObjLoader.LoadTgcMeshFromObj(@"C:\Users\CIDESO\Desktop\Mendez investigacion\tgc-Objloader\UnitTestProjectObj\Resources\bb8\bb8.obj", 0);
 
             MeshDelObj = TgcObjLoader.LoadTgcMeshFromObj(@"C:\Users\bruno\Desktop\tgc archivos prueba\mach5\Speed Racer car mach5\mach5.obj", 0);
 
-            // MeshDelObj = TGCObjLoader.LoadTgcMeshFromObj(@"C:\Users\CIDESO\Desktop\Mendez investigacion\tgc-Objloader\UnitTestProjectObj\DatosPrueba\tgcito\Tgcito color solo.obj", 0);
-            // MeshDelObj = TGCObjLoader.LoadTgcMeshFromObj(@"C:\Users\CIDESO\Desktop\Mendez investigacion\tgc-Objloader\UnitTestProjectObj\DatosPrueba\cubotexturacaja.obj", 0);
-            // MeshDelObj = TGCObjLoader.LoadTgcMeshFromObj(@"C:\Users\CIDESO\Desktop\Mendez investigacion\tgc-Objloader\UnitTestProjectObj\DatosPrueba\tgcito\tgcito con textura.obj", 0);
+            // MeshDelObj = TGCObjLoader.LoadTgcMeshFromObj(@"C:\Users\CIDESO\Desktop\Mendez investigacion\tgc-Objloader\UnitTestProjectObj\Resources\tgcito\Tgcito color solo.obj", 0);
+            // MeshDelObj = TGCObjLoader.LoadTgcMeshFromObj(@"C:\Users\CIDESO\Desktop\Mendez investigacion\tgc-Objloader\UnitTestProjectObj\Resources\cubotexturacaja.obj", 0);
+            // MeshDelObj = TGCObjLoader.LoadTgcMeshFromObj(@"C:\Users\CIDESO\Desktop\Mendez investigacion\tgc-Objloader\UnitTestProjectObj\Resources\tgcito\tgcito con textura.obj", 0);
             // MeshDelObj = TGCObjLoader.LoadTgcMeshFromObj(@"C:\Users\CIDESO\Desktop\wolf.obj", 1);
 
             //           MeshDelObj.AutoTransformEnable = true;
