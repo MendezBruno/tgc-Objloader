@@ -5,15 +5,15 @@ namespace TGC.Group.Model
 {
     public class ObjMesh
     {
-        public ObjMesh(string name)
-        {
-            Name = name;
-        }
-
         public string Name { get; set; }
         public bool Shadow { get; set; } = false;
         public List<string> Usemtl { get; set; } = new List<string>();
         public List<FaceTriangle> FaceTriangles { get; set; } = new List<FaceTriangle>();
+
+        public ObjMesh(string name)
+        {
+            Name = name;
+        }
 
         public int[] CreateMaterialIdsArray()
         {

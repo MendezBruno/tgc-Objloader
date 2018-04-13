@@ -8,7 +8,7 @@ using TGC.Group.Model;
 namespace UnitTestProjectObj
 {
     [TestFixture]
-    internal class ObjMaterialLoaderTest
+    public class ObjMaterialLoaderTest
     {
         private string _fullMaterialPath;
         private Panel _panel3D;
@@ -50,13 +50,6 @@ namespace UnitTestProjectObj
             ObjMaterialsLoader objMaterialLoader = new ObjMaterialsLoader();
             objMaterialLoader.LoadMaterialsFromFiles(_fullMaterialPath, tgcObjLoader.ListMtllib);
             Assert.NotNull(objMaterialLoader.ListObjMaterialMesh.First());
-        }
-
-        [TestCase]
-        public void GetArrayLinesOk()
-        {
-            var lines = File.ReadAllLines(_fullMaterialPath);
-            Assert.True(lines.Length > 0);
         }
 
         [TestCase]

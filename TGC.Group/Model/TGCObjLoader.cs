@@ -15,6 +15,12 @@ namespace TGC.Group.Model
         private const int LIMITVERTEX = 21844;
         private const int INICIO = 0;
 
+        public List<ObjParseStrategy> Strategies { get; set; } = new List<ObjParseStrategy>();
+        public ObjMeshContainer ObjMeshContainer { get; set; } = new ObjMeshContainer();
+        public ObjMaterialsLoader ObjMaterialsLoader { get; set; } = new ObjMaterialsLoader();
+        public List<string> ListMtllib { get; set; } = new List<string>();
+        public MeshBuilder MeshBuilder { get; set; } = new MeshBuilder();
+
         public TGCObjLoader()
         {
             Strategies.Add(new AddShadowStrategy());
@@ -26,12 +32,6 @@ namespace TGC.Group.Model
             Strategies.Add(new CreateVertexStrategy());
             Strategies.Add(new NoOperationStrategy());
         }
-
-        public List<ObjParseStrategy> Strategies { get; set; } = new List<ObjParseStrategy>();
-        public ObjMeshContainer ObjMeshContainer { get; set; } = new ObjMeshContainer();
-        public ObjMaterialsLoader ObjMaterialsLoader { get; set; } = new ObjMaterialsLoader();
-        public List<string> ListMtllib { get; set; } = new List<string>();
-        public MeshBuilder MeshBuilder { get; set; } = new MeshBuilder();
 
         public string GetPathObjforCurrentDirectory()
         {
@@ -56,10 +56,8 @@ namespace TGC.Group.Model
             ObjMeshContainer.ListObjMesh.ForEach(
                 (mesh) =>
                 {
-
                     CheckMeshLimitVertex(mesh);
                     ChekMaterialsHaveTexture(ObjMaterialsLoader.ListObjMaterialMesh);
-
                 });
         }
 
@@ -128,7 +126,6 @@ namespace TGC.Group.Model
                 if (line.Split(' ').FirstOrDefault().Equals(keyWord))
                     linesWithKeyword.Add(line);
             }
-
             return linesWithKeyword.ToArray();
         }
 

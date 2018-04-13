@@ -10,7 +10,7 @@ using TGC.Group.Model;
 namespace UnitTestProjectObj
 {
     [TestFixture]
-    internal class MeshBuilderTest
+    public class MeshBuilderTest
     {
         // private TGCObjLoader _tgcObjLoader = new TGCObjLoader();
         private string _fullobjpath;

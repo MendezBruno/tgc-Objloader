@@ -10,16 +10,16 @@ namespace TGC.Group.Model
     {
         private const string Separador = "\\";
 
+        public List<ObjMaterialsParseStrategy> Strategies { get; set; } = new List<ObjMaterialsParseStrategy>();
+        public List<ObjMaterialMesh> ListObjMaterialMesh { get; set; } = new List<ObjMaterialMesh>();
+        public string CurrentDirectory { get; set; }
+
         public ObjMaterialsLoader()
         {
             Strategies.Add(new CreateNewMaterialStrategy());
             Strategies.Add(new ParseMaterialAndColorStrategy());
             Strategies.Add(new NoOperationStrategyForMaterial());
         }
-
-        public List<ObjMaterialsParseStrategy> Strategies { get; set; } = new List<ObjMaterialsParseStrategy>();
-        public List<ObjMaterialMesh> ListObjMaterialMesh { get; set; } = new List<ObjMaterialMesh>();
-        public string CurrentDirectory { get; set; }
 
         public void LoadMaterialsFromFiles(string pathMtllib, List<string> listMtllib)
         {

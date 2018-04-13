@@ -232,12 +232,11 @@ namespace TGC.Group.Model
             //TODO ver que hacer con Ni, con d, con Ns, con Ke.
 
             //guardar datos de textura
-            matAux.texturePath = objMaterialMesh.getTextura() ?? Path.GetFullPath(currentDirectory + SEPARADOR + objMaterialMesh.getTexturaFileName());
-            matAux.textureFileName = objMaterialMesh.getTexturaFileName();
+            matAux.texturePath = objMaterialMesh.GetTextura() ?? Path.GetFullPath(currentDirectory + SEPARADOR + objMaterialMesh.GetTexturaFileName());
+            matAux.textureFileName = objMaterialMesh.GetTexturaFileName();
 
             return matAux;
         }
-
 
         /// <summary>
         ///     FVF para formato de malla  DIFFUSE_MAP

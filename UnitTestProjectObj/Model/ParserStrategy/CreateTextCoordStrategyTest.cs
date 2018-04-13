@@ -2,36 +2,36 @@
 using TGC.Group.Model;
 using TGC.Group.Model.ParserStrategy;
 
-namespace UnitTestProjectObj
+namespace UnitTestProjectObj.Model.ParserStrategy
 {
     [TestFixture]
-    internal class CreateTextCoordStrategyTest
+    public class CreateTextCoordStrategyTest
     {
+        private readonly CreateTextCoordStrategy _createTextCoordStrategy = new CreateTextCoordStrategy();
+        private readonly CreateNewMeshStrategy _createNewMeshStrategy = new CreateNewMeshStrategy();
+        private ObjMeshContainer _objMeshContainer;
+
         [SetUp]
         public void Init()
         {
-            ObjMeshContainer = new ObjMeshContainer();
+            _objMeshContainer = new ObjMeshContainer();
             var line = "o Cube";
-            _createNewMeshStrategy.ProccesLine(line, ObjMeshContainer);
+            _createNewMeshStrategy.ProccesLine(line, _objMeshContainer);
         }
-
-        private readonly CreateTextCoordStrategy _createTextCoordStrategy = new CreateTextCoordStrategy();
-        private readonly CreateNewMeshStrategy _createNewMeshStrategy = new CreateNewMeshStrategy();
-        public ObjMeshContainer ObjMeshContainer;
 
         [Test]
         public void ProccesLinewithTextureOk()
         {
             var line = "vt 0.666628 0.167070";
-            _createTextCoordStrategy.ProccesLine(line, ObjMeshContainer);
-            Assert.True(ObjMeshContainer.VertexListVt.Count > 0);
+            _createTextCoordStrategy.ProccesLine(line, _objMeshContainer);
+            Assert.True(_objMeshContainer.VertexListVt.Count > 0);
         }
 
         [TestCase]
         public void ProccesLineWithTextureFailsWhenCountParametersUp()
         {
             var line = "vt 0.666628 0.167070 0.167070 ";
-            Assert.That(() => { _createTextCoordStrategy.ProccesLine(line, ObjMeshContainer); }, Throws.ArgumentException);
+            Assert.That(() => { _createTextCoordStrategy.ProccesLine(line, _objMeshContainer); }, Throws.ArgumentException);
         }
     }
 }

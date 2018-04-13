@@ -9,7 +9,7 @@ using TGC.Group.Model;
 namespace UnitTestProjectObj
 {
     [TestFixture]
-    internal class ObjLoaderTest
+    public class ObjLoaderTest
     {
         private string _fullobjpath;
         private string _fullobjpathmeshcolorsolo;

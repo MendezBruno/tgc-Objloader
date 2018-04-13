@@ -9,14 +9,14 @@ namespace UnitTestProjectObj.Model.ParseMaterialStrategy
     [TestFixture]
     internal class CreateNewMaterialStrategyTest
     {
+        private readonly CreateNewMaterialStrategy _createNewMeshMaterialStrategy = new CreateNewMaterialStrategy();
+        private List<ObjMaterialMesh> ListObjMaterialMesh { get; set; }
+
         [SetUp]
         public void Init()
         {
             ListObjMaterialMesh = new List<ObjMaterialMesh>();
         }
-
-        private readonly CreateNewMaterialStrategy _createNewMeshMaterialStrategy = new CreateNewMaterialStrategy();
-        public List<ObjMaterialMesh> ListObjMaterialMesh { get; set; }
 
         [TestCase]
         public void ProccesLineNewObjetOk()

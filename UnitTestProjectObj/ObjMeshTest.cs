@@ -1,6 +1,4 @@
-﻿using Microsoft.DirectX.Direct3D;
-using NUnit.Framework;
-using System.Collections.Generic;
+﻿using NUnit.Framework;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
@@ -10,13 +8,11 @@ using TGC.Group.Model;
 namespace UnitTestProjectObj
 {
     [TestFixture]
-    internal class ObjMeshTest
+    public class ObjMeshTest
     {
         private string _fullobjpathmultimaterial;
-        private ObjMesh resObjMesh;
-        private List<ObjMaterialMesh> listObjMaterialMesh;
-        internal Mesh dxMesh;
-        private Panel panel3D;
+        private ObjMesh _resObjMesh;
+        private Panel _panel3D;
 
         [SetUp]
         public void Init()
@@ -26,18 +22,18 @@ namespace UnitTestProjectObj
             const string testDataCuboTextura = "Resources\\cubotexturacaja.obj";
 
             //Instanciamos un panel para crear un divice
-            panel3D = new Panel();
+            _panel3D = new Panel();
             //Crear Graphics Device
             //
             // panel3D
             //
-            this.panel3D.Dock = DockStyle.Fill;
-            this.panel3D.Location = new System.Drawing.Point(0, 0);
-            this.panel3D.Name = "panel3D";
-            this.panel3D.Size = new System.Drawing.Size(784, 561);
-            this.panel3D.TabIndex = 0;
+            this._panel3D.Dock = DockStyle.Fill;
+            this._panel3D.Location = new System.Drawing.Point(0, 0);
+            this._panel3D.Name = "panel3D";
+            this._panel3D.Size = new System.Drawing.Size(784, 561);
+            this._panel3D.TabIndex = 0;
 
-            D3DDevice.Instance.InitializeD3DDevice(panel3D);
+            D3DDevice.Instance.InitializeD3DDevice(_panel3D);
 
             //Creamos los materiales para luego poder probar la creacion del mesh
             var dir = new DirectoryInfo(Path.GetFullPath(TestContext.CurrentContext.TestDirectory));
@@ -54,8 +50,8 @@ namespace UnitTestProjectObj
         {
             TGCObjLoader tgcObjLoader = new TGCObjLoader();
             tgcObjLoader.LoadObjFromFile(_fullobjpathmultimaterial);
-            resObjMesh = tgcObjLoader.ObjMeshContainer.ListObjMesh.First();
-            Assert.True(resObjMesh.FaceTriangles.Count == resObjMesh.CreateMaterialIdsArray().Length);
+            _resObjMesh = tgcObjLoader.ObjMeshContainer.ListObjMesh.First();
+            Assert.True(_resObjMesh.FaceTriangles.Count == _resObjMesh.CreateMaterialIdsArray().Length);
         }
 
         [TestCase]
@@ -63,8 +59,8 @@ namespace UnitTestProjectObj
         {
             TGCObjLoader tgcObjLoader = new TGCObjLoader();
             tgcObjLoader.LoadObjFromFile(_fullobjpathmultimaterial);
-            resObjMesh = tgcObjLoader.ObjMeshContainer.ListObjMesh.First();
-            int[] materialIds = resObjMesh.CreateMaterialIdsArray();
+            _resObjMesh = tgcObjLoader.ObjMeshContainer.ListObjMesh.First();
+            int[] materialIds = _resObjMesh.CreateMaterialIdsArray();
             Assert.True(materialIds[15810] == 0);
             Assert.True(materialIds[17010] == 1);
         }

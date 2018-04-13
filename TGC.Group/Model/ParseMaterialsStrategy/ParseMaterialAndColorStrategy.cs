@@ -15,10 +15,10 @@ namespace TGC.Group.Model.ParseMaterialsStrategy
 
         public ParseMaterialAndColorStrategy()
         {
-            this._keyWords = new string[] { Ns, Ka, Kd, Ks, Ke, Ni, Tr, Tf, d, illum, map_Kd, disp, map_Bump, map_Ka, map_ks, map_d };
-            this._ColorVariables = new string[] { Ka, Kd, Ks, Ke, Tf };
-            this._vectorVariables = new string[] { Ns, Ni, d, Tr };
-            this._pathTextureVariables = new string[] { map_Kd, disp, map_Bump, map_Ka, map_ks, map_d };
+            this._keyWords = new [] { Ns, Ka, Kd, Ks, Ke, Ni, Tr, Tf, d, illum, map_Kd, disp, map_Bump, map_Ka, map_ks, map_d };
+            this._ColorVariables = new [] { Ka, Kd, Ks, Ke, Tf };
+            this._vectorVariables = new [] { Ns, Ni, d, Tr };
+            this._pathTextureVariables = new [] { map_Kd, disp, map_Bump, map_Ka, map_ks, map_d };
         }
 
         //TODO MONO este proccesLine esta bien feito, refactorizarlo

@@ -36,7 +36,7 @@ namespace TGC.Group.Model.ParserStrategy
             var arrayVertex3 = CheckTriangleFormatCorrect(f[2]);
 
             var face = new FaceTriangle(arrayVertex1[VERTEX], arrayVertex2[VERTEX], arrayVertex3[VERTEX]);
-            ;
+            
             if (arrayVertex1.Length + arrayVertex2.Length + arrayVertex3.Length == COMPLETEARRAY)
             {
                 face.SetTexturesValues(arrayVertex1[TEXTURE], arrayVertex2[TEXTURE], arrayVertex3[TEXTURE]);

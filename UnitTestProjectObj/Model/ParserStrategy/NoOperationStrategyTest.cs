@@ -6,24 +6,24 @@ using TGC.Group.Model.ParserStrategy;
 namespace UnitTestProjectObj.Model.ParserStrategy
 {
     [TestFixture]
-    internal class NoOperationStrategyTest
+    public class NoOperationStrategyTest
     {
-        public ObjMeshContainer ObjMeshContainer;
+        private ObjMeshContainer _objMeshContainer;
         private readonly NoOperationStrategy _noOperationStrategy = new NoOperationStrategy();
 
         [SetUp]
         public void Init()
         {
-            ObjMeshContainer = new ObjMeshContainer();
+            _objMeshContainer = new ObjMeshContainer();
         }
 
         [Test]
         public void ProccesLineNoOperationHashtagOk()
         {
-            List<ObjMesh> ListObjMesh = new List<ObjMesh>();
+            List<ObjMesh> listObjMesh = new List<ObjMesh>();
             var line = "# o Cube";
-            _noOperationStrategy.ProccesLine(line, ObjMeshContainer);
-            Assert.True(ListObjMesh.Count == 0);
+            _noOperationStrategy.ProccesLine(line, _objMeshContainer);
+            Assert.True(listObjMesh.Count == 0);
         }
     }
 }

@@ -59,12 +59,12 @@ namespace TGC.Group.Model
         }
 
         //TODO solucionar el problema cuando el nombre del archivo viene con espacios
-        public string getTextura()
+        public string GetTextura()
         {
             return File.Exists(map_d) ? Path.GetFullPath(map_d) : null; // prodia ser cualquiera, TODO indentificar bien cual usar
         }
 
-        public string getTexturaFileName()
+        public string GetTexturaFileName()
         {
             return Path.GetFileName(map_d).TrimStart().TrimEnd();
         }

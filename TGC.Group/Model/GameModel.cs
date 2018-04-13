@@ -18,18 +18,6 @@ namespace TGC.Group.Model
     /// </summary>
     public class GameModel : TgcExample
     {
-        /// <summary>
-        ///     Constructor del juego.
-        /// </summary>
-        /// <param name="mediaDir">Ruta donde esta la carpeta con los assets</param>
-        /// <param name="shadersDir">Ruta donde esta la carpeta con los shaders</param>
-        public GameModel(string mediaDir, string shadersDir) : base(mediaDir, shadersDir)
-        {
-            Category = Game.Default.Category;
-            Name = Game.Default.Name;
-            Description = Game.Default.Description;
-        }
-
         //Caja que se muestra en el ejemplo.
         private TGCBox Box { get; set; }
 
@@ -50,6 +38,18 @@ namespace TGC.Group.Model
 
         //Importardor de mesh por obj
         private TGCObjLoader TgcObjLoader = new TGCObjLoader();
+
+        /// <summary>
+        ///     Constructor del juego.
+        /// </summary>
+        /// <param name="mediaDir">Ruta donde esta la carpeta con los assets</param>
+        /// <param name="shadersDir">Ruta donde esta la carpeta con los shaders</param>
+        public GameModel(string mediaDir, string shadersDir) : base(mediaDir, shadersDir)
+        {
+            Category = Game.Default.Category;
+            Name = Game.Default.Name;
+            Description = Game.Default.Description;
+        }
 
         /// <summary>
         ///     Se llama una sola vez, al principio cuando se ejecuta el ejemplo.

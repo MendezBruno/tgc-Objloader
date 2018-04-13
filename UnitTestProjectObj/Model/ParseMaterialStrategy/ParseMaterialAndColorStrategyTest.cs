@@ -7,8 +7,12 @@ using TGC.Group.Model.ParseMaterialsStrategy;
 namespace UnitTestProjectObj.Model.ParseMaterialStrategy
 {
     [TestFixture]
-    internal class ParseMaterialAndColorStrategyTest
+    public class ParseMaterialAndColorStrategyTest
     {
+        private readonly ParseMaterialAndColorStrategy _parseMaterialAndColorStrategy = new ParseMaterialAndColorStrategy();
+        private readonly CreateNewMaterialStrategy _createNewMeshMaterialStrategy = new CreateNewMaterialStrategy();
+        private List<ObjMaterialMesh> ListObjMaterialMesh { get; set; }
+
         [SetUp]
         public void Init()
         {
@@ -16,10 +20,6 @@ namespace UnitTestProjectObj.Model.ParseMaterialStrategy
             var line = "newmtl Material.001";
             _createNewMeshMaterialStrategy.ProccesLine(line, ListObjMaterialMesh);
         }
-
-        private readonly ParseMaterialAndColorStrategy _parseMaterialAndColorStrategy = new ParseMaterialAndColorStrategy();
-        private readonly CreateNewMaterialStrategy _createNewMeshMaterialStrategy = new CreateNewMaterialStrategy();
-        public List<ObjMaterialMesh> ListObjMaterialMesh { get; set; }
 
         [TestCase]
         public void ProccesLineWithAmbientValueOk()

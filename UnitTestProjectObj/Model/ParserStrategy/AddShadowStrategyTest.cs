@@ -6,40 +6,40 @@ using TGC.Group.Model.ParserStrategy;
 namespace UnitTestProjectObj.Model.ParserStrategy
 {
     [TestFixture]
-    internal class AddShadowStrategyTest
+    public class AddShadowStrategyTest
     {
         private readonly AddShadowStrategy _addShadowStrategy = new AddShadowStrategy();
         private readonly CreateNewMeshStrategy _createNewMeshStrategy = new CreateNewMeshStrategy();
-        public ObjMeshContainer ObjMeshContainer;
+        private ObjMeshContainer _objMeshContainer;
 
         [SetUp]
         public void Init()
         {
-            ObjMeshContainer = new ObjMeshContainer();
+            _objMeshContainer = new ObjMeshContainer();
             var line = "o Cube";
-            _createNewMeshStrategy.ProccesLine(line, ObjMeshContainer);
+            _createNewMeshStrategy.ProccesLine(line, _objMeshContainer);
         }
 
         [Test]
         public void AsignateAttributeShadowOk()
         {
             var line = "s 1";
-            _addShadowStrategy.ProccesLine(line, ObjMeshContainer);
-            Assert.True(ObjMeshContainer.ListObjMesh.Last().Shadow);
+            _addShadowStrategy.ProccesLine(line, _objMeshContainer);
+            Assert.True(_objMeshContainer.ListObjMesh.Last().Shadow);
         }
 
         [Test]
         public void AsignateAttributeFalisByNumberOfParameters()
         {
             var line = "s";
-            Assert.That(() => { _addShadowStrategy.ProccesLine(line, ObjMeshContainer); }, Throws.ArgumentException);
+            Assert.That(() => { _addShadowStrategy.ProccesLine(line, _objMeshContainer); }, Throws.ArgumentException);
         }
 
         [Test]
         public void AsignateAttributeShadowFaliedForWrongParametro()
         {
             var line = "s badParameter";
-            Assert.That(() => { _addShadowStrategy.ProccesLine(line, ObjMeshContainer); }, Throws.ArgumentException);
+            Assert.That(() => { _addShadowStrategy.ProccesLine(line, _objMeshContainer); }, Throws.ArgumentException);
         }
 
         //TODO hacer el test cuando s viene 1 ó 0 por si es smooth o no
